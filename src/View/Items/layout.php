@@ -21,55 +21,12 @@
 
 <!--		<nav class="header-links">Главная</nav>-->
 	</header>
-	<hr>
+
 	<main>
-		<div class="tags">
-			<ul>
-				<a href="#"><li>#Электроника</li></a>
-				<a href="#"><li>#Ноутбуки</li></a>
-			</ul>
-		</div>
-		<div class="catalog">
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-			<div class="item">
-				<img src="" height="165px" width="195px">
-				<p class="name">Название</p>
-				<span>Описание</span>
-				<p class="price">Цена</p>
-			</div>
-		</div>
+<!--		остальное в каталоге, я так понимаю, что так и надо делать-->
 	</main>
-<!--	Для погинации-->
-	<div></div>
+	<hr>
+
 	<footer>
 	</footer>
 </body>
