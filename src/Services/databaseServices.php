@@ -28,5 +28,3 @@ function getDbConnection()
 	}
 	return $connection;
 }
-
-$connection = getDbConnection();
