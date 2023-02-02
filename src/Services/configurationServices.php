@@ -1,35 +1,42 @@
 <?php
 
-function option(string $name, $defaultValue = null)
+namespace Services;
+const ROOT = __DIR__;
+
+class ConfigurationServices
 {
-	/**
-	 * @var array $config
-	 */
-	static $config = null;
-
-	if ($config === null)
+	public static function option(string $name, $defaultValue = null)
 	{
-		$masterConfig = require ROOT . '/config/config.php';
-		if (file_exists(ROOT . '/config/config.local.php'))
+		/**
+		 * @var array $config
+		 */
+		static $config = null;
+
+		if ($config === null)
 		{
-			$localConfig = require ROOT . '/config/config.local.php';
+
+			$masterConfig = require ROOT . '/../../config/config.php';
+			if (file_exists(ROOT . '/../../config/config.local.php'))
+			{
+				$localConfig = require ROOT . '/../../config/config.local.php';
+			}
+			else
+			{
+				$localConfig = [];
+			}
+			$config = array_merge($masterConfig, $localConfig);
 		}
-		else
+
+		if (array_key_exists($name, $config))
 		{
-			$localConfig = [];
+			return $config[$name];
 		}
-		$config = array_merge($masterConfig, $localConfig);
-	}
 
-	if (array_key_exists($name, $config))
-	{
-		return $config[$name];
-	}
+		if ($defaultValue !== null)
+		{
+			return $defaultValue;
+		}
 
-	if ($defaultValue !== null)
-	{
-		return $defaultValue;
+		throw new Exception("Configuration option {$name} not found");
 	}
-
-	throw new Exception("Configuration option {$name} not found");
 }
