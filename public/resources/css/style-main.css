@@ -1,0 +1,101 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+html, body{
+	font-family: Roboto, sans-serif;
+	height:100%;
+	overflow: auto;
+}
+
+/*подумать, как растянуть боди на весь экран при увеличении*/
+header{
+	margin: 20px 0 20px 0;
+
+}
+header .container{
+	display: flex;
+	align-items: center;
+
+}
+header .container a{
+	margin-right: 20%;
+	margin-left: 10%;
+	width: 190px;
+}
+header .search{
+	display: flex;
+	align-items: center;
+	margin-right: 5%;
+	width: 452px;
+}
+header .container .search input{
+	padding: 10px 5px;
+	width: 400px;
+	border: 2px solid rgba(243, 190, 0, 0.8);
+	opacity: 0.8;
+	font-family: Roboto;
+}
+
+header div .search button{
+	padding: 7px 15px;
+	border: none;
+	background-color: rgba(243, 190, 0, 0.8);
+
+}
+
+
+main{
+	display: grid;
+	padding-left: 10%;
+	grid-template-columns: 1fr auto;
+	grid-column-gap: 100px;
+	margin: 50px 0 100px 0;
+	box-sizing: border-box;
+	min-height: 100%;
+}
+
+main .tags ul a{
+	display: block;
+	list-style-type: none;
+	text-decoration: none;
+	margin-bottom: 20px;
+	color:rgba(0, 0, 0, 0.8);
+	padding: 10px 20px 10px 0;
+	border-bottom: 1px solid;
+}
+
+main .catalog{
+	display: flex;
+	flex-wrap: wrap;
+}
+main .item{
+	margin-right: 50px;
+	margin-bottom: 70px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+main .item .name{
+	margin-top:20px;
+	font-size: 20px;
+}
+main .item span{
+	margin:15px 0 0 0;
+	color: rgba(0, 0, 0, 0.8);
+}
+main .item .price{
+	margin:55px 0 10px 0;
+	font-size: 22px;
+	font-weight: 600;
+	background-color: rgba(243, 190, 0, 0.8);
+	padding: 10px 15px;
+}
+
+
+footer{
+	height: 100px;
+	background-color: #383737;
+}
