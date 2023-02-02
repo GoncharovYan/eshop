@@ -38,17 +38,16 @@ header .container .search input{
 }
 
 header div .search button{
-	padding: 7px 15px;
+	padding: 6.5px 15px;
 	border: none;
 	background-color: rgba(243, 190, 0, 0.8);
-
 }
 
 
 main{
 	display: grid;
 	padding-left: 10%;
-	grid-template-columns: 1fr auto;
+	grid-template-columns: 200px auto;
 	grid-column-gap: 100px;
 	margin: 50px 0 100px 0;
 	box-sizing: border-box;
