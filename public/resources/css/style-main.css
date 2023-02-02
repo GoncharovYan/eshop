@@ -64,10 +64,35 @@ main .tags ul a{
 	border-bottom: 1px solid;
 }
 
-main .catalog{
+main .products{
 	display: flex;
 	flex-wrap: wrap;
 }
+
+.catalog{
+
+}
+
+.paginator{
+	display: flex;
+	justify-content: center;
+}
+.page{
+	margin:55px 0 10px 0;
+	font-size: 22px;
+	font-weight: 600;
+	background-color: rgba(243, 190, 0, 0.8);
+	padding: 10px 15px;
+}
+
+.no-page{
+	margin:55px 0 10px 0;
+	font-size: 22px;
+	font-weight: 600;
+
+	padding: 10px 15px;
+}
+
 main .item{
 	margin-right: 50px;
 	margin-bottom: 70px;

@@ -36,7 +36,6 @@ class ConfigurationServices
 		{
 			return $defaultValue;
 		}
-
 		throw new Exception("Configuration option {$name} not found");
 	}
 }

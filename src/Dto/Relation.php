@@ -12,7 +12,7 @@ abstract class Relation {
 	private static function setConnect() {
 		if(self::$db === null) {
 			try {
-				self::$db = new \PDO('mysql:host=localhost;dbname=dev', 'root', '');
+				self::$db = new \PDO('mysql:host=localhost;dbname=eshop', 'root', '');
 			} catch(\Exception $e) {
 				throw new \Exception('Error creating a database connection ');
 			}

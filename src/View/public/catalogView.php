@@ -1,17 +1,35 @@
+<?php
+/**
+ * @var array $productList
+ * @var array $paginator
+ */
+?>
 
-	<div class="tags">
+
+<div class="tags">
 		<ul>
 			<a href="#"><li>#Электроника</li></a>
 			<a href="#"><li>#Ноутбуки</li></a>
 		</ul>
-	</div>
-	<div class="catalog">
-		<div class="item">
-			<img src="" height="165px" width="195px">
-			<p class="name">Название</p>
-			<span>Описание</span>
-			<p class="price">Цена</p>
-		</div>
-	</div>
-<!--	Для погинации-->
-<div></div>
+</div>
+<div class="catalog">
+    <div class="products">
+        <?for($i = 0; $i < count($productList); $i++){?>
+            <div class="item">
+            <img src="" height="165px" width="195px">
+            <p class="name"><?= $productList[$i]->name?></p>
+            <span>описание</span>
+            <p class="price"><?= $productList[$i]->price?></p>
+            </div>
+        <?}?>
+    </div>
+    <div class="paginator">
+        <?foreach ($paginator as $page){
+            if($page['ref'] !== null){?>
+                <a href ="<?= $page['ref'] ?>" class="page"><?=$page['text']?></a>
+            <?}else{?>
+                <div class="no-page"><?=$page['text']?></div>
+            <?}
+        }?>
+    </div>
+</div>
