@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
-use App\Dto\Relation;
+use Dto\Relation;
 
-use App\Model\Tag;
+use Model\Tag;
 
 
 class Item extends Relation {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace Dto;
 
 abstract class Relation {
 	protected static $db = null;
@@ -186,7 +186,6 @@ abstract class Relation {
 			$result[$key] = $rawRow;
 		}
 		echo '<pre>';
-		var_dump($result);
 		echo '</pre>';
 		return $result;
 	}

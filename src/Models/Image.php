@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
-class Image extends \App\Dto\Relation {
+class Image extends Dto\Relation {
 	public $id;
 
 	public $path;
