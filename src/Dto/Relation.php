@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace Dto;
 
 abstract class Relation {
 	protected static $db = null;

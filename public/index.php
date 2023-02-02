@@ -1,6 +1,6 @@
 <?php
 
-require_once '../src/Kernel.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../boot.php';
 
 use App\Kernel;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
-use App\Dto\Relation;
+use Dto\Relation;
 
 class Orders extends Relation {
 	public $id;

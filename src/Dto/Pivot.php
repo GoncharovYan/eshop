@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace Dto;
 
 class Pivot {
 	public $sqlJoinObject;
