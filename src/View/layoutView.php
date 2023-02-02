@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/public/resources/css/style-main.css">
+	<link rel="stylesheet" href="/public/resources/css/style-details.css">
 	<title>Team&3-Eshop</title>
 </head>
 <body>

@@ -38,10 +38,9 @@ header .container .search input{
 }
 
 header div .search button{
-	padding: 7px 15px;
+	padding: 6.5px 15px;
 	border: none;
 	background-color: rgba(243, 190, 0, 0.8);
-
 }
 
 
