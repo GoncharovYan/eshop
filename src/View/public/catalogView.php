@@ -28,7 +28,7 @@
     <div class="paginator">
         <?foreach ($paginator as $page){
             if($page['ref'] !== null){?>
-                <a href ="<?= $page['ref'] ?>" class="page"><?=$page['text']?></a>
+                <a href ="../<?=$page['ref'] ?>/" class="page"><?=$page['text']?></a>
             <?}else{?>
                 <div class="no-page"><?=$page['text']?></div>
             <?}
