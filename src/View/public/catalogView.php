@@ -2,14 +2,16 @@
 /**
  * @var array $productList
  * @var array $paginator
+ * @var array $tagList
  */
 ?>
 
 
 <div class="tags">
 		<ul>
-			<a href="#"><li>#Электроника</li></a>
-			<a href="#"><li>#Ноутбуки</li></a>
+			<? for($i = 0, $iMax = count($tagList); $i < $iMax; $i++) {?>
+				<a href="#"><li>#<?= $tagList[$i]->name?></li></a>
+			<?}?>
 		</ul>
 </div>
 <div class="catalog">
