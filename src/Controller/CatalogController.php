@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Models\Item;
+use Models\Tag;
 use Services\PageServices;
 
 class CatalogController extends BaseController
@@ -15,11 +16,13 @@ class CatalogController extends BaseController
         $paginator = PageServices::generatePagination($curPage,$maxPage);
 
         $productList = Item::findAll();
+		$tagList = Tag::findAll();
 
         echo $this->render('layoutView.php', [
             'content' => $this->render('public/catalogView.php', [
                 'productList' => $productList,
                 'paginator' => $paginator,
+				'tagList' => $tagList,
             ]),
         ]);
     }
