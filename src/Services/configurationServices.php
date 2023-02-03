@@ -14,7 +14,7 @@ class ConfigurationServices
 
 		if ($config === null)
 		{
-
+            //@todo пути и ROOT
 			$masterConfig = require ROOT . '/../../config/config.php';
 			if (file_exists(ROOT . '/../../config/config.local.php'))
 			{
