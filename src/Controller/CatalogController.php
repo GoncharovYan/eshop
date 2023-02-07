@@ -8,7 +8,7 @@ use Services\PageServices;
 
 class CatalogController extends BaseController
 {
-    public function catalogPage(int $curPage = null)
+    public function catalogPage(string $tag, int $curPage = null)
     {
         if($curPage === null)
         {
@@ -18,8 +18,18 @@ class CatalogController extends BaseController
         $maxPage = 10;
         $paginator = PageServices::generatePagination($curPage,$maxPage);
 
-        $productList = Item::findAll();
-		$tagList = Tag::findAll();
+		if($tag !== 'all'){
+			$productList = Item::executeQuery("select * from item 
+                                                    join item_tag it on item.ID = it.ITEM_ID
+													join tag t on t.ID = it.TAG_ID
+													where t.ALIAS = '$tag'");
+		}
+		else{
+			$productList = Item::findAll();
+		}
+		$tagList = Tag::find([
+			'limit' => '10'
+							 ]);
 
 
         echo $this->render('layoutView.php', [
