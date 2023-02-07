@@ -3,6 +3,7 @@
  * @var array $productList
  * @var array $paginator
  * @var array $tagList
+ * @var array $imagePathList
  */
 ?>
 
@@ -18,7 +19,7 @@
     <div class="products">
         <?for($i = 0; $i < count($productList); $i++){?>
             <div class="item">
-            <img src="" height="165px" width="195px">
+            <img src="<?=$imagePathList[$i]?>" alt="missing jpg">
             <p class="name"><?= $productList[$i]->item_name?></p>
             <span>описание</span>
             <p class="price"><?= $productList[$i]->price?></p>
