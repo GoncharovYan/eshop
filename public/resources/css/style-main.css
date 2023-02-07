@@ -46,6 +46,7 @@ header div .search button{
 
 main{
 	display: grid;
+	justify-content: center;
 	padding-left: 10%;
 	grid-template-columns: 200px auto;
 	grid-column-gap: 100px;
@@ -123,3 +124,5 @@ footer{
 	height: 100px;
 	background-color: #383737;
 }
+
+
