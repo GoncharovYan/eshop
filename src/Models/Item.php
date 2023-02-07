@@ -11,7 +11,7 @@ class Item extends Relation {
 
 	public $id;
 
-	public $name;
+	public $item_name;
 
 	public $short_desc;
 

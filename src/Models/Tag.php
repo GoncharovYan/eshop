@@ -8,6 +8,6 @@ class Tag extends Relation {
 
 	public $id;
 
-	public $name;
+	public $tag_name;
 
 }

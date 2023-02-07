@@ -10,7 +10,7 @@
 <div class="tags">
 		<ul>
 			<? for($i = 0, $iMax = count($tagList); $i < $iMax; $i++) {?>
-				<a href="#"><li>#<?= $tagList[$i]->name?></li></a>
+				<a href="#"><li>#<?= $tagList[$i]->tag_name?></li></a>
 			<?}?>
 		</ul>
 </div>
@@ -19,7 +19,7 @@
         <?for($i = 0; $i < count($productList); $i++){?>
             <div class="item">
             <img src="" height="165px" width="195px">
-            <p class="name"><?= $productList[$i]->name?></p>
+            <p class="name"><?= $productList[$i]->item_name?></p>
             <span>описание</span>
             <p class="price"><?= $productList[$i]->price?></p>
             </div>
