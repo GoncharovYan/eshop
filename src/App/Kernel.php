@@ -13,7 +13,6 @@ class Kernel
         $route = Router::find($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
 		$environment = 'dev';
-		// DROP ALL TABLES BEFORE START MIGRATION!
 		if($environment === 'dev')
 		{
 			Migrator::migrate();
