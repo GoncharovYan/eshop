@@ -128,10 +128,17 @@ main .item .price{
 	justify-self: center;
 }
 
+main .item img{
+	height: 165px;
+	width: 195px;
+	object-fit: contain;
+	cursor: pointer;
+}
+main .item img:hover{
+	transform: scale(1.02);
+}
 
 footer{
 	height: 100px;
 	background-color: #383737;
 }
-
-
