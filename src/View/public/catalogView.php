@@ -9,8 +9,8 @@
 
 <div class="tags">
 		<ul>
-			<? for($i = 0, $iMax = count($tagList); $i < $iMax; $i++) {?>
-				<a href="#"><li>#<?= $tagList[$i]->tag_name?></li></a>
+			<? foreach ($tagList as $tag) {?>
+				<a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
 			<?}?>
 		</ul>
 </div>
@@ -18,10 +18,10 @@
     <div class="products">
         <?for($i = 0; $i < count($productList); $i++){?>
             <div class="item">
-            <img src="" height="165px" width="195px">
-            <p class="name"><?= $productList[$i]->item_name?></p>
-            <span>описание</span>
-            <p class="price"><?= $productList[$i]->price?></p>
+				<img src="" alt="" height="165px" width="195px" style="margin-top: 15px; justify-self: center">
+					<p class="name"><a href="#"><?= $productList[$i]->item_name?></a></p>
+				<span><?= $productList[$i]->short_desc?></span>
+				<p class="price"><?= $productList[$i]->price . "₽"?></p>
             </div>
         <?}?>
     </div>
