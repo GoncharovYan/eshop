@@ -36,15 +36,11 @@
                 <a href="/auth/"><img src="/resources/images/icon-user.png" width="35px" alt=""></a>
             <?}?>
 		</div>
-<!--		подумать над шириной-->
-
-<!--		<nav class="header-links">Главная</nav>-->
 	</header>
-
+	<hr>
 	<main>
         <?= $content ?>
 	</main>
-	<hr>
 
 	<footer>
 	</footer>

@@ -10,4 +10,6 @@ class Tag extends Relation {
 
 	public $tag_name;
 
+	public $alias;
+
 }
