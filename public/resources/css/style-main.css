@@ -133,9 +133,8 @@ main .item img{
 	width: 195px;
 	object-fit: contain;
 	cursor: pointer;
-}
-main .item img:hover{
-	transform: scale(1.02);
+	margin-top: 15px;
+	justify-self: center
 }
 
 footer{
