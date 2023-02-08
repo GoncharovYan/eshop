@@ -9,9 +9,7 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/resources/css/style-main.css">
-    <link rel="stylesheet" href="/resources/css/style-details.css">
-    <link rel="stylesheet" href="/resources/css/style-auth.css">
+	<link rel="stylesheet" href="/resources/css/style.css">
 	<title>Team&3-Eshop</title>
 </head>
 <body>
@@ -24,6 +22,7 @@
 				</label>
 				<button><img src="/resources/images/icon-search.png" height="23px" width="22px" alt=""></button>
 			</div>
+            <a href="/order/"><img src="/resources/images/icon-cart.png" width="35px" alt=""></a>
             <?
             if(\Services\UserServices::checkAuth())
             {?>

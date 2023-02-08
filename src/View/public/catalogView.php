@@ -19,7 +19,9 @@
         <?for($i = 0; $i < count($productList); $i++){?>
             <div class="item">
             <img src="" height="165px" width="195px">
-            <p class="name"><?= $productList[$i]->item_name?></p>
+            <a href="/product/<?= $productList[$i]->id ?>/" class="name">
+                <?= $productList[$i]->item_name?>
+            </a>
             <span>описание</span>
             <p class="price"><?= $productList[$i]->price?></p>
             </div>
