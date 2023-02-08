@@ -13,7 +13,6 @@ class DatabaseServices
             $dbUser = ConfigurationServices::option('DB_USER');
             $dbPass = ConfigurationServices::option('DB_PASSWORD');
             $dbName = ConfigurationServices::option('DB_NAME');
-            echo  $dbHost;
             $connection = mysqli_init();
             $connected = mysqli_real_connect($connection, $dbHost, $dbUser, $dbPass, $dbName);
             if (!$connected)
