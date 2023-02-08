@@ -128,10 +128,16 @@ main .item .price{
 	justify-self: center;
 }
 
+main .item img{
+	height: 165px;
+	width: 195px;
+	object-fit: contain;
+	cursor: pointer;
+	margin-top: 15px;
+	justify-self: center
+}
 
 footer{
 	height: 100px;
 	background-color: #383737;
 }
-
-

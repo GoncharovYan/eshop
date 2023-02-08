@@ -2,7 +2,9 @@
 
 namespace Models;
 
-class Image extends Dto\Relation {
+use Dto\Relation;
+
+class Image extends Relation {
 	public $id;
 
 	public $path;
