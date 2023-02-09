@@ -36,3 +36,9 @@
 \Core\Routing\Router::get('/admin/user/:id/', [new \Controller\admin\AdminUserController(), 'adminUserPage']);
 \Core\Routing\Router::post('/admin/user/:id/edit/', [new \Controller\admin\AdminUserController(), 'adminUserEdit']);
 \Core\Routing\Router::post('/admin/user/:id/delete/', [new \Controller\admin\AdminUserController(), 'adminUserDelete']);
+
+\Core\Routing\Router::get('/admin/order/:id/', [new \Controller\admin\AdminOrderController(), 'adminOrderPage']);
+\Core\Routing\Router::post('/admin/order/:id/edit/', [new \Controller\admin\AdminOrderController(), 'adminOrderEdit']);
+\Core\Routing\Router::post('/admin/order/:id/add-product/', [new \Controller\admin\AdminOrderController(), 'adminOrderAddProduct']);
+\Core\Routing\Router::post('/admin/order/:id/delete-product/', [new \Controller\admin\AdminOrderController(), 'adminOrderDeleteProduct']);
+\Core\Routing\Router::post('/admin/order/:id/delete/', [new \Controller\admin\AdminOrderController(), 'adminOrderDelete']);

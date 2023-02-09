@@ -78,7 +78,8 @@ class AdminListController extends BaseController
 			$orderTable[] = [
 				'id' => $order->id,
 				'customerName' => $order->customer_name,
-				'status' => $order->status,
+				'status' => ($order->status) ? 'закрыт' : 'в обработке',
+				'price' => $order->price,
 				'dateCreated' => $order->date_created,
 			];
 		}
