@@ -1,82 +1,61 @@
-*{
-	padding: 0;
-	margin: 0;
-}
-html, body{
-	font-family: Roboto, sans-serif;
-	height:100%;
-	overflow: auto;
+@charset "UTF-8";
+html, body {
+  font-family: Roboto, sans-serif;
+  height: 100%;
+  overflow: auto;
 }
 
 /*подумать, как растянуть боди на весь экран при увеличении*/
-header{
-	margin: 20px 0 20px 0;
-
-}
-header .container{
-	display: flex;
-	align-items: center;
-
-}
-header .container a{
-	margin-right: 20%;
-	margin-left: 10%;
-	width: 190px;
-}
-header .search{
-	display: flex;
-	align-items: center;
-	margin-right: 5%;
-	width: 452px;
-}
-header .container .search input{
-	padding: 10px 5px;
-	width: 400px;
-	border: 2px solid rgba(243, 190, 0, 0.8);
-	opacity: 0.8;
-	font-family: Roboto;
+header {
+  margin: 20px 0;
 }
 
-header div .search button{
-	padding: 6.5px 15px;
-	border: none;
-	background-color: rgba(243, 190, 0, 0.8);
+header .logo {
+  width: 190px;
 }
 
-
-main{
-	display: grid;
-	padding-left: 10%;
-	grid-template-columns: 200px auto;
-	grid-column-gap: 100px;
-	margin: 50px 0 100px 0;
-	box-sizing: border-box;
-	min-height: 100%;
+header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
-main .tags ul a{
-	display: block;
-	list-style-type: none;
-	text-decoration: none;
-	margin-bottom: 20px;
-	color:rgba(0, 0, 0, 0.8);
-	padding: 10px 20px 10px 0;
-	border-bottom: 1px solid;
+header .search {
+  display: flex;
+  align-items: center;
+  margin-right: 5%;
+  width: 452px;
 }
 
-main .products{
-	display: flex;
-	flex-wrap: wrap;
+header .search input {
+  padding: 10px 5px;
+  width: 400px;
+  border: 2px solid rgba(243, 190, 0, 0.8);
+  opacity: 0.8;
+  font-family: Roboto;
 }
 
-.catalog{
+header .search button {
+  padding: 6.5px 15px;
+  border: none;
+  background-color: rgba(243, 190, 0, 0.8);
+}
 
+header .search__icon {
+  height: 23px;
+  width: 22px;
+}
+
+header .links {
+  display: flex;
+  align-items: center;
 }
 
 .paginator{
 	display: flex;
 	justify-content: center;
 }
+
 .page{
 	margin:55px 0 10px 0;
 	font-size: 22px;
@@ -94,51 +73,28 @@ main .products{
 	padding: 10px 15px;
 }
 
-main .item{
-	border: 1px solid rgba(0, 0, 0, 0.1);
-	display: grid;
-	width:230px;
-	height: 450px;
-	justify-content: center;
+header .links .button {
+  display: block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
 }
 
-main .item .name a{
-	display: block;
-	color:#000;
-	text-decoration: none;
-	font-size: 20px;
-	height: 50px;
-	margin:15px 0 0 10px;
-	width: 195px;
-}
-main .item span{
-	margin:15px 0 0 10px;
-	color: rgba(0, 0, 0, 0.8);
-	word-wrap: break-word;
-	height: 90px;
-	width: 195px;
-}
-main .item .price{
-	margin:30px 0 20px 0px;
-	font-size: 22px;
-	font-weight: 600;
-	background-color: rgba(243, 190, 0, 0.8);
-	padding: 10px 15px;
-	text-align: center;
-	width: 144px;
-	justify-self: center;
+header .links .button img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
-main .item img{
-	height: 165px;
-	width: 195px;
-	object-fit: contain;
-	cursor: pointer;
-	margin-top: 15px;
-	justify-self: center
+main {
+  min-height: 100vh;
+  margin: 100px 0;
+  display: flex;
+  justify-content: center;
 }
 
-footer{
-	height: 100px;
-	background-color: #383737;
+footer {
+  height: 100px;
+  background-color: #383737;
 }

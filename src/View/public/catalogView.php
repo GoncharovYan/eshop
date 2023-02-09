@@ -7,15 +7,15 @@
  */
 ?>
 
-
-<div class="tags">
-		<ul>
-			<? foreach ($tagList as $tag) {?>
-				<a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
-			<?}?>
-		</ul>
-</div>
 <div class="catalog">
+    <div class="tags">
+            <ul>
+                <? foreach ($tagList as $tag) {?>
+                    <a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
+                <?}?>
+            </ul>
+    </div>
+
     <div class="products">
 		<? foreach ($productList as $product){?>
 			<div class="item">
