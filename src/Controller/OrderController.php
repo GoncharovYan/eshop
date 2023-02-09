@@ -32,7 +32,7 @@ class OrderController extends BaseController
         else
         {
             echo $this->render('layoutView.php', [
-                'content' => "<p>пусто сори</p>",
+                'content' => "<p>Товар не найден</p>",
             ]);
         }
     }

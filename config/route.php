@@ -14,3 +14,5 @@
 \Core\Routing\Router::post('/register/',[new \Controller\private\AuthController(), 'registerUser']);
 
 \Core\Routing\Router::get('/logout/',[new \Controller\private\AuthController(), 'logOutUser']);
+
+\Core\Routing\Router::get('/checkout/', [new \Controller\CheckoutController(), 'checkoutPage']);

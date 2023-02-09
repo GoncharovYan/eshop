@@ -45,6 +45,13 @@ class AuthController extends BaseController
        {
            $_SESSION['login'] = $data['login'];
            $_SESSION['pass'] = $data['pass'];
+           $user = User::executeQuery("SELECT * 
+                    FROM user 
+                    WHERE LOGIN = '{$data['login']}'");
+           $_SESSION['email'] = $user[0]->email;
+
+
+
        }
        header("Location: /catalog/all/1/");
     }
@@ -61,7 +68,6 @@ class AuthController extends BaseController
                     VALUES ('{$data['email']}','{$data['login']}','{$pass}',1);"
                 );
                 header("Location: /auth/");
-                die();
             }
         }
         header("Location: /register/");
