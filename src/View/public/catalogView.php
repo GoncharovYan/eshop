@@ -7,20 +7,22 @@
  */
 ?>
 
-
-<div class="tags">
-		<ul>
-			<? foreach ($tagList as $tag) {?>
-				<a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
-			<?}?>
-		</ul>
-</div>
 <div class="catalog">
+    <div class="tags">
+            <ul>
+                <? foreach ($tagList as $tag) {?>
+                    <a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
+                <?}?>
+            </ul>
+    </div>
+
     <div class="products">
 		<? foreach ($productList as $product){?>
 			<div class="item">
 				<img src="<?= $imagePathList[$product->id] ?>" alt="">
-				<p class="name"><a href="#"><?= $product->item_name?></a></p>
+				<p class="name"><a href="/product/<?= $product->id ?>/">
+                    <?= $product->item_name?>
+                </a></p>
 				<span><?= $product->short_desc?></span>
 				<p class="price"><?= $product->price . " ₽"?></p>
 			</div>

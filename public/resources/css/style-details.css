@@ -27,31 +27,31 @@
 	margin-right: 15%;
 	color:rgba(0, 0, 0, 0.9);
 }
-.details .wrapper button{
+.details .wrapper .button{
 	padding: 10px 15px;
 	font-size: 20px;
 	background-color: rgba(243, 190, 0, 0.8);
 	border:none;
 }
-.details .wrapper button:hover{
+.details .wrapper .button:hover{
 	background-color: rgb(231, 166, 0);
 	cursor: pointer;
 	transition: 0.2s;
 }
-.details .tags-wrapper{
+.details .tags{
 	margin: 30px 0;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 }
-.details .tags-wrapper a{
+.details .tags a{
 	margin: 0 10px 20px 0;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-color: rgba(0, 0, 0, 0.1);
 	padding: 5px 10px;
 	border-radius: 15px;
 }
-.details .tags-wrapper a:hover{
+.details .tags a:hover{
 	background-color: #cbcbcb;
 	cursor: pointer;
 	transition: 0.2s;

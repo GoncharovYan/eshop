@@ -1,4 +1,6 @@
+@import "style-zero.css";
 @import "style-main.css";
+@import "style-catalog.css";
 @import "style-details.css";
 @import "style-auth.css";
 @import "style-order.css";
