@@ -4,16 +4,16 @@ namespace Controller;
 
 use Models\Image;
 use Cache\FileCache;
-use Dto\Relation;
 use Models\Item;
 use Models\Tag;
-use Models\User;
+use Services\ConfigurationServices;
 use Services\PageServices;
 
 class CatalogController extends BaseController
 {
     public function catalogPage(string $tag, int $curPage = null)
     {
+
         $cache = new FileCache();
         if($curPage === null)
         {
@@ -21,16 +21,17 @@ class CatalogController extends BaseController
         }
         $search = $_GET['search'] ?? '';
 
-        $itemsPerPage = 3;
+        $itemsPerPage = ConfigurationServices::option('CATALOG_ITEM_LIMIT');
         $id = ($curPage-1)*$itemsPerPage;
 
 		if($tag !== 'all')
 		{
-			$productList = Item::executeQuery("select count(*) from item 
+			$productList = Item::executeQuery("select * from item 
                                                     join item_tag it on ID = it.ITEM_ID
 													join tag t on t.ID = it.TAG_ID
 													where t.ALIAS = '$tag'");
             $maxPage = ceil(count($productList)/$itemsPerPage);
+
             $query = "select item.* from item 
                                                     join item_tag it on ID = it.ITEM_ID
 													join tag t on t.ID = it.TAG_ID
@@ -42,6 +43,9 @@ class CatalogController extends BaseController
             $productList = Item::executeQuery($query."limit $id,$itemsPerPage");
 		}
 		else{
+            $productList = Item::findAll();
+            $maxPage = ceil(count($productList)/$itemsPerPage);
+
             if ($search !== '')
             {
                 $productList = Item::executeQuery("	select * from item
@@ -50,11 +54,8 @@ class CatalogController extends BaseController
             }
             else {
                 $productList = Item::find([
-                    'limit' => "$id, $itemsPerPage",]);
+                    'limit' => "$id, $itemsPerPage"]);
             }
-			$productList = Item::findAll();
-            $maxPage = ceil(count($productList)/$itemsPerPage);
-
 		}
 
         $paginator = PageServices::generatePagination($curPage,$maxPage);
@@ -73,9 +74,11 @@ class CatalogController extends BaseController
         $imageList = Image::executeQuery(
             "SELECT PATH, item.ID FROM image
 			INNER JOIN item_image ON image.ID = item_image.IMAGE_ID
-			WHERE item_image.ITEM_ID = IN (" . implode(',', $itemIdArray) . ")"
+			INNER JOIN item ON item_image.ITEM_ID = item.ID
+            WHERE item.ID IN (" . implode(',', $itemIdArray) . ")"
         );
         $imagePathList = [];
+
         foreach ($imageList as $image) {
             $imagePathList[$image->id] = $image->path;
         }

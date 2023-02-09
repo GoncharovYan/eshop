@@ -53,22 +53,22 @@ class UserServices
     public static function isAdmin(): bool
     {
         session_start();
-        $check = false;
         $adminRole = '1';
         if(isset($_SESSION['login'])&&isset($_SESSION['pass']))
         {
-            $user = User::executeQuery("SELECT * 
+            if(UserServices::checkPass($_SESSION['login'],$_SESSION['pass']))
+            {
+                $user = User::executeQuery("SELECT * 
                     FROM user 
                     WHERE LOGIN = '{$_SESSION['login']}'");
-            if($user[0]->password === $_SESSION['pass'])
-            {
                 if($user[0]->role === $adminRole)
                 {
                     return true;
                 }
             }
+
         }
-        return $check;
+        return false;
     }
 
     public static function getLogin(): ?string
