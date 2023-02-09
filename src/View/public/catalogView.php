@@ -3,8 +3,11 @@
  * @var array $productList
  * @var array $paginator
  * @var array $tagList
+ * @var array $imagePathList
  */
 ?>
+
+
 <div class="tags">
 		<ul>
 			<? foreach ($tagList as $tag) {?>
@@ -14,15 +17,15 @@
 </div>
 <div class="catalog">
     <div class="products">
-        <?for($i = 0; $i < count($productList); $i++){?>
-            <div class="item">
-				<img src="" alt="" height="165px" width="195px" style="margin-top: 15px; justify-self: center">
-					<p class="name"><a href="/product/<?=$productList[$i]->id?>/"><?= $productList[$i]->item_name?></a></p>
-				<span><?= $productList[$i]->short_desc?></span>
-				<p class="price"><?= $productList[$i]->price . "₽"?></p>
-            </div>
-        <?}?>
-    </div>
+		<? foreach ($productList as $product){?>
+			<div class="item">
+				<img src="<?= $imagePathList[$product->id] ?>" alt="">
+				<p class="name"><a href="/product/<?=$productList->id?>/"><?= $product->item_name?></a></p>
+				<span><?= $product->short_desc?></span>
+				<p class="price"><?= $product->price . " ₽"?></p>
+			</div>
+		<?}?>
+	</div>
     <div class="paginator">
         <?foreach ($paginator as $page){
             if($page['ref'] !== null){?>
