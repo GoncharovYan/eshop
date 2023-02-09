@@ -1,0 +1,97 @@
+.catalog {
+  display: grid;
+  justify-content: center;
+  padding-left: 10%;
+  grid-template: "tags products" "paginator paginator";
+  grid-template-columns: 200px auto;
+  grid-column-gap: 100px;
+}
+
+.catalog .tags {
+  grid-area: tags;
+}
+
+.catalog .tags ul a {
+  display: block;
+  list-style-type: none;
+  text-decoration: none;
+  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px 10px 0;
+  border-bottom: 1px solid;
+}
+
+.catalog .products {
+  grid-area: products;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.paginator {
+  grid-area: paginator;
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  margin: 55px 0 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  background-color: rgba(243, 190, 0, 0.8);
+  padding: 10px 15px;
+}
+
+.no-page {
+  margin: 55px 0 10px 0;
+  font-size: 22px;
+  font-weight: 600;
+  padding: 10px 15px;
+}
+
+.catalog .item {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: grid;
+  width: 230px;
+  height: 450px;
+  justify-content: center;
+}
+
+.catalog .item .name a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.catalog .item .name:hover {
+  color: rgba(243, 190, 0, 0.8);
+  transition: 100ms;
+}
+
+.catalog .item span {
+  margin: 15px 0 0 10px;
+  color: rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  height: 90px;
+  width: 195px;
+}
+
+.catalog .item .price {
+  margin: 30px 0 20px 0px;
+  font-size: 22px;
+  font-weight: 600;
+  background-color: rgba(243, 190, 0, 0.8);
+  padding: 10px 15px;
+  text-align: center;
+  width: 144px;
+  justify-self: center;
+}
+
+.catalog .item img {
+  height: 165px;
+  width: 195px;
+  object-fit: contain;
+  cursor: pointer;
+  margin-top: 15px;
+  justify-self: center;
+}

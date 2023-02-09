@@ -72,7 +72,7 @@ class PageServices
         {
             $pagination[] = array(
                 'text' => '1',
-                'ref' => ' '
+                'ref' => null,
             );
         }
         return $pagination;
