@@ -3,7 +3,6 @@
 namespace Controller\admin;
 
 use Controller\BaseController;
-use Models\Image;
 use Models\Item;
 use Models\Orders;
 
@@ -12,6 +11,10 @@ class AdminOrderController extends BaseController
 	public function adminOrderPage(int|string $id)
 	{
 		if ($id === 'new') {
+			$query =
+				"INSERT INTO orders (CUSTOMER_NAME, PRICE, ADDRESS)
+				VALUE ('Новый заказ', 0, 'адрес')";
+			Orders::executeQuery($query);
 			header("Location: /admin/order-list/1/");
 		}
 		$order = Orders::findById($id);

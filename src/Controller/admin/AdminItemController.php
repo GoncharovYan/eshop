@@ -16,9 +16,6 @@ class AdminItemController extends BaseController
 				"INSERT INTO item (ITEM_NAME)
 				VALUE ('Новый товар')";
 			Item::executeQuery($query);
-			$id = Item::executeQuery(
-				"SELECT ID FROM item ORDER BY ID DESC LIMIT 1;"
-			)[0]->id;
 			header("Location: /admin/product-list/1/");
 		}
 

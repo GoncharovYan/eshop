@@ -14,9 +14,6 @@ class AdminTagController extends BaseController
 				"INSERT INTO tag (TAG_NAME, ALIAS)
 				VALUES ('Новый тег', 'Новая ссылка')";
 			Tag::executeQuery($query);
-			$id = Tag::executeQuery(
-				"SELECT ID FROM tag ORDER BY ID DESC LIMIT 1;"
-			)[0]->id;
 			header("Location: /admin/tag-list/1/");
 		}
 

@@ -14,9 +14,6 @@ class AdminUserController extends BaseController
 				"INSERT INTO user (LOGIN, PASSWORD)
 				VALUES ('login', 'password')";
 			User::executeQuery($query);
-			$id = User::executeQuery(
-				"SELECT ID FROM user ORDER BY ID DESC LIMIT 1;"
-			)[0]->id;
 			header("Location: /admin/user-list/1/");
 		}
 

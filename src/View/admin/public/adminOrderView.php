@@ -4,7 +4,6 @@
  * @var array $orderProductList
  */
 use Models\Orders;
-var_dump($order);
 ?>
 
 <div>
