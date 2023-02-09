@@ -16,30 +16,27 @@
 	<header>
 		<div class="container">
 			<a href="/catalog/all/1/"><img src="/resources/images/logo.png" width="190px" alt=""></a>
-			<div class="search">
+			<form class="search" method="GET">
 				<label>
-					<input type="search" value="Поиск по сайту" class="input_text">
+					<input type="search" placeholder="Поиск по сайту" class="input_text" name="search">
 				</label>
-				<button><img src="/resources/images/icon-search.png" height="23px" width="22px" alt=""></button>
-			</div>
-            <a href="/order/"><img src="/resources/images/icon-cart.png" width="35px" alt=""></a>
-            <?
-            if(\Services\UserServices::checkAuth())
-            {?>
-                <div class=header-user>
-                    <p><?=\Services\UserServices::getLogin()?></p>
-                    <a id="logout-header-btn" href="/logout/">Выйти</a>
-                </div>
-            <?}
-            else{?>
-                <a href="/auth/"><img src="/resources/images/icon-user.png" width="35px" alt=""></a>
-            <?}?>
+				<button type="submit"><img src="/resources/images/icon-search.png" height="23px" width="22px" alt=""></button>
+			</form>
+
+			<?
+			if(\Services\UserServices::checkAuth())
+			{?>
+				<div class=header-user>
+					<p><?=\Services\UserServices::getLogin()?></p>
+					<a id="logout-header-btn" href="/logout/">Выйти</a>
+				</div>
+			<?}
+			else{?>
+				<a href="/auth/"><img src="/resources/images/icon-user.png" width="35px" alt=""></a>
+			<?}?>
 		</div>
-<!--		подумать над шириной-->
-
-<!--		<nav class="header-links">Главная</nav>-->
 	</header>
-
+	<hr>
 	<main>
         <?= $content ?>
 	</main>

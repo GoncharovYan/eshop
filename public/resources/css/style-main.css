@@ -19,7 +19,9 @@ header .container{
 
 }
 header .container a{
-
+	margin-right: 20%;
+	margin-left: 10%;
+	width: 190px;
 }
 header .search{
 	display: flex;
@@ -93,21 +95,18 @@ main .products{
 }
 
 main .item{
-	margin-right: 50px;
-	margin-bottom: 70px;
-
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	display: grid;
+	width:230px;
+	height: 450px;
+	justify-content: center;
 }
 
-main .item .name{
-	margin-top:20px;
-	font-size: 20px;
-
+main .item .name a{
+	display: block;
+	color:#000;
 	text-decoration: none;
-	color: inherit;
-	transition: 100ms;
+	font-size: 20px;
 }
 
 main .item .name:hover{
@@ -116,17 +115,31 @@ main .item .name:hover{
 }
 
 main .item span{
-	margin:15px 0 0 0;
+	margin:15px 0 0 10px;
 	color: rgba(0, 0, 0, 0.8);
+	word-wrap: break-word;
+	height: 90px;
+	width: 195px;
 }
 main .item .price{
-	margin:55px 0 10px 0;
+	margin:30px 0 20px 0px;
 	font-size: 22px;
 	font-weight: 600;
 	background-color: rgba(243, 190, 0, 0.8);
 	padding: 10px 15px;
+	text-align: center;
+	width: 144px;
+	justify-self: center;
 }
 
+main .item img{
+	height: 165px;
+	width: 195px;
+	object-fit: contain;
+	cursor: pointer;
+	margin-top: 15px;
+	justify-self: center
+}
 
 footer{
 	height: 100px;

@@ -3,30 +3,29 @@
  * @var array $productList
  * @var array $paginator
  * @var array $tagList
+ * @var array $imagePathList
  */
 ?>
 
 
 <div class="tags">
 		<ul>
-			<? for($i = 0, $iMax = count($tagList); $i < $iMax; $i++) {?>
-				<a href="#"><li>#<?= $tagList[$i]->tag_name?></li></a>
+			<? foreach ($tagList as $tag) {?>
+				<a href="/catalog/<?=$tag->alias?>/1/"><li>#<?= $tag->tag_name?></li></a>
 			<?}?>
 		</ul>
 </div>
 <div class="catalog">
     <div class="products">
-        <?for($i = 0; $i < count($productList); $i++){?>
-            <div class="item">
-            <img src="" height="165px" width="195px">
-            <a href="/product/<?= $productList[$i]->id ?>/" class="name">
-                <?= $productList[$i]->item_name?>
-            </a>
-            <span>описание</span>
-            <p class="price"><?= $productList[$i]->price?></p>
-            </div>
-        <?}?>
-    </div>
+		<? foreach ($productList as $product){?>
+			<div class="item">
+				<img src="<?= $imagePathList[$product->id] ?>" alt="">
+				<p class="name"><a href="#"><?= $product->item_name?></a></p>
+				<span><?= $product->short_desc?></span>
+				<p class="price"><?= $product->price . " ₽"?></p>
+			</div>
+		<?}?>
+	</div>
     <div class="paginator">
         <?foreach ($paginator as $page){
             if($page['ref'] !== null){?>

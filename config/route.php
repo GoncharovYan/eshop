@@ -1,6 +1,6 @@
 <?php
 
-\Core\Routing\Router::get('/catalog/all/:id/', [new \Controller\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:id/', [new \Controller\CatalogController(), 'catalogPage']);
 
 \Core\Routing\Router::get('/product/:id/', [new \Controller\DetailsController(), 'detailsPage']);
 
