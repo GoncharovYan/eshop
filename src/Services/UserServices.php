@@ -25,9 +25,10 @@ class UserServices
         $user = User::executeQuery("SELECT * 
                     FROM user 
                     WHERE LOGIN = '{$login}'");
-        if($user[0] !== null)
+
+        if($user !== null)
         {
-            if(password_verify($pass, $user[0]['PASSWORD']))
+            if(password_verify($pass, $user[0]->password))
             {
                 return true;
             }
@@ -59,9 +60,9 @@ class UserServices
             $user = User::executeQuery("SELECT * 
                     FROM user 
                     WHERE LOGIN = '{$_SESSION['login']}'");
-            if($user[0]['PASSWORD'] === $_SESSION['pass'])
+            if($user[0]->password === $_SESSION['pass'])
             {
-                if($user[0]['ROLE'] === $adminRole)
+                if($user[0]->role === $adminRole)
                 {
                     return true;
                 }

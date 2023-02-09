@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Cache;
 
 class FileCache
@@ -19,14 +18,16 @@ class FileCache
     public function get(string $key): mixed
     {
         $hash = sha1($key);
-        $path = ROOT . '/var/cache/' . $hash / '.php';
+        $path = ROOT . '/var/cache/' . $hash . '.php';
+
 
         if(!file_exists($path))
         {
             return null;
         }
 
-        $data = unserialize(file_get_contents($path),['allowed_classes' => false]);
+        $data = unserialize(file_get_contents($path));
+
         $ttl = $data['ttl'];
         if (time() > $ttl)
         {
@@ -43,7 +44,7 @@ class FileCache
         if($data === null)
         {
             $value = $fetcher();
-            $this->get($key,$value,$ttl);
+            $this->set($key,$value,$ttl);
             return $value;
         }
         else
@@ -56,17 +57,11 @@ class FileCache
     {
         $hash = sha1($key);
         $path = ROOT . '/var/cache/';
-
-        unlink($path . $hash / '.php');
+        unlink($path . $hash . '.php');
     }
 
     public function deleteAll()
     {
-        $path = ROOT . '/var/cache/';
-        $files = scandir($path);
-        foreach ($files as $file)
-        {
-            unlink($path . $file);
-        }
+
     }
 }
