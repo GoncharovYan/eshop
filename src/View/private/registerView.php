@@ -1,7 +1,7 @@
 <div class="auth-form">
     <div class="auth-form-content">
         <p class="title-form">Регистрация</p>
-        <form class="login-form" action="register/" method="post">
+        <form class="login-form" action="/register/" method="post">
             <label>E-mail</label>
             <input class="auth-input" name="email" type="text">
             <label>Логин</label>
