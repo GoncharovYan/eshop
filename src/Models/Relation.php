@@ -1,6 +1,7 @@
 <?php
 
-namespace Dto;
+namespace Models;
+use Services\DatabaseServices;
 
 abstract class Relation {
 	protected static $db = null;
@@ -9,10 +10,12 @@ abstract class Relation {
 		self::setConnect();
 	}
 
+	protected $pivot;
+
 	private static function setConnect() {
 		if(self::$db === null) {
 			try {
-				self::$db = new \PDO('mysql:host=localhost;dbname=eshop', 'root', '');
+				self::$db = DatabaseServices::getPdoConnection();
 			} catch(\Exception $e) {
 				throw new \Exception('Error creating a database connection ');
 			}
@@ -173,20 +176,37 @@ abstract class Relation {
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);
 
+		foreach($class1->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+			$class1Id = $property->getName();
+			break;
+		}foreach($class2->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+			$class2Id = $property->getName();
+			break;
+		}
+
+
 		$tableName        = strtolower($class1->getShortName());
 		$RelatedtableName = strtolower($class2->getShortName());
+		$MiddleTable = $tableName . "_" . $RelatedtableName;
 
-		$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $tableName . "_" . $RelatedtableName . " ON " .
-			$tableName . ".ID=" . strtoupper($tableName) . "_ID" . " INNER JOIN " .
-			$RelatedtableName . " ON " . strtoupper($RelatedtableName) . "_ID=" . $RelatedtableName . ".ID";
 
-		self::setConnect();
-		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
-		foreach($raw as $key => $rawRow) {
-			$result[$key] = $rawRow;
-		}
-		echo '<pre>';
-		echo '</pre>';
-		return $result;
+		$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$tableName . ".". $class1Id . "=" . $MiddleTable . "." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
+			$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
+			$RelatedtableName . "." .$class2Id;
+
+		$pivot = new Pivot($query);
+		return $pivot;
+//		self::setConnect();
+//		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
+//		foreach($raw as $key => $rawRow) {
+//			$result[$key] = $rawRow;
+//		}
+//		echo '<pre>';
+//		var_dump($result);die;
+//		echo '</pre>';
+//		return $result;
 	}
+
+
 }

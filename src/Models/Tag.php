@@ -2,12 +2,10 @@
 
 namespace Models;
 
-use Dto\Relation;
-
 class Tag extends Relation {
 
-	public $id;
+	public $tag_id;
 
-	public $name;
+	public $tag_name;
 
 }

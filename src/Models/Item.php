@@ -2,16 +2,11 @@
 
 namespace Models;
 
-use Dto\Relation;
-
-use Model\Tag;
-
-
 class Item extends Relation {
 
-	public $id;
+	public $item_id;
 
-	public $name;
+	public $item_name;
 
 	public $short_desc;
 

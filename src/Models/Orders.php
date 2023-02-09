@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Dto\Relation;
-
 class Orders extends Relation {
 	public $id;
 

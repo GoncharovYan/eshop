@@ -30,4 +30,20 @@ class DatabaseServices
         }
         return $connection;
     }
+
+	public static function getPdoConnection(){
+		static $db = null;
+		if($db === null) {
+			$dbHost = ConfigurationServices::option('DB_HOST');
+			$dbUser = ConfigurationServices::option('DB_USER');
+			$dbPass = ConfigurationServices::option('DB_PASSWORD');
+			$dbName = ConfigurationServices::option('DB_NAME');
+			try {
+				$db = new \PDO('mysql:host='.$dbHost.';dbname='.$dbName, $dbUser, $dbPass);
+			} catch(\Exception $e) {
+				throw new \Exception('Error creating a database connection ');
+			}
+		}
+		return $db;
+	}
 }
