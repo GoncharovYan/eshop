@@ -17,8 +17,6 @@ class DetailsController extends BaseController
 		$tags = $tag->items()->find([
 			'conditions' => "ITEM_ID = $id"
 		]);
-//		var_dump($tags);
-//		die();
 
         $imagePath = Image::executeQuery(
             "SELECT PATH, item.ID FROM image
