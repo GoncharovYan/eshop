@@ -2,11 +2,6 @@
 
 namespace Models;
 
-use Dto\Relation;
-
-use Model\Tag;
-
-
 class Item extends Relation {
 
 	public $id;
@@ -29,12 +24,12 @@ class Item extends Relation {
 
 	public $date_updated;
 
-	public function __construct() {
-		parent::__construct();
+	public function tags(){
+		return $this->hasMany(Tag::class);
 	}
 
-	public function tag(){
-		return $this->hasToMany(Tag::class);
+	public function images(){
+		return $this->hasMany(Image::class);
 	}
 
 

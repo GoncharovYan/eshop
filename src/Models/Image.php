@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Dto\Relation;
-
 class Image extends Relation {
 	public $id;
 
@@ -15,7 +13,7 @@ class Image extends Relation {
 
 	public $is_main;
 
-	public function __construct() {
-		parent::__construct();
+	public function items(){
+		return $this->belongsToMany(Item::class);
 	}
 }

@@ -14,7 +14,7 @@
 			<hr>
 			<div class="tags">
                 <? foreach ($tags as $tag): ?>
-				    <a>#<?= $tag->tag_name ?></a>
+				    <a>#<?= $tag["tag_name"] ?></a>
                 <? endforeach; ?>
 			</div>
 			<div class="wrapper">
