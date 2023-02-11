@@ -14,7 +14,6 @@ use Models\User;
 		<label style="margin-left: 50px;">Пароль</label>
 		<input type="password" name="password" value="<?= $user->password ?>">
 		<label style="margin-left: 50px;">Админ</label>
-
 		<input type="checkbox" name="role" <?= !($user->role) ? 'checked' : '' ?>>
 		<input type="submit" value="Подтвердить">
 	</form>

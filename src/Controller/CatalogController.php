@@ -6,6 +6,7 @@ use Models\Image;
 use Cache\FileCache;
 use Models\Item;
 use Models\Tag;
+use Models\User;
 use Services\ConfigurationServices;
 use Services\PageServices;
 
@@ -13,7 +14,6 @@ class CatalogController extends BaseController
 {
     public function catalogPage(string $tag, int $curPage = null)
     {
-
         $cache = new FileCache();
         if($curPage === null)
         {
@@ -58,41 +58,52 @@ class CatalogController extends BaseController
             }
 		}
 
-        $paginator = PageServices::generatePagination($curPage,$maxPage);
+		if(!$productList)
+		{
+            echo $this->render('layoutView.php', [
+                'content' => "Товары не найдены",
+                ]);
 
-        $tagList = $cache->remember('tagList', 3600, function(){
-            $provider = new Tag();
-            return $provider->find(['limit' => '10']);
-        });
-
-        $itemIdArray = [];
-        foreach ($productList as $product)
-        {
-            $itemIdArray[] = $product->id;
         }
+		else
+        {
+            $paginator = PageServices::generatePagination($curPage,$maxPage);
 
-        $imageList = Image::executeQuery(
-            "SELECT PATH, item.ID FROM image
+            $tagList = $cache->remember('tagList', 30, function(){
+                $provider = new Tag();
+                return $provider->find(['limit' => '10']);
+            });
+
+            $itemIdArray = [];
+            foreach ($productList as $product)
+            {
+                $itemIdArray[] = $product->id;
+            }
+
+            $imageList = Image::executeQuery(
+                "SELECT PATH, item.ID FROM image
 			INNER JOIN item_image ON image.ID = item_image.IMAGE_ID
 			INNER JOIN item ON item_image.ITEM_ID = item.ID
-            WHERE item.ID IN (" . implode(',', $itemIdArray) . ")"
-        );
-        $imagePathList = [];
+            WHERE item.ID IN (" . implode(',', $itemIdArray) . ") AND image.IS_MAIN = 1"
+            );
+            $imagePathList = [];
 
-        foreach ($imageList as $image) {
-            $imagePathList[$image->id] = $image->path;
+            foreach ($imageList as $image) {
+                $imagePathList[$image->id] = $image->path;
+            }
+
+
+
+            echo $this->render('layoutView.php', [
+                'content' => $this->render('public/catalogView.php', [
+                    'productList' => $productList,
+                    'paginator' => $paginator,
+                    'tagList' => $tagList,
+                    'imagePathList' => $imagePathList,
+                ]),
+            ]);
         }
 
-
-
-		echo $this->render('layoutView.php', [
-			'content' => $this->render('public/catalogView.php', [
-				'productList' => $productList,
-				'paginator' => $paginator,
-				'tagList' => $tagList,
-				'imagePathList' => $imagePathList,
-			]),
-		]);
 	}
 }
 

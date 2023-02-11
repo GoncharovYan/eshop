@@ -70,7 +70,10 @@ class AuthController extends BaseController
                 header("Location: /auth/");
             }
         }
-        header("Location: /register/");
+        else{
+            header("Location: /register/");
+        }
+
     }
 
     public function logOutUser()

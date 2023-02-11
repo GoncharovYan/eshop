@@ -29,8 +29,13 @@
                 <a href="/order/" class="order-button button">
                     <img src="/resources/images/icon-cart.png"alt="">
                 </a>
-                <?
-                if(\Services\UserServices::checkAuth())
+                <? if(\Services\UserServices::isAdmin())
+                {?>
+                    <a href="/admin/product-list/1/" class="admin-button button">
+                        <img src="/resources/images/icon-admin.png"alt="">
+                    </a>
+                <?}?>
+                <? if(\Services\UserServices::checkAuth())
                 {?>
                     <div class=header-user>
                         <p><?=\Services\UserServices::getLogin()?></p>
