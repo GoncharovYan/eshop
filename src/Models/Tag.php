@@ -4,8 +4,12 @@ namespace Models;
 
 class Tag extends Relation {
 
-	public $tag_id;
+	public $id;
 
 	public $tag_name;
+
+	public function items(){
+		return $this->belongsToMany(Item::class);
+	}
 
 }

@@ -10,8 +10,6 @@ abstract class Relation {
 		self::setConnect();
 	}
 
-	protected $pivot;
-
 	private static function setConnect() {
 		if(self::$db === null) {
 			try {
@@ -23,14 +21,11 @@ abstract class Relation {
 	}
 
 	public function save() {
-
 		$class = new \ReflectionClass($this);
-
 
 		$tableName = strtolower($class->getShortName());
 
 		$propsToImplode = [];
-
 		if($this->id) {
 			foreach($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 				$propertyName        = $property->getName();
@@ -40,8 +35,7 @@ abstract class Relation {
 			$setClause = implode(',',$propsToImplode);
 
 			$sqlQuery = 'UPDATE `' . $tableName . '` SET ' . $setClause . ' WHERE id = ' . $this->id;
-		}
-		else {
+		} else {
 			foreach($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 				$propertyName = $property->getName();
 				$propertyToImplode[] = $propertyName;
@@ -59,15 +53,25 @@ abstract class Relation {
 
 		$result = self::$db->exec($sqlQuery);
 
-		if (self::$db->errorCode()) {
-			throw new \Exception(self::$db->errorInfo()[2]);
-		}
-
 		return $result;
 	}
 
-	public static function morph(array $object) {
+	public function delete(){
+		$class = new \ReflectionClass($this);
 
+		$tableName = strtolower($class->getShortName());
+
+		if($this->id){
+			$sqlQuery = 'DELETE FROM `' . $tableName . '`'. 'WHERE id=' . $this->id;
+		}
+		else {
+			throw new \Exception('Не указан id для удаления');
+		}
+
+		self::$db->exec($sqlQuery);
+	}
+
+	public static function morph(array $object) {
 		$class = new \ReflectionClass(get_called_class());
 
 		$entity = $class->newInstance();
@@ -89,12 +93,10 @@ abstract class Relation {
 
 		$tableName = strtolower($class->getShortName());
 
-		$query         = "";
 		$whereClause   = "";
 		$orderClause   = "";
 		$groupByClause = "";
 		$limit         = "";
-		$optionsSql    = "";
 
 		if(is_array($options)) {
 			foreach($options as $key => $value) {
@@ -166,48 +168,53 @@ abstract class Relation {
 		self::setConnect();
 		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
 		foreach($raw as $key => $rawRow) {
-			// $result[$key] = $rawRow;
 			$result[] = self::morph($rawRow);
 		}
 		return $result;
 	}
 
-	public function hasToMany($classRelated) {
-
+	public function hasMany($classRelated) {
+		return $this->relateManyToMany($classRelated);
+	}
+	public function belongsToMany($classRelated){
+		return $this->relateManyToMany($classRelated);
+	}
+	private function relateManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);
 
 		foreach($class1->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 			$class1Id = $property->getName();
 			break;
-		}foreach($class2->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+		}
+		foreach($class2->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 			$class2Id = $property->getName();
 			break;
 		}
 
-
 		$tableName        = strtolower($class1->getShortName());
 		$RelatedtableName = strtolower($class2->getShortName());
-		$MiddleTable = $tableName . "_" . $RelatedtableName;
 
+		try {
+			$MiddleTable = $tableName . "_" . $RelatedtableName;
 
-		$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
-			$tableName . ".". $class1Id . "=" . $MiddleTable . "." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
-			$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
-			$RelatedtableName . "." .$class2Id;
+			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+				$tableName . ".". $class1Id . "=" . $MiddleTable .
+				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
+				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
+				$RelatedtableName . "." .$class2Id;
 
-		$pivot = new Pivot($query);
-		return $pivot;
-//		self::setConnect();
-//		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
-//		foreach($raw as $key => $rawRow) {
-//			$result[$key] = $rawRow;
-//		}
-//		echo '<pre>';
-//		var_dump($result);die;
-//		echo '</pre>';
-//		return $result;
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		} catch (\PDOException $e) {
+			$MiddleTable = $RelatedtableName . "_" . $tableName;
+
+			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+				$tableName . ".". $class1Id . "=" . $MiddleTable .
+				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
+				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
+				$RelatedtableName . "." .$class2Id;
+		}
+
+		return new Pivot($query);
 	}
-
-
 }

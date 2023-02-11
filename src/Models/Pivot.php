@@ -9,6 +9,7 @@ class Pivot {
 
 	private static $db;
 	public function __construct(string $sqlInnerJoinQuery) {
+		self::setConnect();
 		$this->sqlQuery = $sqlInnerJoinQuery;
 	}
 
@@ -23,7 +24,8 @@ class Pivot {
 	}
 
 	public function findAll(): array {
-		$raw = self::$db->query($this->sqlQuery);
+		self::setConnect();
+		$raw = self::$db->query($this->sqlQuery)->fetchAll(\PDO::FETCH_ASSOC);
 		foreach($raw as $rawRow) {
 			$result[] = $rawRow;
 		}
@@ -37,7 +39,6 @@ class Pivot {
 		$orderClause   = "";
 		$groupByClause = "";
 		$limit         = "";
-		$optionsSql    = "";
 
 		if(is_array($options)) {
 			foreach($options as $key => $value) {
@@ -58,21 +59,13 @@ class Pivot {
 		}
 
 		$query = $this->sqlQuery . $optionsSql;
-		var_dump($query);
-
-		self::setConnect();
 
 		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
-		foreach($raw as $rawRow) {
-
+		foreach($raw as $key => $rawRow) {
+			$rawRow = array_change_key_case($rawRow);
 			$result[] = $rawRow;
 		}
 
 		return $result;
 	}
-
-//	public function findById(){
-//
-//	}
-
 }

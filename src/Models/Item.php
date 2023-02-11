@@ -4,7 +4,7 @@ namespace Models;
 
 class Item extends Relation {
 
-	public $item_id;
+	public $id;
 
 	public $item_name;
 
@@ -24,12 +24,12 @@ class Item extends Relation {
 
 	public $date_updated;
 
-	public function __construct() {
-		parent::__construct();
+	public function tags(){
+		return $this->hasMany(Tag::class);
 	}
 
-	public function tag(){
-		return $this->hasToMany(Tag::class);
+	public function images(){
+		return $this->hasMany(Image::class);
 	}
 
 
