@@ -1,6 +1,7 @@
 <?php
-namespace Controller;
+namespace Controller\public;
 
+use Controller\BaseController;
 use Models\Item;
 
 class CheckoutController extends BaseController

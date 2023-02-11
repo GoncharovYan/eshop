@@ -1,7 +1,8 @@
 <?php
 
-namespace Controller;
+namespace Controller\public;
 
+use Controller\BaseController;
 use Models\Image;
 use Cache\FileCache;
 use Models\Item;

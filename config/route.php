@@ -1,11 +1,11 @@
 <?php
 
-\Core\Routing\Router::get('/catalog/:tag/:id/', [new \Controller\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:id/', [new \Controller\public\CatalogController(), 'catalogPage']);
 
-\Core\Routing\Router::get('/product/:id/', [new \Controller\DetailsController(), 'detailsPage']);
+\Core\Routing\Router::get('/product/:id/', [new \Controller\public\DetailsController(), 'detailsPage']);
 
-\Core\Routing\Router::get('/order/', [new \Controller\OrderController(), 'orderPage']);
-\Core\Routing\Router::get('/product/order/:id/', [new \Controller\OrderController(), 'addToCart']);
+\Core\Routing\Router::get('/order/', [new \Controller\public\OrderController(), 'orderPage']);
+\Core\Routing\Router::get('/product/order/:id/', [new \Controller\public\OrderController(), 'addToCart']);
 
 \Core\Routing\Router::get('/auth/', [new \Controller\private\AuthController(), 'authPage']);
 \Core\Routing\Router::post('/auth/',[new \Controller\private\AuthController(), 'authUser']);
@@ -15,7 +15,7 @@
 
 \Core\Routing\Router::get('/logout/',[new \Controller\private\AuthController(), 'logOutUser']);
 
-\Core\Routing\Router::get('/checkout/', [new \Controller\CheckoutController(), 'checkoutPage']);
+\Core\Routing\Router::get('/checkout/', [new \Controller\public\CheckoutController(), 'checkoutPage']);
 
 
 \Core\Routing\Router::get('/admin/product-list/:id/', [new \Controller\admin\AdminListController(), 'adminItemListPage']);

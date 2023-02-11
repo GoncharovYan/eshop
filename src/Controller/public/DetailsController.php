@@ -1,7 +1,8 @@
 <?php
 
-namespace Controller;
+namespace Controller\public;
 
+use Controller\BaseController;
 use Models\Image;
 use Models\Item;
 use Models\Tag;
