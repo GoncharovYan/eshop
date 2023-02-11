@@ -1,18 +1,25 @@
-	<div class="details">
+<?php
+/**
+ * @var \Models\Item $product
+ * @var array $tags
+ */
+?>
+
+
+<div class="details">
 		<div><img src="" width="690px" height="570px"></div>
 		<div class="profile">
-			<h2>Аккумуляторная дрель-шуруповерт</h2>
-			<p class="long-description">Аккумуляторная дрель-шуруповерт NUMBER ONE CD18/2.0-1 служит для закручивания/откручивания крепёжных изделий, а также сверления отверстий в деревянных и металлических поверхностях и отличается высокой надежностью и эффективностью в работе.</p>
+			<h2><?= $product->item_name ?></h2>
+			<p class="long-description"><?= $product->full_desc ?></p>
 			<hr>
-			<div class="tags-wrapper">
-				<a>#Электроника</a>
-				<a>#Ноутбук</a>
-				<a>#Белый</a>
-				<a>#Что-то еще</a>
+			<div class="tags">
+                <? foreach ($tags as $tag): ?>
+				    <a>#<?= $tag->tag_name ?></a>
+                <? endforeach; ?>
 			</div>
 			<div class="wrapper">
-			<p>3178.00 руб</p>
-			<button>Оформить</button>
+			<p><?= $product->price ?> руб</p>
+			<a href="/product/order/<?= $product->id ?>/" class="button">Оформить</a>
 			</div>
 		</div>
 	</div>
