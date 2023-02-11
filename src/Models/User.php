@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Dto\Relation;
-
 class User extends Relation {
 	public $id;
 
