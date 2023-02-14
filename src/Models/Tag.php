@@ -8,6 +8,8 @@ class Tag extends Relation {
 
 	public $tag_name;
 
+	public $alias;
+
 	public function items(){
 		return $this->belongsToMany(Item::class);
 	}

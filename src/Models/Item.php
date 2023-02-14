@@ -32,5 +32,18 @@ class Item extends Relation {
 		return $this->hasMany(Image::class);
 	}
 
+	public function deleteRelation($objRelate){
+		return $this->deleteManyToMany($objRelate);
+	}
 
+	public function addRelation($objRelate){
+		return $this->addManyToMany($objRelate);
+	}
+
+	public static function createNewItem(){
+		$query =
+			"INSERT INTO item (ITEM_NAME)
+				VALUE ('Новый товар')";
+		self::executeQuery($query);
+	}
 }

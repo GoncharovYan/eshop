@@ -12,115 +12,66 @@ class AdminItemController extends BaseController
 	public function adminItemPage(int|string $id)
 	{
 		if ($id === 'new') {
-			$query =
-				"INSERT INTO item (ITEM_NAME)
-				VALUE ('Новый товар')";
-			Item::executeQuery($query);
-			header("Location: /admin/product-list/1/");
+			Item::createNewItem();
+			header("Location: /admin/item/");
 		}
 
 		$item = Item::findById($id);
-		$itemImageList = Image::executeQuery(
-			"SELECT image.ID, PATH, IS_MAIN FROM item
-				INNER JOIN item_image on item.ID = ITEM_ID
-				INNER JOIN image on IMAGE_ID = image.ID
-				WHERE item.ID = $id"
-		);
-		$itemTagList = Tag::executeQuery(
-			"SELECT tag.ID, TAG_NAME FROM item
-				INNER JOIN item_tag ON item.ID = ITEM_ID
-				INNER JOIN tag on item_tag.TAG_ID = tag.ID
-				WHERE item.ID = $id"
-		);
+
+		$image = new Image();
+		$images = $image->items()->find([
+			'conditions' => "ITEM_ID = $id"
+		]);
+
+		$tag = new Tag();
+		$tags = $tag->items()->find([
+			'conditions' => "ITEM_ID = $id"
+		]);
 
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminItemView.php', [
-				'product' => $item,
-				'productImageList' => $itemImageList,
-				'productTagList' => $itemTagList,
+				'item' => $item,
+				'images' => $images,
+				'tags' => $tags,
 			]),
 		]);
 	}
 
-	public function adminItemEdit($id, $data)
+	public function adminItemEdit($className ,$id, $action, $data)
 	{
-		$item_name = $data['item_name'];
-		$short_desc = $data['short_desc'];
-		$full_desc = $data['full_desc'];
-		$count = $data['count'];
-		$price = $data['price'];
-		$is_active = ($data['is_active'] === 'on') ? 1 : 0;
+		$class = "\Models\\" . ucfirst($className);
+		$class = new $class();
 
-		$query =
-			"UPDATE item
-			SET ITEM_NAME = '$item_name',
-				SHORT_DESC = '$short_desc',
-				FULL_DESC = '$full_desc',
-				COUNT = '$count',
-				PRICE = '$price',
-				IS_ACTIVE = $is_active
-			WHERE ID = $id";
-		Item::executeQuery($query);
+		if($action === 'delete-tag')
+		{
+			$tag = Tag::findById($data['tag_id']);
+			$obj = $class::findById($id);
+			$obj->deleteRelation($tag);
+		}
 
-		header("Location: /admin/product/$id/");
-	}
+		if($action === 'add-tag')
+		{
+			$tag = Tag::findById($data['tag_id']);
+			$obj = $class::findById($id);
+			$obj->addRelation($tag);
+		}
 
-	public function adminItemDeleteTag($id, $data)
-	{
-		$tag_id = $data['tag_id'];
-		$query =
-			"DELETE FROM item_tag
-			WHERE ITEM_ID = $id AND TAG_ID = $tag_id";
-		Item::executeQuery($query);
-		header("Location: /admin/product/$id/");
-	}
+		if($action === 'delete')
+		{
+			$obj = $class::findById($id);
+			$obj->delete();
+		}
 
-	public function adminItemAddTag($id, $data)
-	{
-		$tag_id = $data['tag_id'];
-		$query =
-			"INSERT IGNORE INTO item_tag (ITEM_ID, TAG_ID) 
-			VALUE ($id, $tag_id)";
-		Item::executeQuery($query);
-		header("Location: /admin/product/$id/");
-	}
+		if($action === 'edit')
+		{
+			$obj = $class::findById($id);
+			foreach ($data as $key => $value)
+			{
+				$obj->$key = $value;
+			}
+			$obj->save();
+		}
 
-	public function adminItemDeleteImage($id, $data)
-	{
-		$image_id = $data['image_id'];
-		$query =
-			"DELETE FROM item_image
-			WHERE ITEM_ID = $id AND IMAGE_ID = $image_id";
-		Item::executeQuery($query);
-		header("Location: /admin/product/$id/");
-	}
-
-	public function adminItemAddImage($id, $data)
-	{
-		$image_id = $data['image_id'];
-		$query =
-			"INSERT IGNORE INTO item_image (ITEM_ID, IMAGE_ID) 
-			VALUE ($id, $image_id)";
-		Item::executeQuery($query);
-		header("Location: /admin/product/$id/");
-	}
-
-	public function adminItemDelete($id)
-	{
-		$query =
-			"DELETE FROM item_tag
-			WHERE ITEM_ID = $id";
-		Item::executeQuery($query);
-
-		$query =
-			"DELETE FROM item_image
-			WHERE ITEM_ID = $id";
-		Item::executeQuery($query);
-
-		$query =
-			"DELETE FROM item
-			WHERE ID = $id";
-		Item::executeQuery($query);
-		header("Location: /admin/product-list/1/");
+		header("Location: /admin/$className/$id/");
 	}
 }

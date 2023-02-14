@@ -198,7 +198,7 @@ abstract class Relation {
 		try {
 			$MiddleTable = $tableName . "_" . $RelatedtableName;
 
-			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
@@ -208,11 +208,55 @@ abstract class Relation {
 		} catch (\PDOException $e) {
 			$MiddleTable = $RelatedtableName . "_" . $tableName;
 
-			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
 				$RelatedtableName . "." .$class2Id;
+		}
+
+		return new Pivot($query);
+	}
+
+	public function deleteManyToMany($classRelated){
+		$class1 = new \ReflectionClass(static::class);
+		$class2 = new \ReflectionClass($classRelated);
+
+		$tableName        = strtolower($class1->getShortName());
+		$RelatedtableName = strtolower($class2->getShortName());
+
+		try {
+			$query = "DELETE FROM " . $tableName . "_" . $RelatedtableName . " WHERE " .
+				strtoupper($tableName) . "_ID" . "=" . $this->id . " AND " .
+				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
+
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		} catch (\PDOException $e) {
+			$query = "DELETE FROM " . $RelatedtableName . "_" . $tableName . " WHERE " .
+				strtoupper($tableName) . "_ID" . "=" . $this->id . " AND " .
+				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
+		}
+
+		return new Pivot($query);
+	}
+
+	public function addManyToMany($classRelated){
+		$class1 = new \ReflectionClass(static::class);
+		$class2 = new \ReflectionClass($classRelated);
+
+		$tableName        = strtolower($class1->getShortName());
+		$RelatedtableName = strtolower($class2->getShortName());
+
+		try {
+			$query = "INSERT INTO " . $tableName . "_" . $RelatedtableName .
+				" (" . strtoupper($tableName) . "_ID, " . strtoupper($RelatedtableName) . "_ID) " .
+				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
+
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		} catch (\PDOException $e) {
+			$query = "INSERT INTO " . $RelatedtableName . "_" . $tableName .
+				" (" . strtoupper($tableName) . "_ID, " . strtoupper($RelatedtableName) . "_ID) " .
+				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
 		}
 
 		return new Pivot($query);
