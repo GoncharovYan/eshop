@@ -18,9 +18,10 @@
 			<a href="/catalog/all/1/">
                 <img src="/resources/public/images/logo.png" class="logo" alt="logo">
             </a>
-			<form class="search" method="GET">
-                <input type="search" placeholder="Поиск по сайту" name="search">
-				<button type="submit">
+			<form action="/catalog/all/1/" class="search" method="GET" >
+                <input type="search" placeholder="Поиск по сайту" name="search" id="search-text">
+
+				<button type="button" onclick="searchItem()">
                     <img src="/resources/public/images/icon-search.png" class="search__icon" alt="search">
                 </button>
 			</form>
@@ -48,13 +49,13 @@
                     </a>
                 <?}?>
             </div>
-
 		</div>
 	</header>
 	<hr>
 	<main>
         <?= $content ?>
 	</main>
+    <script src="/resources/public/js/catalog-search.js"></script>
 	<hr>
 
 	<footer>

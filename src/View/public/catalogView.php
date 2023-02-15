@@ -16,7 +16,7 @@
             </ul>
     </div>
 
-    <div class="products">
+    <div class="products" id ="catalog-list">
 		<? foreach ($productList as $product){?>
 			<div class="item">
 				<img src="<?= $imagePathList[$product->id] ?>" alt="">
@@ -25,6 +25,16 @@
 				<p class="price"><?= $product->price . " ₽"?></p>
 			</div>
 		<?}?>
+        <? $catalogList = [];
+        foreach ($productList as $product){
+            $catalogList[] = [
+                'id' => $product->id,
+                'title' => $product->item_name,
+                'description' => $product->short_desc,
+                'price' => $product->price,
+                'imagePath' => $imagePathList[$product->id],
+            ];
+        }?>
 	</div>
     <div class="paginator">
         <?foreach ($paginator as $page){
@@ -35,4 +45,11 @@
             <?}
         }?>
     </div>
+    <script type="module">
+        import {CatalogList} from '/resources/public/js/catalog-list.js';
+        const  mainCatalogList = new CatalogList({
+            attachToNodeId: 'catalog-list',
+            items: <?= \Core\Web\Json::encode($catalogList)?>
+        });
+    </script>
 </div>

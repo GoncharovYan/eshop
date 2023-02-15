@@ -1,6 +1,9 @@
 <?php
 
-\Core\Routing\Router::get('/catalog/:tag/:id/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:page/', [new \Controller\public\CatalogController(), 'catalogPage']);
 
 \Core\Routing\Router::get('/product/:id/', [new \Controller\public\DetailsController(), 'detailsPage']);
 
