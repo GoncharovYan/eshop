@@ -11,7 +11,8 @@ use Models\Image;
 </div>
 
 <div>
-	<form action="edit/" method="post" style='display: flex; flex-direction: column;'>
+	<form method="post" style='display: flex; flex-direction: column;'>
+		<input type="hidden" name="action" value="edit">
 		<label style="margin-left: 50px;">Путь</label>
 		<textarea name="path"><?= $image->path ?></textarea>
 		<label style="margin-left: 50px;">Высота</label>
@@ -23,7 +24,8 @@ use Models\Image;
 </div>
 
 <div>
-	<form method="post" action="delete/">
+	<form method="post">
+		<input type="hidden" name="action" value="delete">
 		<input type="submit" value="Удалить изображение">
 	</form>
 </div>

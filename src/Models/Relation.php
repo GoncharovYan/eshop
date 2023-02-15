@@ -198,7 +198,7 @@ abstract class Relation {
 		try {
 			$MiddleTable = $tableName . "_" . $RelatedtableName;
 
-			$query = "SELECT $tableName.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.*, $MiddleTable.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
@@ -208,7 +208,7 @@ abstract class Relation {
 		} catch (\PDOException $e) {
 			$MiddleTable = $RelatedtableName . "_" . $tableName;
 
-			$query = "SELECT $tableName.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.*, $MiddleTable.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
@@ -237,7 +237,7 @@ abstract class Relation {
 				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
 		}
 
-		return new Pivot($query);
+		self::$db->exec($query);
 	}
 
 	public function addManyToMany($classRelated){
@@ -259,6 +259,6 @@ abstract class Relation {
 				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
 		}
 
-		return new Pivot($query);
+		self::$db->exec($query);
 	}
 }

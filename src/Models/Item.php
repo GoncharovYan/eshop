@@ -32,12 +32,8 @@ class Item extends Relation {
 		return $this->hasMany(Image::class);
 	}
 
-	public function deleteRelation($objRelate){
-		return $this->deleteManyToMany($objRelate);
-	}
-
-	public function addRelation($objRelate){
-		return $this->addManyToMany($objRelate);
+	public function orders(){
+		return $this->hasMany(Orders::class);
 	}
 
 	public static function createNewItem(){
