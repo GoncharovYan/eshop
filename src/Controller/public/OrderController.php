@@ -1,7 +1,8 @@
 <?php
 
-namespace Controller;
+namespace Controller\public;
 
+use Controller\BaseController;
 use Models\Item;
 
 class OrderController extends BaseController
@@ -32,7 +33,7 @@ class OrderController extends BaseController
         else
         {
             echo $this->render('layoutView.php', [
-                'content' => "<p>пусто сори</p>",
+                'content' => "<p>Товар не найден</p>",
             ]);
         }
     }

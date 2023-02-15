@@ -3,7 +3,7 @@
         <p class="title-form">Регистрация</p>
         <form class="login-form" action="/register/" method="post">
             <label>E-mail</label>
-            <input class="auth-input" name="email" type="text">
+            <input class="auth-input" name="email" type="email">
             <label>Логин</label>
             <input class="auth-input" name="login" type="text">
             <label>Пароль</label>

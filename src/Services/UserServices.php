@@ -53,7 +53,7 @@ class UserServices
     public static function isAdmin(): bool
     {
         session_start();
-        $adminRole = '1';
+        $adminRole = '0';
         if(isset($_SESSION['login'])&&isset($_SESSION['pass']))
         {
             if(UserServices::checkPass($_SESSION['login'],$_SESSION['pass']))
@@ -83,5 +83,7 @@ class UserServices
             return null;
         }
     }
+
+
 }
 

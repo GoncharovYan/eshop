@@ -9,28 +9,33 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="/resources/css/style.css">
+	<link rel="stylesheet" href="/resources/public/css/style.css">
 	<title>Team&3-Eshop</title>
 </head>
 <body>
 	<header>
 		<div class="container">
 			<a href="/catalog/all/1/">
-                <img src="/resources/images/logo.png" class="logo" alt="logo">
+                <img src="/resources/public/images/logo.png" class="logo" alt="logo">
             </a>
 			<form class="search" method="GET">
                 <input type="search" placeholder="Поиск по сайту" name="search">
 				<button type="submit">
-                    <img src="/resources/images/icon-search.png" class="search__icon" alt="search">
+                    <img src="/resources/public/images/icon-search.png" class="search__icon" alt="search">
                 </button>
 			</form>
 
             <div class="links">
                 <a href="/order/" class="order-button button">
-                    <img src="/resources/images/icon-cart.png"alt="">
+                    <img src="/resources/public/images/icon-cart.png"alt="">
                 </a>
-                <?
-                if(\Services\UserServices::checkAuth())
+                <? if(\Services\UserServices::isAdmin())
+                {?>
+                    <a href="/admin/product-list/1/" class="admin-button button">
+                        <img src="/resources/public/images/icon-admin.png"alt="">
+                    </a>
+                <?}?>
+                <? if(\Services\UserServices::checkAuth())
                 {?>
                     <div class=header-user>
                         <p><?=\Services\UserServices::getLogin()?></p>
@@ -39,7 +44,7 @@
                 <?}
                 else{?>
                     <a href="/auth/" class="auth-button button">
-                        <img src="/resources/images/icon-user.png" alt="">
+                        <img src="/resources/public/images/icon-user.png" alt="">
                     </a>
                 <?}?>
             </div>

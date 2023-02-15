@@ -13,5 +13,5 @@
     </dib>
     <? endforeach;?>
 
-    <button>Да я покупаю всё</button>
+    <a href="/checkout/">Да я покупаю всё</a>
 </div>
