@@ -23,11 +23,11 @@
 
 			<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 				<li><a href="/catalog/all/1/" class="nav-link px-2 text-white">На главную</a></li>
-				<li><a href="/admin/user-list/1/" class="nav-link px-2 text-white">Пользователи</a></li>
-				<li><a href="/admin/product-list/1/" class="nav-link px-2 text-white">Товары</a></li>
-				<li><a href="/admin/tag-list/1/" class="nav-link px-2 text-white">Теги</a></li>
-				<li><a href="/admin/order-list/1/" class="nav-link px-2 text-white">Заказы</a></li>
-				<li><a href="/admin/image-list/1/" class="nav-link px-2 text-white">Картинки</a></li>
+				<li><a href="/admin/user/" class="nav-link px-2 text-white">Пользователи</a></li>
+				<li><a href="/admin/item/" class="nav-link px-2 text-white">Товары</a></li>
+				<li><a href="/admin/tag/" class="nav-link px-2 text-white">Теги</a></li>
+				<li><a href="/admin/orders/" class="nav-link px-2 text-white">Заказы</a></li>
+				<li><a href="/admin/image/" class="nav-link px-2 text-white">Картинки</a></li>
 			</ul>
 
 			<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">

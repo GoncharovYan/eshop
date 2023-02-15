@@ -71,7 +71,7 @@ abstract class Relation {
 		self::$db->exec($sqlQuery);
 	}
 
-	public static function morph(array $object) {
+	public static function morph(array|bool $object) {
 		$class = new \ReflectionClass(get_called_class());
 
 		$entity = $class->newInstance();
@@ -179,6 +179,7 @@ abstract class Relation {
 	public function belongsToMany($classRelated){
 		return $this->relateManyToMany($classRelated);
 	}
+
 	private function relateManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);
@@ -198,7 +199,7 @@ abstract class Relation {
 		try {
 			$MiddleTable = $tableName . "_" . $RelatedtableName;
 
-			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.*, $MiddleTable.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
@@ -208,7 +209,7 @@ abstract class Relation {
 		} catch (\PDOException $e) {
 			$MiddleTable = $RelatedtableName . "_" . $tableName;
 
-			$query = "SELECT * FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
+			$query = "SELECT $tableName.*, $MiddleTable.* FROM " . $tableName . " INNER JOIN " . $MiddleTable . " ON " .
 				$tableName . ".". $class1Id . "=" . $MiddleTable .
 				"." . strtoupper($tableName) . "_ID" . " INNER JOIN " .
 				$RelatedtableName . " ON " . $MiddleTable . "." . strtoupper($RelatedtableName) . "_ID=" .
@@ -216,5 +217,55 @@ abstract class Relation {
 		}
 
 		return new Pivot($query);
+	}
+
+	public function deleteRelation($classRelated) {
+		$this->deleteManyToMany($classRelated);
+	}
+
+	private function deleteManyToMany($classRelated){
+		$class1 = new \ReflectionClass(static::class);
+		$class2 = new \ReflectionClass($classRelated);
+
+		$tableName        = strtolower($class1->getShortName());
+		$RelatedtableName = strtolower($class2->getShortName());
+
+		try {
+			$query = "DELETE FROM " . $tableName . "_" . $RelatedtableName . " WHERE " .
+				strtoupper($tableName) . "_ID" . "=" . $this->id . " AND " .
+				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
+
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		} catch (\PDOException $e) {
+			$query = "DELETE FROM " . $RelatedtableName . "_" . $tableName . " WHERE " .
+				strtoupper($tableName) . "_ID" . "=" . $this->id . " AND " .
+				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		}
+	}
+
+	public function addRelation($classRelated) {
+		$this->addManyToMany($classRelated);
+	}
+
+	private function addManyToMany($classRelated){
+		$class1 = new \ReflectionClass(static::class);
+		$class2 = new \ReflectionClass($classRelated);
+
+		$tableName        = strtolower($class1->getShortName());
+		$RelatedtableName = strtolower($class2->getShortName());
+
+		try {
+			$query = "INSERT INTO " . $tableName . "_" . $RelatedtableName .
+				" (" . strtoupper($tableName) . "_ID, " . strtoupper($RelatedtableName) . "_ID) " .
+				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
+
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		} catch (\PDOException $e) {
+			$query = "INSERT INTO " . $RelatedtableName . "_" . $tableName .
+				" (" . strtoupper($tableName) . "_ID, " . strtoupper($RelatedtableName) . "_ID) " .
+				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
+		}
 	}
 }
