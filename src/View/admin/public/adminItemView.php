@@ -1,12 +1,19 @@
 <?php
 /**
  * @var Item $item
+ * @var Image $mainImage
  * @var array $images
  * @var array $tags
  */
 
+use Models\Image;
 use Models\Item;
+
 ?>
+
+<div>
+	<img src="<?= $mainImage->path ?>">
+</div>
 
 <div>
 	<form method="post" style='display: flex; flex-direction: column;'>
@@ -53,22 +60,32 @@ use Models\Item;
 
 <div>
 	<p style="margin-left: 50px;">Картинки</p>
-	<? foreach ($images as $image) { ?>
+	<label style="display: flex">
+		<? foreach ($images as $image) { ?>
+			<form method="post">
+				<img src="<?= $image->path ?>" style="height: 200px; width: 200px">
+				<input type="hidden" name="action" value="deleteImage">
+				<input type="hidden" name="id" value="<?= $image->id ?>">
+				<input type="submit" value="Удалить">
+			</form>
+		<? } ?>
+	</label>
+	<label>
 		<form method="post">
-			<img src="<?= $image['path'] ?>" style="height: 200px; width: 200px">
-			<input type="hidden" name="action" value="deleteRelation">
-			<input type="hidden" name="relation" value="image">
-			<input type="hidden" name="id" value="<?= $image['id'] ?>">
-			<input type="submit" value="Удалить">
+			<input type="submit" value="Выбрать главное изображение">
+			<input type="hidden" name="action" value="edit">
+			<? foreach ($images as $image) { ?>
+				<input type="radio" name="main_image_id" value="<?= $image->id ?>" <?= $item->main_image_id === $image->id ? 'checked' : '' ?>>
+			<? } ?>
 		</form>
-	<? } ?>
-	<form method="post"">
-		<label>Добавить картинку по id</label>
-		<input type="hidden" name="action" value="addRelation">
-		<input type="hidden" name="relation" value="image">
-		<input type="text" name="id">
-		<input type="submit" value="Добавить">
-	</form>
+	</label>
+	<div>
+		<form method="post" enctype="multipart/form-data">
+			<input type="hidden" name="action" value="addImage">
+			<input type="file" name="image" accept="image/*">
+			<input type="submit" value="Отправить">
+		</form>
+	</div>
 </div>
 
 <div>

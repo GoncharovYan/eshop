@@ -71,7 +71,7 @@ abstract class Relation {
 		self::$db->exec($sqlQuery);
 	}
 
-	public static function morph(array $object) {
+	public static function morph(array|bool $object) {
 		$class = new \ReflectionClass(get_called_class());
 
 		$entity = $class->newInstance();
@@ -235,9 +235,8 @@ abstract class Relation {
 			$query = "DELETE FROM " . $RelatedtableName . "_" . $tableName . " WHERE " .
 				strtoupper($tableName) . "_ID" . "=" . $this->id . " AND " .
 				strtoupper($RelatedtableName) . "_ID" . "=" . $classRelated->id;
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 		}
-
-		self::$db->exec($query);
 	}
 
 	public function addManyToMany($classRelated){
@@ -257,8 +256,7 @@ abstract class Relation {
 			$query = "INSERT INTO " . $RelatedtableName . "_" . $tableName .
 				" (" . strtoupper($tableName) . "_ID, " . strtoupper($RelatedtableName) . "_ID) " .
 				"VALUE (" . $this->id . ", " . $classRelated->id . ")";
+			self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 		}
-
-		self::$db->exec($query);
 	}
 }

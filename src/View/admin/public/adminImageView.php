@@ -19,6 +19,8 @@ use Models\Image;
 		<textarea name="height"><?= $image->height ?></textarea>
 		<label style="margin-left: 50px;">Ширина</label>
 		<textarea name="width"><?= $image->width ?></textarea>
+		<label style="margin-left: 50px;">ID товара</label>
+		<input type="number" value="<?= $image->item_id ?>">
 		<input type="submit" value="Подтвердить">
 	</form>
 </div>

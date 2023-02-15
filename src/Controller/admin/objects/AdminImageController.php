@@ -9,21 +9,17 @@ class AdminImageController extends BaseController
 {
 	public function adminImagePage(int|string $id)
 	{
-		if($id === 'new')
-		{
-			echo $this->render('admin/layoutView.php', [
-				'content' => $this->render('admin/public/adminNewImageView.php', [
-				]),
-			]);
+		if ($id === 'new') {
+			Image::createNewImage();
+			header("Location: /admin/image/");
 		}
-		else {
-			$image = Image::findById($id);
 
-			echo $this->render('admin/layoutView.php', [
-				'content' => $this->render('admin/public/adminImageView.php', [
-					'image' => $image,
-				]),
-			]);
-		}
+		$image = Image::findById($id);
+
+		echo $this->render('admin/layoutView.php', [
+			'content' => $this->render('admin/public/adminImageView.php', [
+				'image' => $image,
+			]),
+		]);
 	}
 }

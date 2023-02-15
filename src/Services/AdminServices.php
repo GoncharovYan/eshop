@@ -2,6 +2,8 @@
 
 namespace Services;
 
+use Models\Image;
+
 class AdminServices
 {
 	public static function adminEditAction($className, $id, $data)
@@ -20,7 +22,7 @@ class AdminServices
 			$obj->$key = $value;
 		}
 		$obj->save();
-		header("Location: /admin/$className/");
+		header("Location: /admin/$className/$id/");
 	}
 
 	public static function adminDelete($className, $obj ,$id, $data)
@@ -48,6 +50,35 @@ class AdminServices
 	public static function adminEditOrderCount($className, $obj ,$id, $data)
 	{
 		$obj->editItemCount($data['id'], $data['item_count']);
+		header("Location: /admin/$className/$id/");
+	}
+
+	public static function adminAddImage($className, $obj ,$id, $data)
+	{
+		$path = '/resources/itemImages/'.$_FILES['image']['name'];
+		$image_info = getimagesize($_FILES["image"]["tmp_name"]);
+
+		$newImage = new Image();
+		$newImage->path = $path;
+		$newImage->item_id = $id;
+		$newImage->width = $image_info[0];
+		$newImage->height = $image_info[1];
+		$newImage->save();
+
+		if(isset($_FILES) && $_FILES['image']['error'] === 0){
+			$destiation_dir = ROOT . '/public' . $path;
+			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir );
+		}
+
+		header("Location: /admin/$className/$id/");
+	}
+
+	public static function adminDeleteImage($className, $obj ,$id, $data)
+	{
+		$image = Image::findById($data['id']);
+		unlink(ROOT . '/public' . $image->path); // Delete image file
+		$image->delete();
+
 		header("Location: /admin/$className/$id/");
 	}
 }

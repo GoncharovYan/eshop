@@ -6,6 +6,7 @@ use Controller\BaseController;
 use Models\Image;
 use Models\Item;
 use Models\Tag;
+use mysql_xdevapi\Exception;
 
 class AdminItemController extends BaseController
 {
@@ -18,8 +19,10 @@ class AdminItemController extends BaseController
 
 		$item = Item::findById($id);
 
+		$mainImage = Image::findById($item->main_image_id);
+
 		$image = new Image();
-		$images = $image->items()->find([
+		$images = $image::find([
 			'conditions' => "ITEM_ID = $id"
 		]);
 
@@ -31,6 +34,7 @@ class AdminItemController extends BaseController
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminItemView.php', [
 				'item' => $item,
+				'mainImage' => $mainImage,
 				'images' => $images,
 				'tags' => $tags,
 			]),
