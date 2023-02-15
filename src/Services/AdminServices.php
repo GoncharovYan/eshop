@@ -35,7 +35,7 @@ class AdminServices
 	{
 		$relatedClass = "\Models\\" . ucfirst($data['relation']);
 		$relatedObj = $relatedClass::findById($data['id']);
-		$obj->deleteManyToMany($relatedObj);
+		$obj->deleteRelation($relatedObj);
 		header("Location: /admin/$className/$id/");
 	}
 
@@ -46,7 +46,7 @@ class AdminServices
 		// Tag
 		$relatedObj = $relatedClass::findById($data['id']);
 		// $relatedObj = Tag::findById($data['id']);
-		$obj->addManyToMany($relatedObj);
+		$obj->addRelation($relatedObj);
 		// $item->addManyToMany($tag);
 		header("Location: /admin/$className/$id/");
 	}

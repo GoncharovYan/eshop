@@ -179,9 +179,6 @@ abstract class Relation {
 	public function belongsToMany($classRelated){
 		return $this->relateManyToMany($classRelated);
 	}
-	public function addRelation($classRelated) {
-
-	}
 
 	private function relateManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
@@ -222,7 +219,11 @@ abstract class Relation {
 		return new Pivot($query);
 	}
 
-	public function deleteManyToMany($classRelated){
+	public function deleteRelation($classRelated) {
+		$this->deleteManyToMany($classRelated);
+	}
+
+	private function deleteManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);
 
@@ -243,7 +244,11 @@ abstract class Relation {
 		}
 	}
 
-	public function addManyToMany($classRelated){
+	public function addRelation($classRelated) {
+		$this->addManyToMany($classRelated);
+	}
+
+	private function addManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);
 
