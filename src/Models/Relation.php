@@ -179,6 +179,10 @@ abstract class Relation {
 	public function belongsToMany($classRelated){
 		return $this->relateManyToMany($classRelated);
 	}
+	public function addRelation($classRelated) {
+
+	}
+
 	private function relateManyToMany($classRelated){
 		$class1 = new \ReflectionClass(static::class);
 		$class2 = new \ReflectionClass($classRelated);

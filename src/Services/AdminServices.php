@@ -41,9 +41,13 @@ class AdminServices
 
 	public static function adminAddRelation($className, $obj ,$id, $data)
 	{
+		// $obj = $item
 		$relatedClass = "\Models\\" . ucfirst($data['relation']);
+		// Tag
 		$relatedObj = $relatedClass::findById($data['id']);
+		// $relatedObj = Tag::findById($data['id']);
 		$obj->addManyToMany($relatedObj);
+		// $item->addManyToMany($tag);
 		header("Location: /admin/$className/$id/");
 	}
 
@@ -76,7 +80,7 @@ class AdminServices
 	public static function adminDeleteImage($className, $obj ,$id, $data)
 	{
 		$image = Image::findById($data['id']);
-		unlink(ROOT . '/public' . $image->path); // Delete image file
+		unlink(ROOT . $image->path); // Delete image file
 		$image->delete();
 
 		header("Location: /admin/$className/$id/");
