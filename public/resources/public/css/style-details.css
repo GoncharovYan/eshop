@@ -1,19 +1,56 @@
-.details{
+.details {
 	display: grid;
 	grid-template-columns: 690px 550px;
-	grid-column-gap: 50px;
+	grid-column-gap: 100px;
 	font-family: Roboto, sans-serif;
+	position: relative;
+	margin-left: 7%;
 }
-.details .profile{
+
+.details .images {
+	display: grid;
+	grid-template:
+		"main-img main-img main-img main-img main-img"
+		"mini-img1 mini-img2 mini-img3 mini-img4 mini-img5";
+	gap: 40px 5px;
+	grid-template-columns: 130px 130px 130px 130px 130px;
+	height: 730px;
+}
+
+.previous, .next{
+	position: absolute;
+	width: auto;
+	top:280px;
+	padding: 0 15px;
+	cursor: pointer;
+}
+
+.details .images .main-image {
+	grid-area: main-img;
+	grid-column: span 5;
+	object-fit: cover;
+	transition: 1s;
+}
+
+.details .images .main-image:hover{
+	transform: scale(1.1);
+}
+.details .images .mini-image1 {
+	grid-area: mini-img1;
+}
+
+.details .profile {
 	margin-right: 100px;
 }
-.details .profile h2{
+
+.details .profile h2 {
 	font-size: 36px;
-	color:rgba(0, 0, 0, 0.9);
+	color: rgba(0, 0, 0, 0.9);
 }
-.details div .long-description{
+
+.details div .long-description {
 	font-size: 20px;
-	margin:30px 0 30px 0;
+	margin: 30px 0 30px 0;
 	color:rgba(0, 0, 0, 0.8);
 }
 .details .wrapper{

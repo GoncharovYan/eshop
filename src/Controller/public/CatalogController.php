@@ -62,7 +62,7 @@ class CatalogController extends BaseController
 		if(!$productList)
 		{
             echo $this->render('layoutView.php', [
-                'content' => "Товары не найдены",
+                'content' => $this->render('public/pageNotFoundView.php', []),
                 ]);
 
         }
