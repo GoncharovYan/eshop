@@ -82,18 +82,17 @@ class CatalogController extends BaseController
             }
 
             $imageList = Image::executeQuery(
-                "SELECT PATH, item.ID FROM image
-			INNER JOIN item_image ON image.ID = item_image.IMAGE_ID
-			INNER JOIN item ON item_image.ITEM_ID = item.ID
-            WHERE item.ID IN (" . implode(',', $itemIdArray) . ") AND image.IS_MAIN = 1"
+                "SELECT image.PATH, ID FROM image
+            WHERE ITEM_ID IN (" . implode(',', $itemIdArray) . ")
+            "
             );
+			// $imageList = Image::find(['conditions' => "ITEM_ID IN (" . implode(',', $itemIdArray) . ")"]);
+
             $imagePathList = [];
 
             foreach ($imageList as $image) {
-                $imagePathList[$image->id] = $image->path;
+                $imagePathList[] = $image->path;
             }
-
-
 
             echo $this->render('layoutView.php', [
                 'content' => $this->render('public/catalogView.php', [

@@ -169,7 +169,7 @@ abstract class Relation {
 	public static function executeQuery(string $query){
 		$result = [];
 		self::setConnect();
-		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
+		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 		foreach($raw as $key => $rawRow) {
 			$result[] = self::morph($rawRow);
 		}
