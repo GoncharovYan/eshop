@@ -12,121 +12,160 @@ use Models\Item;
 
 ?>
 
-<div>
-	<img src="<?= $mainImage->path ?>">
-</div>
-
-<div>
-	<form method="post" style='display: flex; flex-direction: column;'>
-		<input type="hidden" name="action" value="edit">
-		<label style="margin-left: 50px;">Название</label>
-		<textarea name="item_name"><?= $item->item_name ?></textarea>
-		<label style="margin-left: 50px;">Краткое описание</label>
-		<textarea name="short_desc"><?= $item->short_desc ?></textarea>
-		<label style="margin-left: 50px;">Полное описание</label>
-		<textarea name="full_desc"><?= $item->full_desc ?></textarea>
-		<label style="margin-left: 50px;">Количество</label>
-		<input type="number" name="count" value="<?= $item->count ?>">
-		<label style="margin-left: 50px;">Цена</label>
-		<input type="number" name="price" value="<?= $item->price ?>">
-		<label style="margin-left: 50px;">
-			Активен
-			<input type="radio" name="is_active" value="1" <?= $item->is_active ? 'checked' : '' ?>>
-			Неактивен
-			<input type="radio" name="is_active" value="0" <?= $item->is_active ? '' : 'checked' ?>>
-		</label>
-		<input type="submit" value="Подтвердить">
-	</form>
-</div>
-
-<div>
-	<p style="margin-left: 50px;">Теги</p>
-	<? foreach ($tags as $tag) { ?>
-		<form method="post">
-			<label><?= $tag['tag_name'] ?></label>
-			<input type="hidden" name="action" value="deleteRelation">
-			<input type="hidden" name="relation" value="tag">
-			<input type="hidden" name="id" value="<?= $tag['id'] ?>">
-			<input type="submit" value="Удалить">
-		</form>
-	<? } ?>
-	<div>
-		<input type="text" id="elastic-tag" placeholder="название тега">
-		<ul class="elastic">
+<div class="container d-flex flex-column shadow p-3 my-5 bg-white rounded item" xmlns="http://www.w3.org/1999/html">
+	<div class="d-flex justify-content-between">
+		<img src="<?= $mainImage->path ?>" class="img-thumbnail main-image">
+		<div class="w-75">
 			<form method="post">
-				<? foreach ($allTags as $tag) { ?>
-					<li>
-						<?= $tag->tag_name ?>
-						<input type="hidden" name="action" value="addRelation">
+				<input type="hidden" name="action" value="edit">
+
+				<div class="p-3">
+					<label class="form-label">Название</label>
+					<input type="text" name="item_name" class="form-control" value="<?= $item->item_name ?>">
+				</div>
+
+				<div class="d-flex">
+					<div class="p-3">
+						<label class="form-label">Количество</label>
+						<input type="number" name="count" class="form-control" value="<?= $item->count ?>">
+					</div>
+					<div class="p-3">
+						<label class="form-label">Цена</label>
+						<input type="number" name="price" class="form-control" value="<?= $item->price ?>">
+					</div>
+					<div class="p-3">
+						<label class="form-label">Порядок сортировки</label>
+						<input type="number" name="sort_order" class="form-control" value="<?= $item->sort_order ?>">
+					</div>
+				</div>
+
+				<div class="d-flex p-3">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="is_active"
+							   value="1" <?= $item->is_active ? 'checked' : '' ?>>
+						<label class="form-check-label">
+							Активен
+						</label>
+					</div>
+					<div class="form-check ms-3">
+						<input class="form-check-input" type="radio" name="is_active"
+							   value="0" <?= $item->is_active ? '' : 'checked' ?>>
+						<label class="form-check-label">
+							Неактивен
+						</label>
+					</div>
+				</div>
+
+				<div class="p-3">
+					<label class="form-label">Краткое описание</label>
+					<input type="text" name="short_desc" class="form-control" value="<?= $item->short_desc ?>">
+				</div>
+		</div>
+	</div>
+
+	<div class="p-3">
+		<label>Полное описание</label>
+		<textarea name="full_desc" class="form-control"><?= $item->full_desc ?></textarea>
+	</div>
+
+	<div class="p-3 d-flex justify-content-center">
+		<button type="submit" class="btn btn-primary">Сохранить изменения</button>
+	</div>
+	</form>
+
+	<h4 class="text-center pt-2">Теги</h4>
+
+	<div class="tag d-flex justify-content-around m-3">
+		<ul class="overflow-auto list-group " style="width: 30%">
+			<? foreach ($tags as $tag) { ?>
+				<form method="post">
+					<li class="list-group-item m-1 d-flex justify-content-between">
+						<label><?= $tag['tag_name'] ?></label>
+						<input type="hidden" name="action" value="deleteRelation">
 						<input type="hidden" name="relation" value="tag">
-						<input type="hidden" name="id" value="<?= $tag->id ?>">
-						<input type="submit" value="Добавить">
+						<input type="hidden" name="id" value="<?= $tag['id'] ?>">
+						<input type="submit" value="-" class="btn btn-danger">
 					</li>
-				<? } ?>
-			</form>
-		</ul>
-	</div>
-</div>
-
-
-<div>
-	<p style="margin-left: 50px;">Картинки</p>
-	<label style="display: flex">
-		<? foreach ($images as $image) { ?>
-			<form method="post">
-				<img src="<?= $image->path ?>" style="height: 200px; width: 200px">
-				<input type="hidden" name="action" value="deleteImage">
-				<input type="hidden" name="id" value="<?= $image->id ?>">
-				<input type="submit" value="Удалить">
-			</form>
-		<? } ?>
-	</label>
-	<label>
-		<form method="post">
-			<input type="submit" value="Выбрать главное изображение">
-			<input type="hidden" name="action" value="edit">
-			<? foreach ($images as $image) { ?>
-				<input type="radio" name="main_image_id"
-					   value="<?= $image->id ?>" <?= $item->main_image_id === $image->id ? 'checked' : '' ?>>
+				</form>
 			<? } ?>
-		</form>
-	</label>
-	<div>
-		<form method="post" enctype="multipart/form-data">
+		</ul>
+
+		<div class="h-100 overflow-auto" style="width: 30%">
+			<div class="m-1">
+				<input type="search" id="elastic-tag" class="form-control" placeholder="Название тега">
+			</div>
+
+			<ul class="elastic list-group">
+				<? foreach ($allTags as $tag) { ?>
+					<form method="post">
+						<li class="list-group-item m-1 d-flex justify-content-between">
+							<?= $tag->tag_name ?>
+							<input type="hidden" name="action" value="addRelation">
+							<input type="hidden" name="relation" value="tag">
+							<input type="hidden" name="id" value="<?= $tag->id ?>">
+							<input type="submit" value="+" class="btn btn-success">
+						</li>
+					</form>
+				<? } ?>
+			</ul>
+		</div>
+	</div>
+
+	<h4 class="text-center pt-2">Изображения</h4>
+
+	<div class="d-flex overflow-auto">
+		<? foreach ($images as $image) { ?>
+			<div class="d-flex flex-column p-3 bg-white rounded h-100 border" style="width: 235px">
+				<img src="<?= $image->path ?>" class="additional-image ">
+				<div class="d-flex w-100 justify-content-between">
+					<form method="post">
+						<input type="hidden" name="action" value="deleteImage">
+						<input type="hidden" name="id" value="<?= $image->id ?>">
+						<button type="submit" class="btn btn-danger">Удалить</button>
+					</form>
+					<form method="post">
+						<input type="hidden" name="action" value="edit">
+						<input type="hidden" name="main_image_id" value="<?= $image->id ?>">
+						<button type="submit"
+								class="btn <?= $item->main_image_id === $image->id ? 'btn-success' : 'btn-secondary' ?>">
+							Главное
+						</button>
+					</form>
+				</div>
+			</div>
+		<? } ?>
+	</div>
+
+	<div class="p-3">
+		<label class="form-label">Добавить изображение</label>
+		<form method="post" enctype="multipart/form-data" class="d-flex">
 			<input type="hidden" name="action" value="addImage">
-			<input type="file" name="image" accept="image/*">
-			<input type="submit" value="Отправить">
+			<input type="file" name="image" accept="image/*" class="form-control">
+			<button type="submit" class="btn btn-primary">Отправить</button>
 		</form>
 	</div>
-</div>
 
-<div>
-	<form method="post">
-		<input type="hidden" name="action" value="delete">
-		<input type="submit" value="Удалить товар">
-	</form>
+	<div class="p-3 d-flex justify-content-center">
+		<form method="post">
+			<input type="hidden" name="action" value="delete">
+			<button type="submit" class="btn btn-danger">Удалить товар</button>
+		</form>
+	</div>
 </div>
 
 
 <!-- Перенести в .js файл -->
 <script>
-	document.querySelector('#elastic-tag').oninput = function(){
-		let val = this.value.trim();
-		let elasticItems = document.querySelectorAll('.elastic li');
-		if (val !== ''){
-			elasticItems.forEach(function (elem){
-				if (elem.innerText.search(val) === -1){
-					elem.classList.add('hide');
-				}
-				else {
-					elem.classList.remove('hide');
-				}
-			});
-		}
-		else {
-			elasticItems.forEach(function (elem){
-				elem.classList.remove('hide');
-			});
+	document.querySelector('#new-image-path').oninput = function () {
+		let val = this.value;
+		let elem = document.querySelector('.');
+		if (val !== '') {
+			function (elem) {
+				elem.classList.add('hide');
+			}
+			}
+		} else {
+			elem.classList.remove('hide');
 		}
 	}
 </script>
