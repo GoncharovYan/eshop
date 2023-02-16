@@ -4,6 +4,7 @@
  * @var Image $mainImage
  * @var array $images
  * @var array $tags
+ * @var array $allTags
  */
 
 use Models\Image;
@@ -49,14 +50,24 @@ use Models\Item;
 			<input type="submit" value="Удалить">
 		</form>
 	<? } ?>
-	<form method="post">
-		<label>Добавить тег по id</label>
-		<input type="hidden" name="action" value="addRelation">
-		<input type="hidden" name="relation" value="tag">
-		<input type="text" name="id">
-		<input type="submit" value="Добавить">
-	</form>
+	<div>
+		<input type="text" id="elastic-tag" placeholder="название тега">
+		<ul class="elastic">
+			<form method="post">
+				<? foreach ($allTags as $tag) { ?>
+					<li>
+						<?= $tag->tag_name ?>
+						<input type="hidden" name="action" value="addRelation">
+						<input type="hidden" name="relation" value="tag">
+						<input type="hidden" name="id" value="<?= $tag->id ?>">
+						<input type="submit" value="Добавить">
+					</li>
+				<? } ?>
+			</form>
+		</ul>
+	</div>
 </div>
+
 
 <div>
 	<p style="margin-left: 50px;">Картинки</p>
@@ -75,7 +86,8 @@ use Models\Item;
 			<input type="submit" value="Выбрать главное изображение">
 			<input type="hidden" name="action" value="edit">
 			<? foreach ($images as $image) { ?>
-				<input type="radio" name="main_image_id" value="<?= $image->id ?>" <?= $item->main_image_id === $image->id ? 'checked' : '' ?>>
+				<input type="radio" name="main_image_id"
+					   value="<?= $image->id ?>" <?= $item->main_image_id === $image->id ? 'checked' : '' ?>>
 			<? } ?>
 		</form>
 	</label>
@@ -94,4 +106,29 @@ use Models\Item;
 		<input type="submit" value="Удалить товар">
 	</form>
 </div>
+
+
+<!-- Перенести в .js файл -->
+<script>
+	document.querySelector('#elastic-tag').oninput = function(){
+		let val = this.value.trim();
+		let elasticItems = document.querySelectorAll('.elastic li');
+		if (val !== ''){
+			elasticItems.forEach(function (elem){
+				if (elem.innerText.search(val) === -1){
+					elem.classList.add('hide');
+				}
+				else {
+					elem.classList.remove('hide');
+				}
+			});
+		}
+		else {
+			elasticItems.forEach(function (elem){
+				elem.classList.remove('hide');
+			});
+		}
+	}
+</script>
+
 
