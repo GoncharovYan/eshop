@@ -8,136 +8,49 @@ use Models\Item;
 use Models\Orders;
 use Models\Tag;
 use Models\User;
-use Services\PageServices;
 
 class AdminListController extends BaseController
 {
-	public function adminItemListPage(int $curPage = null)
+	public function adminListPage(string $className)
 	{
-		$productList = Item::findAll();
+		$class = "\Models\\" . ucfirst($className);
+		$class = new $class();
 
-		$itemTable = [];
-		$itemTableHead = ['ID', 'Название', 'Стоимость', 'Кол-во', 'Активно', 'Дата создания', 'Дата обновления'];
-		foreach ($productList as $product)
+		$dataList = $class::findAll();
+
+		$dataTable = [];
+		$dataTableHead = array_keys(get_class_vars($class::class));
+		foreach ($dataList as $product)
 		{
-			$itemTable[] = [
-				'id' => $product->id,
-				'name' => $product->item_name,
-				'price' => $product->price,
-				'count' => $product->count,
-				'isActive' => ($product->is_active) ? 'да' : 'нет',
-				'dateCreated' => $product->date_created,
-				'dateUpdated' => $product->date_updated
-			];
+			$newRow = get_object_vars($product);
+			foreach ($newRow as $key => $data)
+			{
+				$newRow[$key] = $this->truncateText($data);
+			}
+			$dataTable[] = $newRow;
 		}
 
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminView.php', [
-				'contentTable' => $itemTable,
-				'contentTableHead' => $itemTableHead,
-				'contentType' => 'product'
+				'contentTable' => $dataTable,
+				'contentTableHead' => $dataTableHead,
+				'contentType' => $className,
 			]),
 		]);
 	}
 
-	public function adminImageListPage(int $curPage = null)
+	private function truncateText(string|null $text)
 	{
-		//Добавить пагинацию
-		$imageList = Image::findAll();
-
-		$imageTable = [];
-		$imageTableHead = ['ID', 'Путь', 'Высота', 'Ширина', 'Главная'];
-		foreach ($imageList as $image)
+		if ($text === null)
 		{
-			$imageTable[] = [
-				'id' => $image->id,
-				'path' => $image->path,
-				'height' => $image->height,
-				'width' => $image->width,
-				'isMain' => ($image->is_main) ? 'да' : 'нет',
-			];
+			return $text;
 		}
-
-		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
-				'contentTable' => $imageTable,
-				'contentTableHead' => $imageTableHead,
-				'contentType' => 'image',
-			]),
-		]);
-	}
-
-	public function adminOrderListPage(int $curPage = null)
-	{
-		$orderList = Orders::findAll();
-
-		$orderTable = [];
-		$orderTableHead = ['ID', 'Заказчик', 'Статус', 'Стоимость', 'Дата создания'];
-		foreach ($orderList as $order)
+		$maxLength = 50;
+		$cropped = mb_substr($text, 0, $maxLength, 'UTF-8');
+		if ($cropped !== $text)
 		{
-			$orderTable[] = [
-				'id' => $order->id,
-				'customerName' => $order->customer_name,
-				'status' => ($order->status) ? 'закрыт' : 'в обработке',
-				'price' => $order->price,
-				'dateCreated' => $order->date_created,
-			];
+			return "$cropped...";
 		}
-
-		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
-				'contentTable' => $orderTable,
-				'contentTableHead' => $orderTableHead,
-				'contentType' => 'order',
-			]),
-		]);
-	}
-
-	public function adminTagListPage(int $curPage = null)
-	{
-		$tagList = Tag::findAll();
-
-		$tagTable = [];
-		$tagTableHead = ['ID', 'Название'];
-		foreach ($tagList as $tag)
-		{
-			$tagTable[] = [
-				'id' => $tag->id,
-				'name' => $tag->tag_name
-			];
-		}
-
-		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
-				'contentTable' => $tagTable,
-				'contentTableHead' => $tagTableHead,
-				'contentType' => 'tag',
-			]),
-		]);
-	}
-
-	public function adminUserListPage(int $curPage = null)
-	{
-		$tagList = User::findAll();
-
-		$userTable = [];
-		$userTableHead = ['ID', 'Почта', 'Логин', 'Роль'];
-		foreach ($tagList as $user)
-		{
-			$userTable[] = [
-				'id' => $user->id,
-				'email' => $user->email,
-				'login' => $user->login,
-				'role' => ($user->role) ? 'пользователь' : 'админ',
-			];
-		}
-
-		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
-				'contentTable' => $userTable,
-				'contentTableHead' => $userTableHead,
-				'contentType' => 'user',
-			]),
-		]);
+		return $text;
 	}
 }

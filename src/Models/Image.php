@@ -11,9 +11,12 @@ class Image extends Relation {
 
 	public $width;
 
-	public $is_main;
+	public $item_id;
 
-	public function items(){
-		return $this->belongsToMany(Item::class);
+	public static function createNewImage(){
+		$query =
+			"INSERT INTO image (PATH, HEIGHT, WIDTH)
+				VALUE ('', 0, 0)";
+		self::executeQuery($query);
 	}
 }
