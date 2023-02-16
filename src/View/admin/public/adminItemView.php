@@ -92,7 +92,7 @@ use Models\Item;
 
 		<div class="h-100 overflow-auto" style="width: 30%">
 			<div class="m-1">
-				<input type="search" id="elastic-tag" class="form-control" placeholder="Название тега">
+				<input type="search" id="elastic-tag" class="form-control" placeholder="Поиск тега">
 			</div>
 
 			<ul class="elastic list-group">
