@@ -6,7 +6,8 @@ use Models\Tag;
 ?>
 
 <div>
-	<form action="edit/" method="post" style='display: flex; flex-direction: column;'>
+	<form method="post" style='display: flex; flex-direction: column;'>
+		<input type="hidden" name="action" value="edit">
 		<label style="margin-left: 50px;">Название</label>
 		<textarea name="tag_name"><?= $tag->tag_name ?></textarea>
 		<label style="margin-left: 50px;">Ссылка</label>
@@ -16,7 +17,8 @@ use Models\Tag;
 </div>
 
 <div>
-	<form method="post" action="delete/">
+	<form method="post">
+		<input type="hidden" name="action" value="delete">
 		<input type="submit" value="Удалить тег">
 	</form>
 </div>

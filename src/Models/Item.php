@@ -24,6 +24,8 @@ class Item extends Relation {
 
 	public $date_updated;
 
+	public $main_image_id;
+
 	public function tags(){
 		return $this->hasMany(Tag::class);
 	}
@@ -32,5 +34,14 @@ class Item extends Relation {
 		return $this->hasMany(Image::class);
 	}
 
+	public function orders(){
+		return $this->hasMany(Orders::class);
+	}
 
+	public static function createNewItem(){
+		$query =
+			"INSERT INTO item (ITEM_NAME, PRICE)
+				VALUE ('Новый товар', 0)";
+		self::executeQuery($query);
+	}
 }
