@@ -10,3 +10,23 @@
 .elastic tr.hide{
 	display: none;
 }
+
+.item .main-image{
+	height: 400px;
+	width: 400px;
+	object-fit: contain;
+}
+
+.item .additional-image{
+	height: 200px;
+	width: 200px;
+	object-fit: contain;
+}
+
+.item textarea{
+	height: 200px;
+}
+
+.item .tag{
+	height: 300px;
+}

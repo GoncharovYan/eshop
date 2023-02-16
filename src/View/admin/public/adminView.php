@@ -22,7 +22,7 @@
 			for(const cell of target.parentNode.cells)
 				cell.classList.toggle('sorted', cell === target);
 		};
-		document.querySelectorAll('.table_sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
+		document.querySelectorAll('.table-sort thead').forEach(tableTH => tableTH.addEventListener('click', () => getSort(event)));
 	});
 </script>
 
@@ -49,15 +49,15 @@
 	}
 </script>
 
-<div>
-	<table class="table_sort">
+<div class="container">
+	<table class="table table-sort table-striped align-middle">
 		<thead>
 			<tr>
 				<? foreach ($contentTableHead as $contentHead) {?>
 					<th><?=$contentHead?></th>
 				<?}?>
 				<th>
-					<a href="/admin/<?=$contentType?>/new/">Добавить</a>
+					<a href="/admin/<?=$contentType?>/new/" class="btn btn-primary">Добавить</a>
 				</th>
 			</tr>
 		</thead>
@@ -68,7 +68,7 @@
 					<th><?=$content ?></th>
 				<?}?>
 				<th>
-					<a href="/admin/<?=$contentType?>/<?echo $contentRow['id']?>/">Изменить</a>
+					<a href="/admin/<?=$contentType?>/<?echo $contentRow['id']?>/" class="btn btn-secondary">Изменить</a>
 				</th>
 			</tr>
 		<?}?>
