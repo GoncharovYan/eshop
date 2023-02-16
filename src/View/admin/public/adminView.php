@@ -6,8 +6,8 @@
  */
 ?>
 
+<!-- Сортировка. Вынести в отдельный файл -->
 <script>
-	// Скрипт сортировки
 	document.addEventListener('DOMContentLoaded', () => {
 		const getSort = ({ target }) => {
 			const order = (target.dataset.order = -(target.dataset.order || -1));
@@ -26,6 +26,29 @@
 	});
 </script>
 
+<!-- Умный поиск. Перенести в отдельный файл -->
+<script>
+	document.querySelector('#elastic').oninput = function(){
+		let val = this.value.trim();
+		let elasticItems = document.querySelectorAll('.elastic tr');
+		if (val !== ''){
+			elasticItems.forEach(function (elem){
+				if (elem.innerText.toLowerCase().search(val.toLowerCase()) === -1){
+					elem.classList.add('hide');
+				}
+				else {
+					elem.classList.remove('hide');
+				}
+			});
+		}
+		else {
+			elasticItems.forEach(function (elem){
+				elem.classList.remove('hide');
+			});
+		}
+	}
+</script>
+
 <div>
 	<table class="table_sort">
 		<thead>
@@ -38,7 +61,7 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody class="elastic">
 		<? foreach ($contentTable as $contentRow) {?>
 			<tr>
 				<? foreach ($contentRow as $content) {?>

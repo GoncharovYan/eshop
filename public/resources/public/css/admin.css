@@ -1,0 +1,12 @@
+#elastic {
+	display: block;
+	margin: 40px 0;
+}
+
+.elastic li.hide{
+	display: none;
+}
+
+.elastic tr.hide{
+	display: none;
+}
