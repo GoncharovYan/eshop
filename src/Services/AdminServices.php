@@ -59,7 +59,7 @@ class AdminServices
 
 	public static function adminAddImage($className, $obj ,$id, $data)
 	{
-		$path = '/resources/itemImages/'.$_FILES['image']['name'];
+		$path = '/resources/public/itemImages/'.$_FILES['image']['name'];
 		$image_info = getimagesize($_FILES["image"]["tmp_name"]);
 
 		$newImage = new Image();
@@ -73,6 +73,7 @@ class AdminServices
 			$destiation_dir = ROOT . '/public' . $path;
 			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir );
 		}
+		var_dump($destiation_dir);
 
 		header("Location: /admin/$className/$id/");
 	}
@@ -80,7 +81,7 @@ class AdminServices
 	public static function adminDeleteImage($className, $obj ,$id, $data)
 	{
 		$image = Image::findById($data['id']);
-		unlink(ROOT . $image->path); // Delete image file
+		unlink(ROOT . '/public' . $image->path); // Delete image file
 		$image->delete();
 
 		header("Location: /admin/$className/$id/");

@@ -20,6 +20,10 @@ class AdminItemController extends BaseController
 		$item = Item::findById($id);
 
 		$mainImage = Image::findById($item->main_image_id);
+		if($mainImage->path === null)
+		{
+			$mainImage = Image::findById(1);
+		}
 
 		$image = new Image();
 		$images = $image::find([
@@ -31,12 +35,27 @@ class AdminItemController extends BaseController
 			'conditions' => "ITEM_ID = $id"
 		]);
 
+
+		$allTags = Tag::findAll();
+
+		// Удаление текущих тегов товара из массива всех тегов
+		$tagsID = [];
+		foreach ($tags as $itemTag) {
+			$tagsID[] = $itemTag['id'];
+		}
+		foreach ($allTags as $key => $otherTag) {
+			if(in_array($otherTag->id, $tagsID, true)) {
+				unset($allTags[$key]);
+			}
+		}
+
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminItemView.php', [
 				'item' => $item,
 				'mainImage' => $mainImage,
 				'images' => $images,
 				'tags' => $tags,
+				'allTags' => $allTags,
 			]),
 		]);
 	}

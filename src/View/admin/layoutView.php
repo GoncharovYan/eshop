@@ -11,6 +11,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="/resources/public/css/admin.css">
 	<title>Team&3-Eshop</title>
 </head>
 <body>
@@ -31,7 +32,7 @@
 			</ul>
 
 			<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-				<input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+				<input type="search" class="form-control form-control-dark" id="elastic" placeholder="Поиск">
 			</form>
 
 		</div>
