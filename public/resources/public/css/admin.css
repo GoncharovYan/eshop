@@ -17,6 +17,12 @@
 	object-fit: contain;
 }
 
+.admin-image .main-image{
+	height: 400px;
+	width: 400px;
+	object-fit: contain;
+}
+
 .item .additional-image{
 	height: 200px;
 	width: 200px;
@@ -29,4 +35,8 @@
 
 .item .tag{
 	height: 300px;
+}
+
+.order .items{
+	max-height: 250px;
 }
