@@ -32,7 +32,7 @@
                 </a>
                 <? if(\Services\UserServices::isAdmin())
                 {?>
-                    <a href="/admin/product-list/1/" class="admin-button button">
+                    <a href="/admin/item/" class="admin-button button">
                         <img src="/resources/public/images/icon-admin.png"alt="">
                     </a>
                 <?}?>
