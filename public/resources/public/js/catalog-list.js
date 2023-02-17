@@ -31,23 +31,22 @@ export class CatalogList
 
     creatItemsContainer()
     {
-        this.itemsContainer = document.createElement('div');
-        this.itemsContainer.classList.add('catalog-list');
+        this.itemsContainer = document.createElement('div')
+        this.itemsContainer.classList.add('catalog-list')
 
-        this.rootNode.append(this.itemsContainer);
+        this.rootNode.append(this.itemsContainer)
     }
 
     createItem(itemData)
     {
-        return new CatalogItem(itemData);
+        return new CatalogItem(itemData)
     }
 
     render()
     {
-        this.itemsContainer.innerHTML = '';
+        this.itemsContainer.innerHTML = ''
         this.items.forEach((item)=>{
-            console.log(item);
-            this.itemsContainer.append(item.render());
+            this.itemsContainer.append(item.render())
         })
     }
 
@@ -60,7 +59,7 @@ export class CatalogList
             )
             .then((data)=>
                 {
-                    console.log(data[0])
+
                     this.items = data[0].map((item)=>{
                         return this.createItem(item);
                     })

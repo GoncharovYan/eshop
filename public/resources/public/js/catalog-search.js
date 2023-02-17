@@ -1,7 +1,7 @@
 
 function searchItem()
 {
-  var search = document.getElementById('search-text').value
+  let search = document.getElementById('search-text').value
   if(search)
   {
     if(window.location.pathname.indexOf('/catalog/') === -1)
