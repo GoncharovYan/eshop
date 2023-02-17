@@ -2,23 +2,39 @@
 /**
  * @var Tag $tag
  */
+
 use Models\Tag;
+
 ?>
 
-<div>
-	<form method="post" style='display: flex; flex-direction: column;'>
-		<input type="hidden" name="action" value="edit">
-		<label style="margin-left: 50px;">Название</label>
-		<textarea name="tag_name"><?= $tag->tag_name ?></textarea>
-		<label style="margin-left: 50px;">Ссылка</label>
-		<textarea name="alias"><?= $tag->alias ?></textarea>
-		<input type="submit" value="Подтвердить">
-	</form>
+<div class="container d-flex flex-column shadow p-3 my-5 bg-white rounded">
+	<div>
+		<form method="post">
+			<input type="hidden" name="action" value="edit">
+
+			<div class="form-group mb-2">
+				<label class="form-label" ">Название</label>
+				<input class="form-control" type="text" name="tag_name" value="<?= $tag->tag_name ?>">
+			</div>
+
+			<div class="form-group mb-2">
+				<label class="form-label">Ссылка</label>
+				<input class="form-control" type="text" name="alias" value="<?= $tag->alias ?>">
+			</div>
+	</div>
+
+	<div class="d-flex justify-content-evenly p-3">
+		<div>
+			<button type="submit" class="btn btn-primary">Сохранить изменения</button>
+			</form>
+		</div>
+
+		<div>
+			<form method="post">
+				<input type="hidden" name="action" value="delete">
+				<button type="submit" class="btn btn-danger">Удалить тег</button>
+			</form>
+		</div>
+	</div>
 </div>
 
-<div>
-	<form method="post">
-		<input type="hidden" name="action" value="delete">
-		<input type="submit" value="Удалить тег">
-	</form>
-</div>
