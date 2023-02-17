@@ -12,7 +12,7 @@ class Kernel
     {
         $route = Router::find($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
-		$environment = 'nodev';
+		$environment = 'dev';
 		if($environment === 'dev')
 		{
 			Migrator::migrate();

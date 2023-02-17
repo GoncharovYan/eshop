@@ -60,8 +60,23 @@ class FileCache
         unlink($path . $hash . '.php');
     }
 
-    public function deleteAll()
+    public function clearExpiedData()
     {
+        $path    = ROOT . '/var/cache/';
+        foreach (scandir($path) as $file)
+        {
+            if(strpos($file, ".php"))
+            {
 
+                $filePath = $path . $file;
+                $data = unserialize(file_get_contents($filePath));
+                $ttl = $data['ttl'];
+                if (time() > $ttl)
+                {
+                    unlink($filePath);
+                }
+            }
+        }
     }
 }
+
