@@ -13,7 +13,7 @@ use Models\Tag;
 			<input type="hidden" name="action" value="edit">
 
 			<div class="form-group mb-2">
-				<label class="form-label" ">Название</label>
+				<label class="form-label">Название</label>
 				<input class="form-control" type="text" name="tag_name" value="<?= $tag->tag_name ?>">
 			</div>
 

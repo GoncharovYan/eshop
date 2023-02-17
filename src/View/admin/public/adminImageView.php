@@ -4,30 +4,52 @@
  */
 
 use Models\Image;
+
 ?>
 
-<div>
-	<img src="<?=$image->path ?>">
+
+<div class="container d-flex shadow p-3 my-5 bg-white rounded admin-image">
+	<img src="<?= $image->path ?>" class="main-image img-thumbnail">
+	<div class="d-flex flex-column m-3 w-75">
+		<div>
+			<form method="post" style='display: flex; flex-direction: column;'>
+				<input type="hidden" name="action" value="edit">
+
+				<div class="form-group mb-2">
+					<label class="form-label">Путь</label>
+					<input class="form-control" type="text" name="path" value="<?= $image->path ?>">
+				</div>
+
+				<div class="form-group mb-2">
+					<label class="form-label">Высота</label>
+					<input class="form-control" type="number" name="height" value="<?= $image->height ?>">
+				</div>
+
+				<div class="form-group mb-2">
+					<label class="form-label">Ширина</label>
+					<input class="form-control" type="number" name="width" value="<?= $image->width ?>">
+				</div>
+
+				<div class="form-group mb-2">
+					<label class="form-label">ID товара</label>
+					<input class="form-control" type="number" name="item_id" value="<?= $image->item_id ?>">
+				</div>
+		</div>
+
+		<div class="d-flex justify-content-evenly p-3">
+			<div>
+				<button type="submit" class="btn btn-primary">Сохранить изменения</button>
+				</form>
+			</div>
+
+			<div>
+				<form method="post">
+					<input type="hidden" name="action" value="delete">
+					<button type="submit" class="btn btn-danger">Удалить изображение</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div>
-	<form method="post" style='display: flex; flex-direction: column;'>
-		<input type="hidden" name="action" value="edit">
-		<label style="margin-left: 50px;">Путь</label>
-		<textarea name="path"><?= $image->path ?></textarea>
-		<label style="margin-left: 50px;">Высота</label>
-		<textarea name="height"><?= $image->height ?></textarea>
-		<label style="margin-left: 50px;">Ширина</label>
-		<textarea name="width"><?= $image->width ?></textarea>
-		<label style="margin-left: 50px;">ID товара</label>
-		<input type="number" value="<?= $image->item_id ?>">
-		<input type="submit" value="Подтвердить">
-	</form>
-</div>
 
-<div>
-	<form method="post">
-		<input type="hidden" name="action" value="delete">
-		<input type="submit" value="Удалить изображение">
-	</form>
-</div>
