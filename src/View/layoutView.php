@@ -55,7 +55,6 @@
 	<main>
         <?= $content ?>
 	</main>
-	<hr>
 
 	<footer>
 	</footer>

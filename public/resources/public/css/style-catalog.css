@@ -3,7 +3,7 @@
   justify-content: center;
   padding-left: 10%;
   grid-template: "tags products" "paginator paginator";
-  grid-template-columns: 200px auto;
+  grid-template-columns: 200px 980px;
   grid-column-gap: 100px;
 }
 
@@ -58,12 +58,17 @@
   height: 450px;
   justify-content: center;
 }
-
+.catalog .item .name{
+	width: 195px;
+	margin: 10px 0 0 10px;
+	height: 40px;
+}
 .catalog .item .name a {
   display: block;
   color: #000;
   text-decoration: none;
   font-size: 20px;
+
 }
 
 .catalog .item .name:hover {
@@ -80,7 +85,7 @@
 }
 
 .catalog .item .price {
-  margin: 30px 0 20px 0px;
+  margin: 35px 0 20px 0px;
   font-size: 22px;
   font-weight: 600;
   background-color: rgba(243, 190, 0, 0.8);

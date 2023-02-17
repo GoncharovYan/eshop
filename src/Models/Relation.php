@@ -140,7 +140,10 @@ abstract class Relation {
 		self::setConnect();
 
 		$raw = self::$db->query($query)->fetch(\PDO::FETCH_ASSOC);
-		return self::morph($raw);
+		if ($raw !== false)
+		{
+			return self::morph($raw);
+		}
 	}
 
 	public static function findAll() {
@@ -166,7 +169,7 @@ abstract class Relation {
 	public static function executeQuery(string $query){
 		$result = [];
 		self::setConnect();
-		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);;
+		$raw = self::$db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
 		foreach($raw as $key => $rawRow) {
 			$result[] = self::morph($rawRow);
 		}

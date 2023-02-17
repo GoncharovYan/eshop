@@ -19,7 +19,7 @@
     <div class="products">
 		<? foreach ($productList as $product){?>
 			<div class="item">
-				<img src="<?= $imagePathList[$product->id] ?>" alt="">
+				<img src="<?= $imagePathList[$product->id-1] ?>" alt="">
 				<p class="name"><a href="/product/<?=$product->id?>/"><?= $product->item_name?></a></p>
 				<span><?= $product->short_desc?></span>
 				<p class="price"><?= $product->price . " ₽"?></p>
