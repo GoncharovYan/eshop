@@ -1,6 +1,3 @@
-// searchItem = (e)=>{
-//   console.log(e);
-// }
 
 function searchItem()
 {

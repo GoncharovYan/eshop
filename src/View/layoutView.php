@@ -56,8 +56,6 @@
         <?= $content ?>
 	</main>
     <script src="/resources/public/js/catalog-search.js"></script>
-	<hr>
-
 	<footer>
 	</footer>
 </body>

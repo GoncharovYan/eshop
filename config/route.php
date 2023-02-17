@@ -4,6 +4,7 @@
 \Core\Routing\Router::get('/catalog/', [new \Controller\public\CatalogController(), 'catalogPage']);
 \Core\Routing\Router::get('/catalog/:tag/', [new \Controller\public\CatalogController(), 'catalogPage']);
 \Core\Routing\Router::get('/catalog/:tag/:page/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:page/change/', [new \Controller\public\CatalogController(), 'changePage']);
 
 \Core\Routing\Router::get('/product/:id/', [new \Controller\public\DetailsController(), 'detailsPage']);
 

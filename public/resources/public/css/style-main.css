@@ -7,7 +7,12 @@ html, body {
 
 /*подумать, как растянуть боди на весь экран при увеличении*/
 header {
-  margin: 20px 0;
+  background-color: white;
+  border-bottom: 1px solid grey;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
 }
 
 header .logo {
