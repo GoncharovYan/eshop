@@ -76,7 +76,7 @@ use Models\Item;
 	<h4 class="text-center pt-2">Теги</h4>
 
 	<div class="tag d-flex justify-content-around m-3">
-		<ul class="overflow-auto list-group " style="width: 30%">
+		<ul class="overflow-auto list-group border" style="width: 30%">
 			<? foreach ($tags as $tag) { ?>
 				<form method="post">
 					<li class="list-group-item m-1 d-flex justify-content-between">
@@ -90,7 +90,7 @@ use Models\Item;
 			<? } ?>
 		</ul>
 
-		<div class="h-100 overflow-auto" style="width: 30%">
+		<div class="h-100 overflow-auto border" style="width: 30%">
 			<div class="m-1">
 				<input type="search" id="elastic-tag" class="form-control" placeholder="Поиск тега">
 			</div>
@@ -113,7 +113,7 @@ use Models\Item;
 
 	<h4 class="text-center pt-2">Изображения</h4>
 
-	<div class="d-flex overflow-auto">
+	<div class="d-flex overflow-auto border">
 		<? foreach ($images as $image) { ?>
 			<div class="d-flex flex-column p-3 bg-white rounded h-100 border" style="width: 235px">
 				<img src="<?= $image->path ?>" class="additional-image ">

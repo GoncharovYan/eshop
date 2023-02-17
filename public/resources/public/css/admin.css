@@ -36,3 +36,7 @@
 .item .tag{
 	height: 300px;
 }
+
+.order .items{
+	max-height: 250px;
+}
