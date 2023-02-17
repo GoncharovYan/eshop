@@ -1,6 +1,10 @@
 <?php
 
-\Core\Routing\Router::get('/catalog/:tag/:id/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:page/', [new \Controller\public\CatalogController(), 'catalogPage']);
+\Core\Routing\Router::get('/catalog/:tag/:page/change/', [new \Controller\public\CatalogController(), 'changePage']);
 
 \Core\Routing\Router::get('/product/:id/', [new \Controller\public\DetailsController(), 'detailsPage']);
 
@@ -21,10 +25,8 @@
 \Core\Routing\Router::get('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminPage']);
 \Core\Routing\Router::post('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminEdit']);
 
-\Core\Routing\Router::get('/', [new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/product/', [new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/product', [new \Controller\public\ErrorController(), 'pageNotFound']);
-\Core\Routing\Router::get('/:tag', [new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/order',[new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/order/:tag', [new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/product/order/:id', [new \Controller\public\ErrorController(), 'pageNotFound']);

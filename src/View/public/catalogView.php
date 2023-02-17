@@ -3,7 +3,7 @@
  * @var array $productList
  * @var array $paginator
  * @var array $tagList
- * @var array $imagePathList
+ * @var string $search
  */
 ?>
 
@@ -15,24 +15,34 @@
                 <?}?>
             </ul>
     </div>
-
-    <div class="products">
-		<? foreach ($productList as $product){?>
-			<div class="item">
-				<img src="<?= $imagePathList[$product->id-1] ?>" alt="">
-				<p class="name"><a href="/product/<?=$product->id?>/"><?= $product->item_name?></a></p>
-				<span><?= $product->short_desc?></span>
-				<p class="price"><?= $product->price . " ₽"?></p>
-			</div>
-		<?}?>
-	</div>
-    <div class="paginator">
-        <?foreach ($paginator as $page){
-            if($page['ref'] !== null){?>
-                <a href ="../<?=$page['ref'] ?>/" class="page"><?=$page['text']?></a>
-            <?}else{?>
-                <div class="no-page"><?=$page['text']?></div>
-            <?}
+    <div class="products" id ="main-catalog-list">
+        <? $catalogList = [];
+        foreach ($productList as $product){
+            $catalogList[] = [
+                'id' => $product['id'],
+                'title' => $product['item_name'],
+                'shortDesc' => $product['short_desc'],
+                'price' => $product['price'],
+                'imagePath' => $product['imagePath'],
+            ];
         }?>
-    </div>
+	</div>
+    <div class="paginator" id="main-paginator"></div>
+    <script type="module">
+        import {CatalogList} from '/resources/public/js/catalog-list.js';
+        import {PageList} from '/resources/public/js/catalog-pagination.js';
+        const  mainCatalogList = new CatalogList({
+            attachToNodeId: 'main-catalog-list',
+            items: <?= \Core\Web\Json::encode($catalogList)?>
+        });
+        mainCatalogList.render();
+        console.log(mainCatalogList);
+        const  mainPaginator = new PageList('main-paginator',
+            <?=$paginator['curPage']?>,
+            <?=$paginator['maxPage']?>,
+            "<?=$search?>",
+            mainCatalogList
+        );
+        mainPaginator.render();
+    </script>
 </div>
