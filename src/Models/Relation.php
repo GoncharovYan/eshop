@@ -35,6 +35,10 @@ abstract class Relation {
 			$setClause = implode(',',$propsToImplode);
 
 			$sqlQuery = 'UPDATE `' . $tableName . '` SET ' . $setClause . ' WHERE id = ' . $this->id;
+
+			self::$db->exec($sqlQuery);
+
+			$result = $this->id;
 		} else {
 			foreach($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 				$propertyName = $property->getName();
@@ -49,9 +53,18 @@ abstract class Relation {
 			$setNames = implode(',', $namesToImplode);
 
 			$sqlQuery = 'INSERT INTO `' . $tableName . '`(' . $setClause . ') VALUES (' . $setNames . ')';
+
+			self::$db->exec($sqlQuery);
+
+			$query = 'SELECT * FROM ' . $tableName . ' ORDER BY ID DESC LIMIT 1';
+			$raw = self::$db->query($query)->fetch(\PDO::FETCH_ASSOC);
+			if ($raw !== false)
+			{
+				$result = self::morph($raw);
+			}
 		}
 
-		$result = self::$db->exec($sqlQuery);
+		//$result = self::$db->exec($sqlQuery);
 
 		return $result;
 	}
