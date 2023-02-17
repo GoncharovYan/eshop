@@ -24,3 +24,11 @@
 \Core\Routing\Router::get('/admin/:class/', [new \Controller\admin\AdminListController(), 'adminListPage']);
 \Core\Routing\Router::get('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminPage']);
 \Core\Routing\Router::post('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminEdit']);
+
+\Core\Routing\Router::get('/product/', [new \Controller\public\ErrorController(), 'pageNotFound']);
+\Core\Routing\Router::get('/product', [new \Controller\public\ErrorController(), 'pageNotFound']);
+\Core\Routing\Router::get('/order',[new \Controller\public\ErrorController(), 'pageNotFound']);
+\Core\Routing\Router::get('/order/:tag', [new \Controller\public\ErrorController(), 'pageNotFound']);
+\Core\Routing\Router::get('/product/order/:id', [new \Controller\public\ErrorController(), 'pageNotFound']);
+
+
