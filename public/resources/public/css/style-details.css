@@ -15,6 +15,7 @@
 	gap: 40px 5px;
 	grid-template-columns: 130px 130px 130px 130px 130px;
 	height: 730px;
+	margin-bottom: 100px;
 }
 
 .previous, .next{
