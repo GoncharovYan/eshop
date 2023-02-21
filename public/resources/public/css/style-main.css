@@ -5,7 +5,7 @@ html, body {
   overflow: auto;
 }
 
-/*подумать, как растянуть боди на весь экран при увеличении*/
+
 header {
   background-color: white;
   border-bottom: 1px solid grey;
@@ -13,6 +13,7 @@ header {
   top: 0;
   z-index: 100;
   width: 100%;
+	padding:25px 0;
 }
 
 header .logo {
@@ -74,7 +75,7 @@ header .links .button img {
 
 main {
   min-height: 100vh;
-  margin: 100px 0;
+  margin-top: 200px;
   display: flex;
   justify-content: center;
 }

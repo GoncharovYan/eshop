@@ -4,6 +4,7 @@
  * @var array $counts
  * @var string $email
  * @var int $cost
+ * @var int $token
  */
 ?>
 <div class="order">
@@ -25,6 +26,7 @@
                         <?= $cost ?></span>
                 </p>
                 <input class="order-details__confirm" type="submit" value="Да я покупаю всё">
+				<input type="hidden" name="token" value="<?= $token?>">
             </form>
         </div>
 

@@ -6,6 +6,7 @@ use Controller\BaseController;
 use Models\Item;
 use Models\Orders;
 use Models\Relation;
+use Services\TokenServices;
 
 class OrderController extends BaseController
 {
@@ -42,12 +43,15 @@ class OrderController extends BaseController
                 $email = null;
             }
 
+			$token = TokenServices::createToken();
+
             echo $this->render('layoutView.php', [
                 'content' => $this->render('public/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
                     'email' => $email,
                     'cost' => $cost,
+					'token' => $token,
                 ]),
             ]);
         }
@@ -71,6 +75,9 @@ class OrderController extends BaseController
     public function checkout($data)
     {
         session_start();
+
+		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+		TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
 
         $newOrder = new Orders();
 

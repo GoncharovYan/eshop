@@ -37,10 +37,10 @@ class CatalogController extends BaseController
 
             echo $this->render('layoutView.php', [
                 'content' => $this->render('public/catalogView.php', [
-                    'productList' => $productList,
-                    'paginator' => $paginator,
-                    'tagList' => $tagList,
-                    'search' => $search,
+					'productList' => $productList,
+					'paginator' => $paginator,
+					'tagList' => $tagList,
+					'search' => $search,
                 ]),
             ]);
         }
