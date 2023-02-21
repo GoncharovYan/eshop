@@ -50,7 +50,7 @@
 </script>
 
 <div class="container">
-	<table class="table table-sort table-striped align-middle">
+	<table class="table table-sort table-striped ">
 		<thead>
 			<tr>
 				<? foreach ($contentTableHead as $contentHead) {?>

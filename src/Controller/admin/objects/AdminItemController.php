@@ -12,40 +12,40 @@ class AdminItemController extends BaseController
 {
 	public function adminItemPage(int|string $id)
 	{
-		if ($id === 'new') {
-			Item::createNewItem();
-			header("Location: /admin/item/");
-		}
-
-		$item = Item::findById($id);
-
-		$mainImage = Image::findById($item->main_image_id);
-		if($mainImage->path === null)
-		{
-			$mainImage = Image::findById(1);
-		}
-
-		$image = new Image();
-		$images = $image::find([
-			'conditions' => "ITEM_ID = $id"
-		]);
-
-		$tag = new Tag();
-		$tags = $tag->items()->find([
-			'conditions' => "ITEM_ID = $id"
-		]);
-
-
 		$allTags = Tag::findAll();
+		if ($id === 'new') {
+			$item = new Item();
+			$mainImage = Image::findById(1);
+			$images = [];
+			$tags = [];
+		} else {
+			$item = Item::findById($id);
 
-		// Удаление текущих тегов товара из массива всех тегов
-		$tagsID = [];
-		foreach ($tags as $itemTag) {
-			$tagsID[] = $itemTag['id'];
-		}
-		foreach ($allTags as $key => $otherTag) {
-			if(in_array($otherTag->id, $tagsID, true)) {
-				unset($allTags[$key]);
+			$mainImage = Image::findById($item->main_image_id);
+			if($mainImage->path === null)
+			{
+				$mainImage = Image::findById(1);
+			}
+
+			$image = new Image();
+			$images = $image::find([
+				'conditions' => "ITEM_ID = $id"
+			]);
+
+			$tag = new Tag();
+			$tags = $tag->items()->find([
+				'conditions' => "ITEM_ID = $id"
+			]);
+
+			// Удаление текущих тегов товара из массива всех тегов
+			$tagsID = [];
+			foreach ($tags as $itemTag) {
+				$tagsID[] = $itemTag['id'];
+			}
+			foreach ($allTags as $key => $otherTag) {
+				if(in_array($otherTag->id, $tagsID, true)) {
+					unset($allTags[$key]);
+				}
 			}
 		}
 

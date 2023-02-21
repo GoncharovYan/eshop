@@ -10,11 +10,10 @@ class AdminTagController extends BaseController
 	public function adminTagPage(int|string $id)
 	{
 		if ($id === 'new') {
-			Tag::createNewTag();
-			header("Location: /admin/tag/");
+			$tag = new Tag();
+		} else {
+			$tag = Tag::findById($id);
 		}
-
-		$tag = Tag::findById($id);
 
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminTagView.php', [

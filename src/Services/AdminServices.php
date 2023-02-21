@@ -9,7 +9,12 @@ class AdminServices
 	public static function adminEditAction($className, $id, $data)
 	{
 		$class = "\Models\\" . ucfirst($className);
-		$obj = $class::findById($id);
+		if($id === 'new')
+		{
+			$obj = new $class;
+		} else {
+			$obj = $class::findById($id);
+		}
 
 		$actionFunction = 'admin' . ucfirst($data['action']);
 		self::$actionFunction($className, $obj ,$id, $data);
@@ -21,8 +26,8 @@ class AdminServices
 		{
 			$obj->$key = $value;
 		}
-		$obj->save();
-		header("Location: /admin/$className/$id/");
+		$obj = $obj->save();
+		header("Location: /admin/$className/$obj->id/");
 	}
 
 	public static function adminDelete($className, $obj ,$id, $data)
@@ -39,21 +44,40 @@ class AdminServices
 		header("Location: /admin/$className/$id/");
 	}
 
-	public static function adminAddRelation($className, $obj ,$id, $data)
+	public static function adminDeleteRelations($className, $obj ,$id, $data)
 	{
-		// $obj = $item
 		$relatedClass = "\Models\\" . ucfirst($data['relation']);
-		// Tag
-		$relatedObj = $relatedClass::findById($data['id']);
-		// $relatedObj = Tag::findById($data['id']);
-		$obj->addRelation($relatedObj);
-		// $item->addManyToMany($tag);
+		$relatedObjectArr = $relatedClass::findByIdArr($data['id']);
+		$obj->deleteRelationArr($relatedObjectArr);
 		header("Location: /admin/$className/$id/");
 	}
 
-	public static function adminEditOrderCount($className, $obj ,$id, $data)
+	public static function adminAddRelation($className, $obj ,$id, $data)
 	{
-		$obj->editItemCount($data['id'], $data['item_count']);
+		$relatedClass = "\Models\\" . ucfirst($data['relation']);
+		$relatedObj = $relatedClass::findById($data['id']);
+		$obj->addRelation($relatedObj);
+		header("Location: /admin/$className/$id/");
+	}
+
+	public static function adminAddRelations($className, $obj ,$id, $data)
+	{
+		$relatedClass = "\Models\\" . ucfirst($data['relation']);
+		$relatedClassArr = $relatedClass::findByIdArr($data['id']);
+		$obj->addRelationArr($relatedClassArr);
+		header("Location: /admin/$className/$id/");
+	}
+
+	public static function adminAddOrderItemRelation($className, $obj ,$id, $data)
+	{
+		$relatedClass = "\Models\\" . ucfirst($data['relation']);
+		$relatedClassArr = $relatedClass::findByIdArr($data['id']);
+	}
+
+	public static function adminUpdateItemCount($className, $obj ,$id, $data)
+	{
+		$relatedClass = "\Models\\" . ucfirst($data['relation']);
+		$obj->updateRelationArr($relatedClass, 'ITEM_COUNT', $data['relationData']);
 		header("Location: /admin/$className/$id/");
 	}
 
@@ -73,7 +97,6 @@ class AdminServices
 			$destiation_dir = ROOT . '/public' . $path;
 			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir );
 		}
-		var_dump($destiation_dir);
 
 		header("Location: /admin/$className/$id/");
 	}
