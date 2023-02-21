@@ -59,7 +59,6 @@ export class CatalogList
             )
             .then((data)=>
                 {
-
                     this.items = data[0].map((item)=>{
                         return this.createItem(item);
                     })

@@ -58,7 +58,7 @@ export class PageList
 
         if(this.curPage !== 1)
         {
-            let firstPage = document.createElement('a')
+            let firstPage = document.createElement('button')
             firstPage.classList.add('page')
             firstPage.addEventListener('click', ()=>this.swapPage(1))
             firstPage.innerText = '<<'
@@ -87,7 +87,7 @@ export class PageList
 
         for (let i = firstPage; i <= lastPage; i++)
         {
-            let pageButton = document.createElement('a')
+            let pageButton = document.createElement('button')
             if(i != this.curPage)
             {
                 pageButton.classList.add('page')
@@ -103,7 +103,7 @@ export class PageList
 
         if(this.curPage !== this.maxPage)
         {
-            let lastPage = document.createElement('a')
+            let lastPage = document.createElement('button')
             lastPage.classList.add('page')
             lastPage.addEventListener('click', ()=>this.swapPage(this.maxPage))
             lastPage.innerText ='>>'
