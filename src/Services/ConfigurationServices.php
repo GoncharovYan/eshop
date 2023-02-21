@@ -2,6 +2,8 @@
 
 namespace Services;
 
+use Exception;
+
 class ConfigurationServices
 {
     public static function option(string $name, $defaultValue = null)
