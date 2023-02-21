@@ -47,8 +47,10 @@ abstract class Relation
 		} else {
 			foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 				$propertyName = $property->getName();
-				$propertyToImplode[] = $propertyName;
-				$namesToImplode[] = '"' . $this->{$propertyName} . '"';
+				if ($propertyName !== 'date_created' && $propertyName !== 'date_updated') {
+					$propertyToImplode[] = $propertyName;
+					$namesToImplode[] = '"' . $this->{$propertyName} . '"';
+				}
 			}
 
 			array_shift($propertyToImplode);
@@ -336,9 +338,9 @@ abstract class Relation
 	 * @param array $extraRelationData
 	 *
 	 * Принимает:
-	 * 	массив объектов, связи к которым нужно образовать;
-	 * 	название дополнительного столбца (например, 'ITEM_COUNT')
-	 * 	массив дополнительных данных для внесения в таблицу связей, [id связаного объекта] => [значение в дополнительном столбце];
+	 *    массив объектов, связи к которым нужно образовать;
+	 *    название дополнительного столбца (например, 'ITEM_COUNT')
+	 *    массив дополнительных данных для внесения в таблицу связей, [id связаного объекта] => [значение в дополнительном столбце];
 	 */
 	private function addManyToManyArr(array $classRelatedArr, $extraRelationDataType, array $extraRelationData)
 	{
@@ -356,8 +358,7 @@ abstract class Relation
 			}
 		}
 
-		if(isset($extraRelationDataType))
-		{
+		if (isset($extraRelationDataType)) {
 			$extraRelationDataType = ", " . $extraRelationDataType;
 		} else {
 			$extraRelationDataType = "";
@@ -389,9 +390,9 @@ abstract class Relation
 	 * @param array $relationData
 	 *
 	 * Принимает:
-	 * 	класс, связи к которому нужно изменить;
-	 * 	название дополнительного столбца (например, 'ITEM_COUNT')
-	 * 	массив дополнительных данных для изменения таблицы связей, [id связаного объекта] => [значение в дополнительном столбце];
+	 *    класс, связи к которому нужно изменить;
+	 *    название дополнительного столбца (например, 'ITEM_COUNT')
+	 *    массив дополнительных данных для изменения таблицы связей, [id связаного объекта] => [значение в дополнительном столбце];
 	 */
 	private function updateManyToManyArr($classRelatedArr, $relationDataType, array $relationData)
 	{
