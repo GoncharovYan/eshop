@@ -164,9 +164,13 @@ abstract class Relation
 		}
 	}
 
+	/**
+	 * @param array $ids
+	 *
+	 * Возвращает массив объектов по массиву id
+	 */
 	public static function findByIdArr(array $ids)
 	{
-
 		$class = new \ReflectionClass(static::class);
 
 		$tableName = strtolower($class->getShortName());
@@ -326,6 +330,16 @@ abstract class Relation
 		$this->addManyToManyArr($classRelatedArr, $extraRelationDataType, $extraRelationData);
 	}
 
+	/**
+	 * @param array $classRelatedArr
+	 * @param $extraRelationDataType
+	 * @param array $extraRelationData
+	 *
+	 * Принимает:
+	 * 	массив объектов, связи к которым нужно образовать;
+	 * 	название дополнительного столбца (например, 'ITEM_COUNT')
+	 * 	массив дополнительных данных для внесения в таблицу связей, [id связаного объекта] => [значение в дополнительном столбце];
+	 */
 	private function addManyToManyArr(array $classRelatedArr, $extraRelationDataType, array $extraRelationData)
 	{
 		$class1 = new \ReflectionClass(static::class);
@@ -369,6 +383,16 @@ abstract class Relation
 		$this->updateManyToManyArr($classRelatedArr, $relationDataType, $relationData);
 	}
 
+	/**
+	 * @param $classRelatedArr
+	 * @param $relationDataType
+	 * @param array $relationData
+	 *
+	 * Принимает:
+	 * 	класс, связи к которому нужно изменить;
+	 * 	название дополнительного столбца (например, 'ITEM_COUNT')
+	 * 	массив дополнительных данных для изменения таблицы связей, [id связаного объекта] => [значение в дополнительном столбце];
+	 */
 	private function updateManyToManyArr($classRelatedArr, $relationDataType, array $relationData)
 	{
 		$class1 = new \ReflectionClass(static::class);
@@ -405,6 +429,11 @@ abstract class Relation
 		$this->deleteManyToManyArr($classRelatedArr);
 	}
 
+	/**
+	 * @param array $classRelatedArr
+	 *
+	 * Принимает массив объектов, связи к которым нужно удалить
+	 */
 	private function deleteManyToManyArr(array $classRelatedArr)
 	{
 		$class1 = new \ReflectionClass(static::class);
