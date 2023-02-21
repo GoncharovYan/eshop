@@ -1,9 +1,12 @@
-#elastic {
-	display: block;
-	margin: 40px 0;
+.elastic li.hide{
+	display: none;
 }
 
-.elastic li.hide{
+.elastic-tag li{
+	display: flex;
+}
+
+.elastic-tag li.hide{
 	display: none;
 }
 
@@ -34,9 +37,5 @@
 }
 
 .item .tag{
-	height: 300px;
-}
-
-.order .items{
-	max-height: 250px;
+	height: 400px;
 }

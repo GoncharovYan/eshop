@@ -38,10 +38,4 @@ class Item extends Relation {
 		return $this->hasMany(Orders::class);
 	}
 
-	public static function createNewItem(){
-		$query =
-			"INSERT INTO item (ITEM_NAME, PRICE)
-				VALUE ('Новый товар', 0)";
-		self::executeQuery($query);
-	}
 }
