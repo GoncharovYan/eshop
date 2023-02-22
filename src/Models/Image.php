@@ -13,10 +13,4 @@ class Image extends Relation {
 
 	public $item_id;
 
-	public static function createNewImage(){
-		$query =
-			"INSERT INTO image (PATH, HEIGHT, WIDTH)
-				VALUE ('', 0, 0)";
-		self::executeQuery($query);
-	}
 }
