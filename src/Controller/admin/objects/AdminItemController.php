@@ -21,11 +21,7 @@ class AdminItemController extends BaseController
 		} else {
 			$item = Item::findById($id);
 
-			$mainImage = Image::findById($item->main_image_id);
-			if($mainImage->path === null)
-			{
-				$mainImage = Image::findById(1);
-			}
+			$mainImage = Image::findById($item->main_image_id) ?? Image::findById(1);
 
 			$image = new Image();
 			$images = $image::find([

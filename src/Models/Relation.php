@@ -43,7 +43,7 @@ abstract class Relation
 
 			self::$db->exec($sqlQuery);
 
-			$result = $this->id;
+			$result = $this;
 		} else {
 			foreach ($class->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
 				$propertyName = $property->getName();
