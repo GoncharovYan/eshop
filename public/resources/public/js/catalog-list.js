@@ -33,7 +33,6 @@ export class CatalogList
     {
         this.itemsContainer = document.createElement('div')
         this.itemsContainer.classList.add('catalog-list')
-
         this.rootNode.append(this.itemsContainer)
     }
 
@@ -45,9 +44,19 @@ export class CatalogList
     render()
     {
         this.itemsContainer.innerHTML = ''
-        this.items.forEach((item)=>{
-            this.itemsContainer.append(item.render())
-        })
+        if(this.items.length === 0)
+        {
+            const emptyProductsString = document.createElement('p')
+            emptyProductsString.classList.add("emptyProducts")
+            emptyProductsString.innerText = "Товар не найден!"
+            this.itemsContainer.append(emptyProductsString)
+        }
+        else
+        {
+            this.items.forEach((item)=>{
+                this.itemsContainer.append(item.render())
+            })
+        }
     }
 
     swapPage()
@@ -59,7 +68,6 @@ export class CatalogList
             )
             .then((data)=>
                 {
-
                     this.items = data[0].map((item)=>{
                         return this.createItem(item);
                     })
