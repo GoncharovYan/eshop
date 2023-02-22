@@ -83,19 +83,32 @@ class AdminServices
 
 	public static function adminAddImage($className, $obj ,$id, $data)
 	{
-		$path = '/resources/public/itemImages/'.$_FILES['image']['name'];
-		$image_info = getimagesize($_FILES["image"]["tmp_name"]);
+		if (isset($_FILES['image']['tmp_name'])) {
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			$mime = finfo_file($finfo, $_FILES['image']['tmp_name']);
+			$allowed = array('image/png', 'image/jpg', 'image/jpeg', 'image/webp');
+			if (!in_array($mime, $allowed)) {
+				echo 'Wrong file type';
+				exit();
+			}
+			finfo_close($finfo);
+		}
+
+		$imageInfo = getimagesize($_FILES["image"]["tmp_name"]);
+		$fileName = md5(uniqid('', true)) . '.jpg';
+		$uploadDir = '/resources/public/itemImages/';
+		$path = $uploadDir . $fileName;
 
 		$newImage = new Image();
 		$newImage->path = $path;
 		$newImage->item_id = $id;
-		$newImage->width = $image_info[0];
-		$newImage->height = $image_info[1];
-		$newImage->save();
+		$newImage->width = $imageInfo[0];
+		$newImage->height = $imageInfo[1];
 
 		if(isset($_FILES) && $_FILES['image']['error'] === 0){
 			$destiation_dir = ROOT . '/public' . $path;
 			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir );
+			$newImage->save();
 		}
 
 		header("Location: /admin/$className/$id/");
