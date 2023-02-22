@@ -8,11 +8,18 @@ use Models\Item;
 use Models\Orders;
 use Models\Tag;
 use Models\User;
+use Services\UserServices;
 
 class AdminListController extends BaseController
 {
 	public function adminListPage(string $className)
 	{
+        if(!UserServices::isAdmin())
+        {
+            header("Location: /catalog/all/1/");
+            exit;
+        }
+
 		$class = "\Models\\" . ucfirst($className);
 		$class = new $class();
 

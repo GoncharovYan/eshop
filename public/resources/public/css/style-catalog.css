@@ -82,6 +82,11 @@
   justify-self: center;
 }
 
+.emptyProducts{
+  font-size: 25px;
+  margin-top: 15px;
+}
+
 .paginator {
   margin-top: 20px;
   grid-area: paginator;

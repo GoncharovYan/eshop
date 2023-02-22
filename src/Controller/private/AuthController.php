@@ -45,13 +45,10 @@ class AuthController extends BaseController
        {
            $_SESSION['login'] = $data['login'];
            $_SESSION['pass'] = $data['pass'];
-           $user = User::executeQuery("SELECT * 
-                    FROM user 
-                    WHERE LOGIN = '{$data['login']}'");
+           $user = User::find([
+               'conditions'=> "LOGIN = '{$_SESSION['login']}'"
+           ]);
            $_SESSION['email'] = $user[0]->email;
-
-
-
        }
        header("Location: /catalog/all/1/");
     }
@@ -63,11 +60,28 @@ class AuthController extends BaseController
             if(UserServices::checkLogin($data['login']))
             {
                 $pass = password_hash($data['pass'], PASSWORD_DEFAULT);
-                User::executeQuery("
-                    INSERT INTO user (EMAIL, LOGIN, PASSWORD, ROLE)
-                    VALUES ('{$data['email']}','{$data['login']}','{$pass}',1);"
-                );
-                header("Location: /auth/");
+                $newUser = new User();
+                $newUser->login = $data['login'];
+                $newUser->password = $pass;
+                $newUser->email = $data['email'];
+                $newUser->role = 1;
+                $newUser->save();
+
+                $messages[] = "Регистрация прошла успешно!";
+                echo $this->render('layoutView.php', [
+                    'messages'=> $messages,
+                    'content' => $this->render('private/authView.php', [
+                    ]),
+                ]);
+            }
+            else
+            {
+                $messages[] = "Сожалеем, но данный логин занят!";
+                echo $this->render('layoutView.php', [
+                    'messages'=> $messages,
+                    'content' => $this->render('private/registerView.php', [
+                    ]),
+                ]);
             }
         }
         else{

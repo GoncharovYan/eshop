@@ -55,7 +55,6 @@ export class PageList
     render()
     {
         this.itemsContainer.innerHTML = ''
-
         if(this.curPage !== 1)
         {
             let firstPage = document.createElement('button')
@@ -64,7 +63,6 @@ export class PageList
             firstPage.innerText = '<<'
             this.itemsContainer.append(firstPage)
         }
-
         let firstPage;
         if( this.curPage - 3 < 1)
         {
@@ -101,7 +99,7 @@ export class PageList
             this.itemsContainer.append(pageButton)
         }
 
-        if(this.curPage !== this.maxPage)
+        if(this.curPage !== this.maxPage && this.maxPage > 1)
         {
             let lastPage = document.createElement('button')
             lastPage.classList.add('page')

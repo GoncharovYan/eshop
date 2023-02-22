@@ -88,13 +88,28 @@ header .links .button img {
 
 main {
   min-height: 100vh;
-  margin: 100px 0;
+  margin: 130px 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 footer {
   height: 100px;
   width: 100%;
   background-color: #383737;
+}
+
+.message
+{
+  display: flex;
+  background: #9ac0de;
+  border-radius: 5px;
+  margin-bottom: 25px;
+  padding: 10px 30px;
+  min-width: 402px;
+  justify-content: space-around;
+  color: #2d2929;
+  font-weight: bold;
+  font-size: 20px;
 }
