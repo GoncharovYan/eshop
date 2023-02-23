@@ -57,10 +57,10 @@ class Validator
 		if (!is_numeric($number) || !is_int($number + 0)) {
 			$this->errors []= "$name must be only numeric";
 		}
-		if (isset($max) && $number > $max) {
+		if (is_null($max) && $number > $max) {
 			$this->errors [] = "$name is more than the maximum";
 		}
-		if (isset($min) && $number < $min) {
+		if (is_null($min) && $number < $min) {
 			$this->errors [] = "$name is less than the minimum";
 		}
 	}
