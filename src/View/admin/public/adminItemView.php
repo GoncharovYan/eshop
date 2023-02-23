@@ -18,6 +18,7 @@ use Models\Item;
 		<div class="w-75">
 			<form method="post">
 				<input type="hidden" name="action" value="edit">
+				<input type="hidden" name="main_image_id" value="<?= $mainImage->id ?>">
 
 				<div class="p-3">
 					<label class="form-label">Название</label>
@@ -137,7 +138,7 @@ use Models\Item;
 						<button type="submit" class="btn btn-danger">Удалить</button>
 					</form>
 					<form method="post">
-						<input type="hidden" name="action" value="edit">
+						<input type="hidden" name="action" value="editMainImage">
 						<input type="hidden" name="main_image_id" value="<?= $image->id ?>">
 						<button type="submit"
 								class="btn <?= $item->main_image_id === $image->id ? 'btn-success' : 'btn-secondary' ?>">
