@@ -1,9 +1,9 @@
 function validateAuthForm()
 {
     let user = document.getElementById("auth-login").value
-    if(user.length === 0)
+    if((user.length) === 0 || (/^[0-9A-Z]+$/i.test(user.value)))
     {
-        window.alert(`Поле "Логин" не может быть пустым!`)
+        window.alert(`Поле "Логин" не может быть пустым и содержать спец. символы!`)
         return false
     }
     let pass = document.getElementById("auth-pass").value
@@ -29,9 +29,9 @@ function validateRegistrForm()
         return false;
     }
     let user = document.getElementById("reg-login").value
-    if(user.length === 0)
+    if((user.length) === 0 || (/^[0-9A-Z]+$/i.test(user.value)))
     {
-        window.alert(`Поле "Логин" не может быть пустым!`)
+        window.alert(`Поле "Логин" не может быть пустым содержать спец. символы !`)
         return false
     }
     let pass = document.getElementById("reg-pass").value
