@@ -2,6 +2,7 @@
 /**
  * @var string $style
  * @var string $content
+ * @var array $messages
  */
 ?>
 
@@ -51,8 +52,10 @@
             </div>
 		</div>
 	</header>
-	<hr>
 	<main>
+        <? if(!empty($messages)): ?>
+        <div class="message"><?= implode('<br>',$messages); ?></div>
+        <? endif; ?>
         <?= $content ?>
 	</main>
     <script src="/resources/public/js/catalog-search.js"></script>

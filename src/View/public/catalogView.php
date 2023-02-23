@@ -36,7 +36,6 @@
             items: <?= \Core\Web\Json::encode($catalogList)?>
         });
         mainCatalogList.render();
-        console.log(mainCatalogList);
         const  mainPaginator = new PageList('main-paginator',
             <?=$paginator['curPage']?>,
             <?=$paginator['maxPage']?>,
