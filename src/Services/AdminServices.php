@@ -87,7 +87,7 @@ class AdminServices
 	{
 		$imageInfo = getimagesize($_FILES["image"]["tmp_name"]);
 		$fileName = md5(uniqid('', true)) . '.jpg';
-		$uploadDir = '/resources/public/itemImages/';
+		$uploadDir = '/resources/objects/itemImages/';
 		$path = $uploadDir . $fileName;
 
 		$newImage = new Image();
@@ -97,7 +97,7 @@ class AdminServices
 		$newImage->height = $imageInfo[1];
 
 		if (isset($_FILES) && $_FILES['image']['error'] === 0) {
-			$destiation_dir = ROOT . '/public' . $path;
+			$destiation_dir = ROOT . '/objects' . $path;
 			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir);
 			$newImage->save();
 		}
@@ -108,7 +108,7 @@ class AdminServices
 	public static function adminDeleteImage($className, $obj, $id, $data)
 	{
 		$image = Image::findById($data['id']);
-		unlink(ROOT . '/public' . $image->path); // Delete image file
+		unlink(ROOT . '/objects' . $image->path); // Delete image file
 		$image->delete();
 
 		header("Location: /admin/$className/$id/");

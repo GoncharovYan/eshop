@@ -15,7 +15,7 @@ class DetailsController extends BaseController
 
 		if(!$product){
 			echo $this->render('layoutView.php', [
-				'content' => $this->render('public/pageNotFoundView.php', []),
+				'content' => $this->render('objects/pageNotFoundView.php', []),
 			]);
 		}
 		else
@@ -45,7 +45,7 @@ class DetailsController extends BaseController
 			// }
 
 			echo $this->render('layoutView.php', [
-				'content' => $this->render('public/detailsPageView.php', [
+				'content' => $this->render('objects/detailsPageView.php', [
 					'imagePath' => $imagePath,
 					'product' => $product,
 					'tags' => $tags,

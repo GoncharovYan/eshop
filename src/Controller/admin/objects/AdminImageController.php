@@ -25,7 +25,7 @@ class AdminImageController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminImageView.php', [
+			'content' => $this->render('admin/objects/adminImageView.php', [
 				'image' => $image,
 				'token' => TokenServices::createToken(),
 			]),

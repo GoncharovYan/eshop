@@ -38,7 +38,7 @@ class AdminListController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
+			'content' => $this->render('admin/adminListView.php', [
 				'contentTable' => $dataTable,
 				'contentTableHead' => $dataTableHead,
 				'contentType' => $className,

@@ -25,7 +25,7 @@ class AdminUserController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminUserView.php', [
+			'content' => $this->render('admin/objects/adminUserView.php', [
 				'user' => $user,
 				'token' => TokenServices::createToken(),
 			]),

@@ -58,7 +58,7 @@ class AdminItemController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminItemView.php', [
+			'content' => $this->render('admin/objects/adminItemView.php', [
 				'item' => $item,
 				'mainImage' => $mainImage,
 				'images' => $images,

@@ -25,7 +25,7 @@ class AdminTagController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminTagView.php', [
+			'content' => $this->render('admin/objects/adminTagView.php', [
 				'tag' => $tag,
 				'token' => TokenServices::createToken(),
 			]),

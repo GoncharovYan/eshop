@@ -31,7 +31,7 @@ class AdminOrdersController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminOrderView.php', [
+			'content' => $this->render('admin/objects/adminOrderView.php', [
 				'order' => $order,
 				'orderItems' => $items,
 				'token' => TokenServices::createToken(),
