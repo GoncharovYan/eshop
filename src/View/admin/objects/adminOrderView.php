@@ -3,6 +3,7 @@
  * @var Orders $order
  * @var array $orderItems
  * @var array $itemsCount
+ * @var int $token
  */
 
 use Models\Orders;
@@ -13,6 +14,7 @@ use Models\Orders;
 	<div>
 		<form method="post" class="d-flex flex-column">
 			<input type="hidden" name="action" value="edit">
+			<input type="hidden" name="token" value="<?= $token?>">
 
 			<div class="form-group mb-2">
 				<label class="form-label">Имя заказчика</label>
@@ -77,6 +79,7 @@ use Models\Orders;
 					<form method="post">
 						<input type="hidden" name="action" value="deleteRelations">
 						<input type="hidden" name="relation" value="item">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<ul class="list-group">
 							<? foreach ($orderItems as $orderItem) { ?>
 								<li class="list-group-item m-1 d-flex justify-content-between">
@@ -97,6 +100,7 @@ use Models\Orders;
 					<form method="post">
 						<input type="hidden" name="action" value="updateItemCount">
 						<input type="hidden" name="relation" value="item">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<ul class="elastic-tag list-group">
 							<? foreach ($orderItems as $orderItem) { ?>
 								<li class="list-group-item m-1 justify-content-between" style="height: 41px">
@@ -118,6 +122,7 @@ use Models\Orders;
 		<label>Добавить товар по id</label>
 		<input type="hidden" name="action" value="addRelation">
 		<input type="hidden" name="relation" value="item">
+		<input type="hidden" name="token" value="<?= $token?>">
 		<input type="text" name="id">
 		<button type="submit" class="btn btn-primary">Добавить</button>
 	</form>
@@ -125,6 +130,7 @@ use Models\Orders;
 	<div class="p-3 d-flex justify-content-center">
 		<form method="post">
 			<input type="hidden" name="action" value="delete">
+			<input type="hidden" name="token" value="<?= $token?>">
 			<button type="submit" class="btn btn-danger">Удалить заказ</button>
 		</form>
 	</div>

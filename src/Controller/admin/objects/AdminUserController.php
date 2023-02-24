@@ -6,6 +6,7 @@ use Controller\BaseController;
 use Models\User;
 use Services\AdminServices;
 use Services\AdminValidateServices;
+use Services\TokenServices;
 use Services\UserServices;
 
 class AdminUserController extends BaseController
@@ -24,8 +25,9 @@ class AdminUserController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminUserView.php', [
+			'content' => $this->render('admin/objects/adminUserView.php', [
 				'user' => $user,
+				'token' => TokenServices::createToken(),
 			]),
 		]);
 	}
@@ -36,6 +38,9 @@ class AdminUserController extends BaseController
 			header("Location: /catalog/all/1/");
 			exit;
 		}
+
+		session_start();
+		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
 		if ($data['action'] !== 'edit') {
 			echo 'Wrong action';

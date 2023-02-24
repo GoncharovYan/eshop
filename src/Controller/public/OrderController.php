@@ -46,7 +46,7 @@ class OrderController extends BaseController
 			$token = TokenServices::createToken();
 
             echo $this->render('layoutView.php', [
-                'content' => $this->render('public/orderView.php', [
+                'content' => $this->render('objects/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
                     'email' => $email,

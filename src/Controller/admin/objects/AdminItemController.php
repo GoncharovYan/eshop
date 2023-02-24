@@ -8,6 +8,7 @@ use Models\Item;
 use Models\Tag;
 use Services\AdminServices;
 use Services\AdminValidateServices;
+use Services\TokenServices;
 use Services\UserServices;
 
 class AdminItemController extends BaseController
@@ -57,12 +58,13 @@ class AdminItemController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminItemView.php', [
+			'content' => $this->render('admin/objects/adminItemView.php', [
 				'item' => $item,
 				'mainImage' => $mainImage,
 				'images' => $images,
 				'tags' => $tags,
 				'allTags' => $allTags,
+				'token' => TokenServices::createToken(),
 			]),
 		]);
 	}
@@ -73,6 +75,9 @@ class AdminItemController extends BaseController
 			header("Location: /catalog/all/1/");
 			exit;
 		}
+
+		session_start();
+		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
 		switch ($data['action']) {
 			case "edit":
@@ -85,12 +90,15 @@ class AdminItemController extends BaseController
 			case "addImage":
 				AdminValidateServices::adminItemAddImageValidate($data);
 				break;
+			case "deleteImage":
+				AdminValidateServices::adminRelationValidate($data);
+				break;
 			case "editMainImage":
 				AdminValidateServices::adminItemEditMainImageValidate($data);
 				$data['action'] = "edit";
 				break;
 			default:
-				echo 'Wrong action';
+				echo "Wrong action " . $data['action'];
 				exit();
 		}
 		AdminServices::adminEditAction('item', $id, $data);

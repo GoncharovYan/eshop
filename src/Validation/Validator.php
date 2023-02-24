@@ -39,6 +39,12 @@ class Validator
 
 	public function checkEngText(string $text, string $name, int $maxlength, int $minlength = 1)
 	{
+		if (strlen($text) < $minlength) {
+			$this->errors []= "$name length is less than the minimum";
+		}
+		if (strlen($text) > $maxlength) {
+			$this->errors []= "$name length is more than the maximum";
+		}
 		if (!preg_match('/^[a-z0-9!?+()%\-]+$/iu', $text)) {
 			$this->errors [] = "$name must be in English";
 		}
@@ -49,10 +55,10 @@ class Validator
 		if (!is_numeric($number) || !is_int($number + 0)) {
 			$this->errors []= "$name must be only numeric";
 		}
-		if (is_null($max) && $number > $max) {
+		if (!is_null($max) && $number > $max) {
 			$this->errors [] = "$name is more than the maximum";
 		}
-		if (is_null($min) && $number < $min) {
+		if (!is_null($min) && $number < $min) {
 			$this->errors [] = "$name is less than the minimum";
 		}
 	}
