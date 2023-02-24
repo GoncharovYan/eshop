@@ -1,11 +1,17 @@
 function validateAuthForm()
 {
     let user = document.getElementById("auth-login").value
-    if((user.length) === 0 || (/^[0-9A-Z]+$/i.test(user.value)))
+    if((user.length) === 0 || !user.match(/^[a-zA-Z0-9]+$/))
     {
-        window.alert(`Поле "Логин" не может быть пустым и содержать спец. символы!`)
+        window.alert(`Логин должен содержать только буквы латинского алфавита и цифры`)
         return false
     }
+    if((user.length) > 62)
+    {
+        window.alert(`Максимальная длина логина: 62 символа`)
+        return false
+    }
+
     let pass = document.getElementById("auth-pass").value
     if(pass.length < 5)
     {
@@ -28,12 +34,24 @@ function validateRegistrForm()
         window.alert(`Некорректно заполнено поле "Email"`)
         return false;
     }
-    let user = document.getElementById("reg-login").value
-    if((user.length) === 0 || (/^[0-9A-Z]+$/i.test(user.value)))
+    if((email.length) > 62)
     {
-        window.alert(`Поле "Логин" не может быть пустым содержать спец. символы !`)
+        window.alert(`Максимальная допустимая длина почты: 62 символа`)
         return false
     }
+
+    let user = document.getElementById("reg-login").value
+    if((user.length) === 0 || !user.match(/^[a-zA-Z0-9]+$/))
+    {
+        window.alert(`Логин должен содержать только буквы латинского алфавита и цифры`)
+        return false
+    }
+    if((user.length) > 62)
+    {
+        window.alert(`Максимальная длина логина: 62 символа`)
+        return false
+    }
+
     let pass = document.getElementById("reg-pass").value
     if(pass.length < 5)
     {
