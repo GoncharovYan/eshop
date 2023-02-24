@@ -8,7 +8,7 @@ class ErrorController extends BaseController
 {
 	public function pageNotFound(){
 		echo $this->render('layoutView.php', [
-				'content' => $this->render('objects/pageNotFoundView.php', [
+				'content' => $this->render('public/pageNotFoundView.php', [
 
 				]),
 		]);
