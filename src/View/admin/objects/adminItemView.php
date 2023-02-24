@@ -5,6 +5,7 @@
  * @var array $images
  * @var array $tags
  * @var array $allTags
+ * @var int $token
  */
 
 use Models\Image;
@@ -18,6 +19,8 @@ use Models\Item;
 		<div class="w-75">
 			<form method="post">
 				<input type="hidden" name="action" value="edit">
+				<input type="hidden" name="main_image_id" value="<?= $mainImage->id ?>">
+				<input type="hidden" name="token" value="<?= $token?>">
 
 				<div class="p-3">
 					<label class="form-label">Название</label>
@@ -73,45 +76,60 @@ use Models\Item;
 	</div>
 	</form>
 
-	<h4 class="text-center pt-2">Теги</h4>
+	<h4 class="text-center">Теги</h4>
 
-	<div class="tag d-flex justify-content-around m-3">
-		<ul class="overflow-auto list-group border" style="width: 30%">
-			<? foreach ($tags as $tag) { ?>
-				<form method="post">
-					<li class="list-group-item m-1 d-flex justify-content-between">
-						<label><?= $tag['tag_name'] ?></label>
-						<input type="hidden" name="action" value="deleteRelation">
+	<div class="tag">
+		<div class="m-1 d-flex align-items-center">
+			<input type="search" id="elastic-tag" class="form-control" placeholder="Поиск тега">
+		</div>
+
+		<div class="d-flex justify-content-around m-3 h-100">
+			<div class="list-group" style="width: 30%">
+				<div class="border h-100 overflow-auto h-50">
+					<form method="post">
+						<input type="hidden" name="action" value="deleteRelations">
 						<input type="hidden" name="relation" value="tag">
-						<input type="hidden" name="id" value="<?= $tag['id'] ?>">
-						<input type="submit" value="-" class="btn btn-danger">
-					</li>
-				</form>
-			<? } ?>
-		</ul>
-
-		<div class="h-100 overflow-auto border" style="width: 30%">
-			<div class="m-1">
-				<input type="search" id="elastic-tag" class="form-control" placeholder="Поиск тега">
+						<input type="hidden" name="token" value="<?= $token?>">
+						<ul class="elastic-tag list-group">
+							<? foreach ($tags as $tag) { ?>
+								<li class="list-group-item m-1 justify-content-between">
+									<label><?= $tag['tag_name'] ?></label>
+									<input type="checkbox" name="id[]" value="<?= $tag['id'] ?>">
+								</li>
+							<? } ?>
+						</ul>
+				</div>
+				<div class="p-3 d-flex justify-content-center">
+					<input type="submit" value="Удалить выбранное" class="btn btn-danger">
+					</form>
+				</div>
 			</div>
 
-			<ul class="elastic list-group">
-				<? foreach ($allTags as $tag) { ?>
+			<div class="list-group" style="width: 30%">
+				<div class="border h-100 overflow-auto h-50">
 					<form method="post">
-						<li class="list-group-item m-1 d-flex justify-content-between">
-							<?= $tag->tag_name ?>
-							<input type="hidden" name="action" value="addRelation">
-							<input type="hidden" name="relation" value="tag">
-							<input type="hidden" name="id" value="<?= $tag->id ?>">
-							<input type="submit" value="+" class="btn btn-success">
-						</li>
+						<input type="hidden" name="action" value="addRelations">
+						<input type="hidden" name="relation" value="tag">
+						<input type="hidden" name="token" value="<?= $token?>">
+						<ul class="elastic-tag list-group">
+							<? foreach ($allTags as $tag) { ?>
+								<li class="list-group-item m-1 justify-content-between">
+									<?= $tag->tag_name ?>
+									<input type="checkbox" name="id[]" value="<?= $tag->id ?>">
+								</li>
+							<? } ?>
+						</ul>
+				</div>
+				<div class="p-3 d-flex justify-content-center">
+					<input type="submit" value="Добавить выбранное" class="btn btn-success">
 					</form>
-				<? } ?>
-			</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<h4 class="text-center pt-2">Изображения</h4>
+
+	<h4 class="text-center p-2 mt-5">Изображения</h4>
 
 	<div class="d-flex overflow-auto border">
 		<? foreach ($images as $image) { ?>
@@ -121,11 +139,13 @@ use Models\Item;
 					<form method="post">
 						<input type="hidden" name="action" value="deleteImage">
 						<input type="hidden" name="id" value="<?= $image->id ?>">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<button type="submit" class="btn btn-danger">Удалить</button>
 					</form>
 					<form method="post">
-						<input type="hidden" name="action" value="edit">
+						<input type="hidden" name="action" value="editMainImage">
 						<input type="hidden" name="main_image_id" value="<?= $image->id ?>">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<button type="submit"
 								class="btn <?= $item->main_image_id === $image->id ? 'btn-success' : 'btn-secondary' ?>">
 							Главное
@@ -140,6 +160,7 @@ use Models\Item;
 		<label class="form-label">Добавить изображение</label>
 		<form method="post" enctype="multipart/form-data" class="d-flex">
 			<input type="hidden" name="action" value="addImage">
+			<input type="hidden" name="token" value="<?= $token?>">
 			<input type="file" name="image" accept="image/*" class="form-control">
 			<button type="submit" class="btn btn-primary">Отправить</button>
 		</form>
@@ -148,26 +169,12 @@ use Models\Item;
 	<div class="p-3 d-flex justify-content-center">
 		<form method="post">
 			<input type="hidden" name="action" value="delete">
+			<input type="hidden" name="token" value="<?= $token?>">
 			<button type="submit" class="btn btn-danger">Удалить товар</button>
 		</form>
 	</div>
 </div>
 
-
-<!-- Перенести в .js файл -->
-<script>
-	document.querySelector('#new-image-path').oninput = function () {
-		let val = this.value;
-		let elem = document.querySelector('.');
-		if (val !== '') {
-			function (elem) {
-				elem.classList.add('hide');
-			}
-			}
-		} else {
-			elem.classList.remove('hide');
-		}
-	}
-</script>
+<script src="/resources/admin/js/admin-item.js"></script>
 
 

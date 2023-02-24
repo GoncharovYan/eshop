@@ -10,9 +10,9 @@ class UserServices
 {
     public static function checkLogin(string $login): bool
     {
-        $user = User::executeQuery("SELECT * 
-                    FROM user 
-                    WHERE LOGIN = '{$login}'");
+        $user = User::find([
+            'conditions'=> "LOGIN = '$login'"
+        ]);
         if(isset($user[0]))
         {
             return false;
@@ -22,17 +22,15 @@ class UserServices
 
     public static function checkPass(string $login, string $pass): bool
     {
-        $user = User::executeQuery("SELECT * 
-                    FROM user 
-                    WHERE LOGIN = '{$login}'");
-
+        $user = User::find([
+            'conditions'=> "LOGIN = '$login'"
+        ]);
         if($user !== null)
         {
             if(password_verify($pass, $user[0]->password))
             {
                 return true;
             }
-
         }
         return false;
     }
@@ -58,15 +56,14 @@ class UserServices
         {
             if(UserServices::checkPass($_SESSION['login'],$_SESSION['pass']))
             {
-                $user = User::executeQuery("SELECT * 
-                    FROM user 
-                    WHERE LOGIN = '{$_SESSION['login']}'");
+                $user = User::find([
+                    'conditions'=> "LOGIN = '{$_SESSION['login']}'"
+                ]);
                 if($user[0]->role === $adminRole)
                 {
                     return true;
                 }
             }
-
         }
         return false;
     }

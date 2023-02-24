@@ -1,6 +1,7 @@
 <?php
 /**
  * @var Tag $tag
+ * @var int $token
  */
 
 use Models\Tag;
@@ -11,6 +12,7 @@ use Models\Tag;
 	<div>
 		<form method="post">
 			<input type="hidden" name="action" value="edit">
+			<input type="hidden" name="token" value="<?= $token?>">
 
 			<div class="form-group mb-2">
 				<label class="form-label">Название</label>

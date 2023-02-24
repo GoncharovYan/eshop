@@ -47,7 +47,7 @@ class OrderController extends BaseController
 
 
             echo $this->render('layoutView.php', [
-                'content' => $this->render('public/orderView.php', [
+                'content' => $this->render('objects/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
                     'email' => $email,
@@ -89,13 +89,11 @@ class OrderController extends BaseController
         $newOrder->address = $data['address'];
         $newOrder->comment = $data['comment'];
         $newOrder->status = 0;
-        //@todo прокид без даты
         $newOrder->date_created = date('Y/m/d h:m:s');
         $newOrder->price = $_SESSION['total_cost'];
 
         $newOrder->save();
 
-        //@todo придумать что-нибудь умное с таблицей связи...
         //$cart = $_SESSION['cart'];
         //$productsIdArray = array_keys($cart);
         //$productsIdString = implode(",", $productsIdArray);

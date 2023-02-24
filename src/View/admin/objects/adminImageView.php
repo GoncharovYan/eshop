@@ -1,6 +1,7 @@
 <?php
 /**
  * @var Image $image
+ * @var int $token
  */
 
 use Models\Image;
@@ -14,6 +15,7 @@ use Models\Image;
 		<div>
 			<form method="post" style='display: flex; flex-direction: column;'>
 				<input type="hidden" name="action" value="edit">
+				<input type="hidden" name="token" value="<?= $token?>">
 
 				<div class="form-group mb-2">
 					<label class="form-label">Путь</label>
@@ -45,6 +47,7 @@ use Models\Image;
 			<div>
 				<form method="post">
 					<input type="hidden" name="action" value="delete">
+					<input type="hidden" name="token" value="<?= $token?>">
 					<button type="submit" class="btn btn-danger">Удалить изображение</button>
 				</form>
 			</div>

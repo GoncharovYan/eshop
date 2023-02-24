@@ -8,11 +8,18 @@ use Models\Item;
 use Models\Orders;
 use Models\Tag;
 use Models\User;
+use Services\UserServices;
 
 class AdminListController extends BaseController
 {
 	public function adminListPage(string $className)
 	{
+        if(!UserServices::isAdmin())
+        {
+            header("Location: /catalog/all/1/");
+            exit;
+        }
+
 		$class = "\Models\\" . ucfirst($className);
 		$class = new $class();
 
@@ -31,7 +38,7 @@ class AdminListController extends BaseController
 		}
 
 		echo $this->render('admin/layoutView.php', [
-			'content' => $this->render('admin/public/adminView.php', [
+			'content' => $this->render('admin/adminListView.php', [
 				'contentTable' => $dataTable,
 				'contentTableHead' => $dataTableHead,
 				'contentType' => $className,
