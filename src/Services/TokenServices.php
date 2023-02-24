@@ -17,17 +17,17 @@ class TokenServices
 
 	public static function checkToken(?string $token, ?string $sessionToken, string $error): void
 	{
+
 		if($_SERVER['REQUEST_METHOD'] === 'POST')
 		{
+
 			if (!$token || $token !== $sessionToken)
 			{
 				$controller = new OrderController();
 				echo $controller->render('layoutView.php', [
-					'content' => "<p style='text-align: center; 
-								font-family: Roboto, 
-								sans-serif; 
-								font-size: 32px; 
-								margin-top:40px;'>$error</p>"
+					'content' => $controller->render('public/pageNotFoundView.php', [
+						'error' => $error
+					])
 				]);
 
 				header($_SERVER['SERVER_PROTOCOL'] . ' 405 Method Not Allowed');

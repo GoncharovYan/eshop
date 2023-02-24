@@ -7,6 +7,7 @@ use Models\Item;
 use Models\Orders;
 use Models\Relation;
 use Services\TokenServices;
+use Validation\Validator;
 
 class OrderController extends BaseController
 {
@@ -45,8 +46,9 @@ class OrderController extends BaseController
 
 			$token = TokenServices::createToken();
 
+
             echo $this->render('layoutView.php', [
-                'content' => $this->render('objects/orderView.php', [
+                'content' => $this->render('public/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
                     'email' => $email,
@@ -78,6 +80,55 @@ class OrderController extends BaseController
 
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 		TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+
+		$val = new Validator();
+		$val->checkEmail($data['email']);
+		$val->checkPhone($data['phone']);
+		$val->checkText($data['name'], 'Name', 30);
+		$val->checkText($data['address'], 'Address', 120);
+
+
+		if(!$val->isSuccess())
+		{
+			$cart = $_SESSION['cart'];
+			$productsIdArray = array_keys($cart);
+			$cost = 0;
+
+			$productsIdString = implode(",", $productsIdArray);
+
+			$items = Item::find([
+									'conditions' => "ID IN ($productsIdString)",
+								]);
+
+			foreach ($items as $item)
+			{
+				$cost += $item->price * $cart[(int)$item->id];
+			}
+
+			$_SESSION['total_cost'] = $cost;
+
+			if (isset($_SESSION['login']))
+			{
+				$email = $_SESSION['email'];
+			}
+			else
+			{
+				$email = null;
+			}
+			$messages = $val->getErrors();
+			echo $this->render('layoutView.php', [
+				'messages'=> $messages,
+				'content' => $this->render('public/orderView.php', [
+					'items' => $items,
+					'counts' => $cart,
+					'email' => $email,
+					'cost' => $cost,
+					'token' => $_SESSION['token']
+				]),
+			]);
+			header('Location:/order/');
+			exit;
+		}
 
         $newOrder = new Orders();
 

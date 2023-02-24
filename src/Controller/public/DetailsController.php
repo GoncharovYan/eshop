@@ -45,7 +45,7 @@ class DetailsController extends BaseController
 			// }
 
 			echo $this->render('layoutView.php', [
-				'content' => $this->render('objects/detailsPageView.php', [
+				'content' => $this->render('public/detailsPageView.php', [
 					'imagePath' => $imagePath,
 					'product' => $product,
 					'tags' => $tags,
