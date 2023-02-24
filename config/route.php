@@ -21,8 +21,16 @@
 \Core\Routing\Router::get('/logout/',[new \Controller\private\AuthController(), 'logOutUser']);
 
 \Core\Routing\Router::get('/admin/:class/', [new \Controller\admin\AdminListController(), 'adminListPage']);
-\Core\Routing\Router::get('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminPage']);
-\Core\Routing\Router::post('/admin/:class/:id/', [new \Controller\admin\AdminController(), 'adminEdit']);
+\Core\Routing\Router::get('/admin/item/:id/', [new \Controller\admin\objects\AdminItemController(), 'adminItemPage']);
+\Core\Routing\Router::post('/admin/item/:id/', [new \Controller\admin\objects\AdminItemController(), 'adminItemEdit']);
+\Core\Routing\Router::get('/admin/tag/:id/', [new \Controller\admin\objects\AdminTagController(), 'adminTagPage']);
+\Core\Routing\Router::post('/admin/tag/:id/', [new \Controller\admin\objects\AdminTagController(), 'adminTagEdit']);
+\Core\Routing\Router::get('/admin/orders/:id/', [new \Controller\admin\objects\AdminOrdersController(), 'adminOrdersPage']);
+\Core\Routing\Router::post('/admin/orders/:id/', [new \Controller\admin\objects\AdminOrdersController(), 'adminOrdersEdit']);
+\Core\Routing\Router::get('/admin/user/:id/', [new \Controller\admin\objects\AdminUserController(), 'adminUserPage']);
+\Core\Routing\Router::post('/admin/user/:id/', [new \Controller\admin\objects\AdminUserController(), 'adminUserEdit']);
+\Core\Routing\Router::get('/admin/image/:id/', [new \Controller\admin\objects\AdminImageController(), 'adminImagePage']);
+\Core\Routing\Router::post('/admin/image/:id/', [new \Controller\admin\objects\AdminImageController(), 'adminImageEdit']);
 
 \Core\Routing\Router::get('/product/', [new \Controller\public\ErrorController(), 'pageNotFound']);
 \Core\Routing\Router::get('/product', [new \Controller\public\ErrorController(), 'pageNotFound']);
