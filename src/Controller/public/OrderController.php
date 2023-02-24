@@ -45,6 +45,7 @@ class OrderController extends BaseController
 
 			$token = TokenServices::createToken();
 
+
             echo $this->render('layoutView.php', [
                 'content' => $this->render('public/orderView.php', [
                     'items' => $items,
@@ -78,6 +79,7 @@ class OrderController extends BaseController
 
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 		TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+
 
         $newOrder = new Orders();
 

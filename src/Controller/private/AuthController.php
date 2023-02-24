@@ -60,6 +60,7 @@ class AuthController extends BaseController
     {
         if(isset($data['email'], $data['login'], $data['pass']))
         {
+			
             if(UserServices::checkLogin($data['login']))
             {
                 $pass = password_hash($data['pass'], PASSWORD_DEFAULT);
@@ -73,7 +74,6 @@ class AuthController extends BaseController
         else{
             header("Location: /register/");
         }
-
     }
 
     public function logOutUser()
