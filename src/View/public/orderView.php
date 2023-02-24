@@ -35,10 +35,15 @@
             <div class="items">
                 <?
                 foreach ($items as $item):?>
-                    <div class="item">
+                    <div class="item" id="item-id-<?= $item->id ?>">
                         <p class="item__name"> <?= $item->item_name?><p>
-                        <p class="item__count"> <?=$counts[$item->id]?><p>
+                        <div class="item__count">
+                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, -1)">-</div>
+                            <p  id="item-id-<?= $item->id ?>-count"><?=$counts[$item->id]?></p>
+                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, 1)">+</div>
+                        </div>
                         <p class="item__price"> <?= $item->price * $counts[$item->id]?><p>
+                        <p class="item__del" onclick="deleteFromCart(<?= $item->id ?>)"><span>×</span></p>
                     </div>
                 <?endforeach; ?>
             </div>
@@ -46,4 +51,5 @@
 
     </div>
 
+    <script src="/resources/public/js/cart.js"></script>
 </div>
