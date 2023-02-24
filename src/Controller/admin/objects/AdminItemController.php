@@ -8,6 +8,7 @@ use Models\Item;
 use Models\Tag;
 use Services\AdminServices;
 use Services\AdminValidateServices;
+use Services\TokenServices;
 use Services\UserServices;
 
 class AdminItemController extends BaseController
@@ -63,6 +64,7 @@ class AdminItemController extends BaseController
 				'images' => $images,
 				'tags' => $tags,
 				'allTags' => $allTags,
+				'token' => TokenServices::createToken(),
 			]),
 		]);
 	}
@@ -73,6 +75,9 @@ class AdminItemController extends BaseController
 			header("Location: /catalog/all/1/");
 			exit;
 		}
+
+		session_start();
+		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
 		switch ($data['action']) {
 			case "edit":

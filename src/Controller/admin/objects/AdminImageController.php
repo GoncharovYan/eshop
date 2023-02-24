@@ -6,6 +6,7 @@ use Controller\BaseController;
 use Models\Image;
 use Services\AdminServices;
 use Services\AdminValidateServices;
+use Services\TokenServices;
 use Services\UserServices;
 
 class AdminImageController extends BaseController
@@ -26,6 +27,7 @@ class AdminImageController extends BaseController
 		echo $this->render('admin/layoutView.php', [
 			'content' => $this->render('admin/public/adminImageView.php', [
 				'image' => $image,
+				'token' => TokenServices::createToken(),
 			]),
 		]);
 	}
@@ -36,6 +38,9 @@ class AdminImageController extends BaseController
 			header("Location: /catalog/all/1/");
 			exit;
 		}
+
+		session_start();
+		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
 		if ($data['action'] !== 'edit') {
 			echo 'Wrong action';

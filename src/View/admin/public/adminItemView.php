@@ -5,6 +5,7 @@
  * @var array $images
  * @var array $tags
  * @var array $allTags
+ * @var int $token
  */
 
 use Models\Image;
@@ -19,6 +20,7 @@ use Models\Item;
 			<form method="post">
 				<input type="hidden" name="action" value="edit">
 				<input type="hidden" name="main_image_id" value="<?= $mainImage->id ?>">
+				<input type="hidden" name="token" value="<?= $token?>">
 
 				<div class="p-3">
 					<label class="form-label">Название</label>
@@ -87,6 +89,7 @@ use Models\Item;
 					<form method="post">
 						<input type="hidden" name="action" value="deleteRelations">
 						<input type="hidden" name="relation" value="tag">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<ul class="elastic-tag list-group">
 							<? foreach ($tags as $tag) { ?>
 								<li class="list-group-item m-1 justify-content-between">
@@ -107,6 +110,7 @@ use Models\Item;
 					<form method="post">
 						<input type="hidden" name="action" value="addRelations">
 						<input type="hidden" name="relation" value="tag">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<ul class="elastic-tag list-group">
 							<? foreach ($allTags as $tag) { ?>
 								<li class="list-group-item m-1 justify-content-between">
@@ -135,11 +139,13 @@ use Models\Item;
 					<form method="post">
 						<input type="hidden" name="action" value="deleteImage">
 						<input type="hidden" name="id" value="<?= $image->id ?>">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<button type="submit" class="btn btn-danger">Удалить</button>
 					</form>
 					<form method="post">
 						<input type="hidden" name="action" value="editMainImage">
 						<input type="hidden" name="main_image_id" value="<?= $image->id ?>">
+						<input type="hidden" name="token" value="<?= $token?>">
 						<button type="submit"
 								class="btn <?= $item->main_image_id === $image->id ? 'btn-success' : 'btn-secondary' ?>">
 							Главное
@@ -154,6 +160,7 @@ use Models\Item;
 		<label class="form-label">Добавить изображение</label>
 		<form method="post" enctype="multipart/form-data" class="d-flex">
 			<input type="hidden" name="action" value="addImage">
+			<input type="hidden" name="token" value="<?= $token?>">
 			<input type="file" name="image" accept="image/*" class="form-control">
 			<button type="submit" class="btn btn-primary">Отправить</button>
 		</form>
@@ -162,6 +169,7 @@ use Models\Item;
 	<div class="p-3 d-flex justify-content-center">
 		<form method="post">
 			<input type="hidden" name="action" value="delete">
+			<input type="hidden" name="token" value="<?= $token?>">
 			<button type="submit" class="btn btn-danger">Удалить товар</button>
 		</form>
 	</div>
