@@ -47,7 +47,7 @@ class AuthController extends BaseController
         session_start();
         $val = new Validator();
         $val->checkLogin($data['login']);
-        $val->checkText($data['pass'], 'password',$minPassLength);
+        $val->checkText($data['pass'], 'password', 62, $minPassLength);
 
         if(!$val->isSuccess())
         {
@@ -79,7 +79,7 @@ class AuthController extends BaseController
         $val = new Validator();
         $val->checkEmail($data['email']);
         $val->checkLogin($data['login']);
-        $val->checkText($data['pass'], 'password',$minPassLength);
+        $val->checkText($data['pass'], 'password', 62, $minPassLength);
 
         if(!$val->isSuccess())
         {

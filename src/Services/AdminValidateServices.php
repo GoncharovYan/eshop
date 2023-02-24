@@ -34,7 +34,7 @@ class AdminValidateServices
 		if (empty($data['price'])) {
 			$data['price'] = 0;
 		} else {
-			$val->checkInt($data['price'], 'price');
+			$val->checkInt($data['price'], 'price', 0);
 		}
 
 		$val->checkBool($data['is_active'], 'is_active');
@@ -149,13 +149,13 @@ class AdminValidateServices
 		$val->checkText($data['customer_name'], 'customer_name', 255, 1);
 		$val->checkPhone($data['c_phone']);
 		$val->checkEmail($data['c_email']);
-		if (empty($data['price'])) {
+		if (empty($data['comment'])) {
 			$data['comment'] = '-';
 		} else {
 			$val->checkText($data['comment'], 'comment', 1023);
 		}
 
-		$val->checkText($data['address'], 'address', 511, 1);
+		$val->checkText($data['address'], 'address', 511);
 		if (empty($data['price'])) {
 			$data['price'] = 0;
 		} else {

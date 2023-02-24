@@ -90,12 +90,15 @@ class AdminItemController extends BaseController
 			case "addImage":
 				AdminValidateServices::adminItemAddImageValidate($data);
 				break;
+			case "deleteImage":
+				AdminValidateServices::adminRelationValidate($data);
+				break;
 			case "editMainImage":
 				AdminValidateServices::adminItemEditMainImageValidate($data);
 				$data['action'] = "edit";
 				break;
 			default:
-				echo 'Wrong action';
+				echo "Wrong action " . $data['action'];
 				exit();
 		}
 		AdminServices::adminEditAction('item', $id, $data);
