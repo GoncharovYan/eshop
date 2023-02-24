@@ -15,18 +15,10 @@ class Validator
         }
     }
 
-    public function checkMin(string $str, string $strName, int $min = 1): void
-    {
-       if(strlen($str) < $min)
-       {
-           $this->errors []= "Minimum string length for {$strName}: {$min}";
-       }
-    }
-
     public function checkLogin(string $login): void
     {
-        $this->checkMin($login, 'login');
-        if (!preg_match('/^[a-zA-Z0-9-_]+$/', $login))
+        $this->checkText($login, 'login', 62);
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $login))
         {
             $this->errors []= "Login must be only alphanumeric";
         }
