@@ -12,5 +12,4 @@ class Image extends Relation {
 	public $width;
 
 	public $item_id;
-
 }

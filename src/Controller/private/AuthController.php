@@ -55,20 +55,27 @@ class AuthController extends BaseController
         }
         else
         {
-            if(UserServices::checkPass($data['login'],$data['pass']))
+            if(!UserServices::checkLogin($data['login']))
             {
-                $_SESSION['login'] = $data['login'];
-                $_SESSION['pass'] = $data['pass'];
-                $user = User::find([
-                    'conditions'=> "LOGIN = '{$_SESSION['login']}'"
-                ]);
-                $_SESSION['email'] = $user[0]->email;
-                header("Location: /catalog/all/1/");
-                exit;
+                $messages []= "Логин не найден!";
             }
             else
             {
-                $messages []= "Неверный пароль";
+                if(UserServices::checkPass($data['login'],$data['pass']))
+                {
+                    $_SESSION['login'] = $data['login'];
+                    $_SESSION['pass'] = $data['pass'];
+                    $user = User::find([
+                        'conditions'=> "LOGIN = '{$_SESSION['login']}'"
+                    ]);
+                    $_SESSION['email'] = $user[0]->email;
+                    header("Location: /catalog/all/1/");
+                    exit;
+                }
+                else
+                {
+                    $messages []= "Неверный пароль!";
+                }
             }
         }
         echo $this->render('layoutView.php', [
@@ -98,7 +105,7 @@ class AuthController extends BaseController
             exit;
         }
 
-        if(UserServices::checkLogin($data['login']))
+        if(!UserServices::checkLogin($data['login']))
         {
             $pass = password_hash($data['pass'], PASSWORD_DEFAULT);
             $newUser = new User();
