@@ -3,12 +3,11 @@
         <p class="title-form">Авторизация</p>
         <form class="login-form" action="/auth/" method="post" onsubmit="return validateAuthForm()">
             <label>Логин</label>
-            <input class="auth-input" name="login" type="text" id="auth-login">
+            <input required class="auth-input" name="login" type="text" id="auth-login"  maxlength="62">
             <label>Пароль</label>
-            <input class="auth-input" name="pass" type="password" id="auth-pass">
+            <input required class="auth-input" name="pass" type="password" id="auth-pass" minlength="5" maxlength="62">
             <button type="submit"  class="auth-form-btn" >Войти</button>
         </form>
         <a id="auth-page-btn" href="/registr/">Зарегистрироваться</a>
     </div>
-    <script src="/resources/public/js/user-forms.js"></script>
 </div>
