@@ -21,16 +21,21 @@ class AdminItemController extends BaseController
 		}
 
 		$allTags = Tag::findAll();
-		if ($id === 'new') {
-			$item = new Item();
-			$mainImage = Image::findById(1);
-			$images = [];
-			$tags = [];
+		if (!is_numeric($id)) {
+			if ($id === 'new') {
+				$item = new Item();
+				$mainImage = Image::findById(1);
+				$images = [];
+				$tags = [];
+			} else {
+				echo 'Item not found';
+				exit;
+			}
 		} else {
 			$item = Item::findById($id);
-			if (!isset($item)) {
-				echo 'Товар не найден';
-				exit();
+			if (is_null($item)) {
+				echo 'Item not found';
+				exit;
 			}
 
 			$mainImage = Image::findById($item->main_image_id) ?? Image::findById(1);
@@ -69,7 +74,8 @@ class AdminItemController extends BaseController
 		]);
 	}
 
-	public function adminItemEdit($id, $data)
+	public
+	function adminItemEdit($id, $data)
 	{
 		if (!UserServices::isAdmin()) {
 			header("Location: /catalog/all/1/");
@@ -82,6 +88,8 @@ class AdminItemController extends BaseController
 		switch ($data['action']) {
 			case "edit":
 				AdminValidateServices::adminItemEditValidate($data);
+				break;
+			case "delete":
 				break;
 			case "deleteRelations":
 			case "addRelations":

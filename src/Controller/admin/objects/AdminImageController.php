@@ -18,10 +18,19 @@ class AdminImageController extends BaseController
 			exit;
 		}
 
-		if ($id === 'new') {
-			$image = new Image();
+		if (!is_numeric($id)){
+			if($id === 'new'){
+				$image = new Image();
+			} else {
+				echo 'image not found';
+				exit;
+			}
 		} else {
 			$image = Image::findById($id);
+			if(is_null($image)){
+				echo 'image not found';
+				exit;
+			}
 		}
 
 		echo $this->render('admin/layoutView.php', [
@@ -42,11 +51,17 @@ class AdminImageController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		if ($data['action'] !== 'edit') {
-			echo 'Wrong action';
-			exit();
+		switch ($data['action']) {
+			case "edit":
+				AdminValidateServices::adminImageEditValidate($data);
+				break;
+			case "delete":
+				break;
+			default:
+				echo 'Wrong action';
+				exit();
 		}
-		AdminValidateServices::adminImageEditValidate($data);
+
 		AdminServices::adminEditAction('image', $id, $data);
 	}
 }
