@@ -8,6 +8,7 @@ use Models\Item;
 use Models\Orders;
 use Models\Tag;
 use Models\User;
+use mysql_xdevapi\Exception;
 use Services\UserServices;
 
 class AdminListController extends BaseController
@@ -21,6 +22,11 @@ class AdminListController extends BaseController
         }
 
 		$class = "\Models\\" . ucfirst($className);
+		if (!class_exists($class))
+		{
+			echo 'object not found';
+			exit();
+		}
 		$class = new $class();
 
 		$dataList = $class::findAll();
