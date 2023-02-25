@@ -45,7 +45,7 @@ class Pivot {
 		if(is_array($options)) {
 			foreach($options as $key => $value) {
 				if($key === 'conditions') {
-					$whereClause = " WHERE " . trim(self::$db->quote($value), '\'"');
+					$whereClause = " WHERE " . $value;
 				}
 				if($key === 'order') {
 					$orderClause = " ORDER BY " . trim(self::$db->quote($value), '\'"');
