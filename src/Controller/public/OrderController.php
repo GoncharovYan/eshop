@@ -6,11 +6,13 @@ use Controller\BaseController;
 use Core\Web\Json;
 use Models\Item;
 use Models\Orders;
+use Models\Relation;
 use Services\TokenServices;
+use Validation\Validator;
 
 class OrderController extends BaseController
 {
-    public function orderPage()
+    public function orderPage($messages = null)
     {
         session_start();
 
@@ -46,6 +48,7 @@ class OrderController extends BaseController
 			$token = TokenServices::createToken();
 
             echo $this->render('layoutView.php', [
+                'messages'=> $messages,
                 'content' => $this->render('public/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
@@ -115,6 +118,23 @@ class OrderController extends BaseController
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 		TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
 
+		$val = new Validator();
+		$val->checkEmail($data['email']);
+		$val->checkPhone($data['phone']);
+		$val->checkText($data['name'], 'Name', 30);
+		$val->checkText($data['address'], 'Address', 120);
+        if (empty($data['comment'])) {
+            $data['comment'] = '-';
+        } else {
+            $val->checkText($data['comment'], 'comment', 1022);
+        }
+
+		if(!$val->isSuccess())
+		{
+            $this->orderPage($val->getErrors());
+			exit;
+		}
+
         $newOrder = new Orders();
 
         $newOrder->customer_name = $data['name'];
@@ -139,7 +159,7 @@ class OrderController extends BaseController
             'content' => "<p>ну всё жди. скоро будем</p>",
         ]);
 
+
        // header('Location: /catalog/all/1/');
     }
-
 }

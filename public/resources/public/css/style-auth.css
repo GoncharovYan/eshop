@@ -37,10 +37,7 @@
     cursor: pointer;
 }
 
-.header-user{
-    display: flex;
-    margin-left: 120px;
-}
+
 
 #logout-header-btn{
     margin-left: 10px;

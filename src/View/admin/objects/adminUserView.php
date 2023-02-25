@@ -1,6 +1,7 @@
 <?php
 /**
  * @var User $user
+ * @var int $token
  */
 
 use Models\User;
@@ -11,6 +12,7 @@ use Models\User;
 	<div>
 		<form method="post">
 			<input type="hidden" name="action" value="edit">
+			<input type="hidden" name="token" value="<?= $token?>">
 
 			<div class="form-group mb-2">
 				<label class="form-label">Email</label>
@@ -46,6 +48,7 @@ use Models\User;
 		<div>
 			<form method="post">
 				<input type="hidden" name="action" value="delete">
+				<input type="hidden" name="token" value="<?= $token?>">
 				<button type="submit" class="btn btn-danger">Удалить пользователя</button>
 			</form>
 		</div>

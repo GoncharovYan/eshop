@@ -15,7 +15,7 @@ class DetailsController extends BaseController
 
 		if(!$product){
 			echo $this->render('layoutView.php', [
-				'content' => $this->render('public/pageNotFoundView.php', []),
+				'content' => $this->render('objects/pageNotFoundView.php', []),
 			]);
 		}
 		else

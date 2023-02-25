@@ -1,13 +1,13 @@
 <div class="auth-form">
     <div class="auth-form-content">
         <p class="title-form">Авторизация</p>
-        <form class="login-form" action="/auth/" method="post">
+        <form class="login-form" action="/auth/" method="post" onsubmit="return validateAuthForm()">
             <label>Логин</label>
-            <input class="auth-input" name="login" type="text">
+            <input required class="auth-input" name="login" type="text" id="auth-login"  maxlength="62">
             <label>Пароль</label>
-            <input class="auth-input" name="pass" type="password"/>
-            <button type="submit" class="auth-form-btn" >Войти</button>
+            <input required class="auth-input" name="pass" type="password" id="auth-pass" minlength="5" maxlength="62">
+            <button type="submit"  class="auth-form-btn" >Войти</button>
         </form>
-        <a id="auth-page-btn" href="/register/">Зарегистрироваться</a>
+        <a id="auth-page-btn" href="/registr/">Зарегистрироваться</a>
     </div>
 </div>

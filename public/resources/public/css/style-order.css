@@ -19,7 +19,14 @@
   margin-right: 40px;
   width: 400px;
 }
-
+.order-details__error{
+	background-color:rgb(227,128,128);
+	padding: 10px 5px;
+	font-size: 20px;
+	font-family: Roboto, sans-serif;
+	border-radius: 5px;
+	margin: 20px 0;
+}
 .order-details__title {
   margin-bottom: 15px;
   font-size: 24px;

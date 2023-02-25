@@ -1,14 +1,15 @@
-.catalog {
-  display: grid;
+
+
+.catalog .tags ul {
+  display: flex;
   justify-content: center;
-  padding-left: 10%;
-  grid-template: "tags products" "paginator paginator";
-  grid-template-columns: 200px 980px;
-  grid-column-gap: 100px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.catalog .tags {
-  grid-area: tags;
+.tags a:hover{
+  background-color: rgba(243, 190, 0, 0.8);
 }
 
 .catalog .tags ul a {
@@ -17,38 +18,14 @@
   text-decoration: none;
   margin-bottom: 20px;
   color: rgba(0, 0, 0, 0.8);
-  padding: 10px 20px 10px 0;
+  padding: 10px 10px 10px 10px;
   border-bottom: 1px solid;
 }
 
 .catalog-list {
-  grid-area: products;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.paginator {
-  grid-area: paginator;
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.page{
-  margin:55px 0 10px 0;
-  font-size: 22px;
-  font-weight: 600;
-  background-color: rgba(243, 190, 0, 0.8);
-  border: black ridge 2px;
-  padding: 10px 15px;
-}
-
-.no-page{
-  margin:55px 0 10px 0;
-  font-size: 22px;
-  font-weight: 600;
-  border: black ridge 1px;
-  padding: 10px 15px;
+  flex-wrap: wrap;
 }
 
 .catalog .item {
@@ -63,6 +40,7 @@
 	margin: 10px 0 0 10px;
 	height: 40px;
 }
+
 .catalog .item .name a {
   display: block;
   color: #000;
@@ -71,7 +49,7 @@
 
 }
 
-.catalog .item .name:hover {
+.catalog .item .name a:hover {
   color: rgba(243, 190, 0, 0.8);
   transition: 100ms;
 }
@@ -100,6 +78,44 @@
   width: 195px;
   object-fit: contain;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 25px;
   justify-self: center;
+}
+
+.emptyProducts{
+  font-size: 25px;
+  margin-top: 15px;
+}
+
+.paginator {
+  margin-top: 20px;
+  grid-area: paginator;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page{
+  margin:0px 10px 0px 10px;
+  font-size: 24px;
+  font-weight: 600;
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+.page:hover{
+  background-color: rgba(243, 190, 0, 0.8);
+  cursor: pointer;
+}
+
+.no-page{
+  margin:55px 10px 10px 10px;
+  background-color: rgba(243, 190, 0, 0.8);
+  font-size: 22px;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
 }
