@@ -119,16 +119,18 @@ abstract class Relation
 		$groupByClause = "";
 		$limit = "";
 
+		self::setConnect();
+
 		if (is_array($options)) {
 			foreach ($options as $key => $value) {
 				if ($key === 'conditions') {
-					$whereClause = " WHERE " . $value;
+					$whereClause = " WHERE " . trim(self::$db->quote($value), '\'"');
 				}
 				if ($key === 'order') {
-					$orderClause = " ORDER BY " . $value;
+					$orderClause = " ORDER BY " . trim(self::$db->quote($value), '\'"');
 				}
 				if ($key === 'limit') {
-					$limit = " LIMIT " . $value;
+					$limit = " LIMIT " . trim(self::$db->quote($value), '\'"');
 				}
 			}
 			$optionsSql = $whereClause . $orderClause . $limit;
@@ -138,11 +140,116 @@ abstract class Relation
 
 		$query = "SELECT * FROM " . $tableName . $optionsSql;
 
-		self::setConnect();
-
 		$raw = self::$db->query($query);
 		foreach ($raw as $rawRow) {
 
+			$result[] = self::morph($rawRow);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * @param $options
+	 * Принимает массив имён, по которым идёт условие where. Например ['ID' => 1, '%NAME' => 'Телефоны', 'ID => [1,2]
+	 * @param $logic_filters
+	 * логические операторы между where конструкциями. Например ['OR'] или ['OR', 'AND'].
+	 * Их число должно быть меньше на 1 количества options
+	 * @param $order_filters
+	 * конструкция order. В нем находится список имён OrderList, по которым идёт сортировка
+	 * и значение OrderDesc, сортировать ли возр/убыв. Например ['OrderList' => ['ID'], 'OrderDesc' => 'Desc']
+	 * @param $limit
+	 * @return array
+	 * @throws \Exception
+	 */
+	public static function findd($options = [], $logic_filters = [], $order_filters = [], $limit = 100)
+	{
+
+		$result = [];
+
+		$class = new \ReflectionClass(static::class);
+
+		$tableName = strtolower($class->getShortName());
+		$whereClause = "";
+		$orderClause = "";
+		if(!empty($options)) {
+			$whereClause = " WHERE ";
+			if(is_array($options)) {
+				foreach($options as $key => $value) {
+
+					if($key[0] === "%") {
+						$key = substr($key, 1);
+						if($class->hasProperty(strtolower($key))) {
+							$whereClause = $whereClause . ' ' . $key . " LIKE ? ";
+						}
+					}
+					else {
+						if($class->hasProperty(strtolower($key))) {
+							if(is_array($value)) {
+								$whereClause = $whereClause . ' ' . $key . ' IN (' . implode(',', $value) . ')';
+							}
+							else {
+								$whereClause = $whereClause . ' ' . $key . ' = ? ';
+							}
+						}
+
+					}
+					$whereClause = $whereClause . array_shift($logic_filters);
+				}
+
+			}
+			else {
+				throw new \Exception('Неверный тип входного аргумента');
+			}
+		}
+
+		if(!empty($order_filters)){
+			if(is_array($order_filters)){
+				$orderClause = " ORDER BY ";
+
+				if(array_key_exists('OrderList', $order_filters))
+					$orderClause = $orderClause . implode(',', $order_filters['OrderList']);
+				if(array_key_exists('OrderDesc', $order_filters))
+					$orderClause = $orderClause . ' ' .$order_filters['OrderDesc'];
+
+			} else {
+				throw new \Exception('Неверный тип входного аргумента');
+			}
+		}
+		$limit = ' LIMIT ' . (int)$limit;
+		$optionsSql = $whereClause . $orderClause . $limit;
+		$query = "SELECT * FROM " . $tableName . $optionsSql;
+		var_dump($query);die;
+
+		self::setConnect();
+
+		$sth = self::$db->prepare($query);
+
+		$bindCount = 1;
+		foreach ($options as $key => $value) {
+
+			if($key[0] === "%") {
+				$key = substr($key, 1);
+				if($class->hasProperty(strtolower($key))){
+					$sth->bindValue($bindCount, '%' . $value . '%' );
+				}
+			} else {
+				if($class->hasProperty(strtolower($key))) {
+					if(!is_array($value)) {
+						$sth->bindValue($bindCount, $value);
+					} else {
+						$bindCount -= 1;
+					}
+				}
+			}
+			$bindCount += 1;
+		}
+
+		$sth->execute();
+
+
+		$raw = $sth->fetchAll();
+		foreach ($raw as $rawRow) {
 			$result[] = self::morph($rawRow);
 		}
 
@@ -156,11 +263,12 @@ abstract class Relation
 
 		$tableName = strtolower($class->getShortName());
 
-		$query = "SELECT * FROM " . $tableName . " WHERE ID=" . $id;
-
+		$query = "SELECT * FROM " . $tableName . " WHERE ID = ?";
 		self::setConnect();
-
-		$raw = self::$db->query($query)->fetch(\PDO::FETCH_ASSOC);
+		$sth = self::$db->prepare($query);
+		$sth->bindParam(1, $id);
+		$sth->execute();
+		$raw = $sth->fetch();
 		if ($raw !== false) {
 			return self::morph($raw);
 		}
