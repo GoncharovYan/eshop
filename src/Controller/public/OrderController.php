@@ -3,6 +3,7 @@
 namespace Controller\public;
 
 use Controller\BaseController;
+use Core\Web\Json;
 use Models\Item;
 use Models\Orders;
 use Models\Relation;
@@ -13,12 +14,12 @@ class OrderController extends BaseController
 {
     public function orderPage($messages = null)
     {
-        //$product = Item::findById($id);
         session_start();
 
-        if (isset($_SESSION['cart']))
+        if (!empty($_SESSION['cart']))
         {
             $cart = $_SESSION['cart'];
+
             $productsIdArray = array_keys($cart);
             $cost = 0;
 
@@ -46,7 +47,6 @@ class OrderController extends BaseController
 
 			$token = TokenServices::createToken();
 
-
             echo $this->render('layoutView.php', [
                 'messages'=> $messages,
                 'content' => $this->render('public/orderView.php', [
@@ -61,18 +61,54 @@ class OrderController extends BaseController
         else
         {
             echo $this->render('layoutView.php', [
-                'content' => "<p>Товар не найден</p>",
+                'content' => "<p>Корзина пустая :(</p>",
             ]);
         }
     }
 
-    public function addToCart(int $id, int $count = 1)
+    public function modifyCart()
     {
         session_start();
 
+        $data = Json::decode(file_get_contents('php://input'));
+
+        $id = $data['id'];
+        $count = $data['count'];
+
+        if (!isset($_SESSION['cart'][$id]))
+        {
+            if ($count < 1) return;
+
+            $_SESSION['cart'][$id] = $count;
+            return;
+        }
+
         $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + $count;
 
-        header("Location: /catalog/all/1/");
+        if ($_SESSION['cart'][$id] < 1)
+        {
+            unset($_SESSION['cart'][$id]);
+        }
+
+        echo Json::encode([
+            'id' => $id,
+            'count' => $count,
+        ]);
+    }
+
+    public function deleteFromCart()
+    {
+        session_start();
+
+        $data = Json::decode(file_get_contents('php://input'));
+
+        $id = $data['id'];
+
+        unset($_SESSION['cart'][$id]);
+
+        echo Json::encode([
+            'id' => $id,
+        ]);
     }
 
     public function checkout($data)
@@ -107,19 +143,17 @@ class OrderController extends BaseController
         $newOrder->address = $data['address'];
         $newOrder->comment = $data['comment'];
         $newOrder->status = 0;
-        $newOrder->date_created = date('Y/m/d h:m:s');
         $newOrder->price = $_SESSION['total_cost'];
 
-        $newOrder->save();
+        $order = $newOrder->save();
 
-        //$cart = $_SESSION['cart'];
-        //$productsIdArray = array_keys($cart);
-        //$productsIdString = implode(",", $productsIdArray);
+        $cart = $_SESSION['cart'];
 
-        //Relation::executeQuery(
-        //    "INSERT INTO item_order VALUES ()"
-        //)
+        $productIdArr = array_keys($cart);
 
+        $products = Item::findByIdArr($productIdArr);
+
+        $order->addRelationArr($products, "ITEM_COUNT", $cart);
 
         echo $this->render('layoutView.php', [
             'content' => "<p>ну всё жди. скоро будем</p>",

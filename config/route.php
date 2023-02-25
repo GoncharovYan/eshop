@@ -10,7 +10,8 @@
 
 \Core\Routing\Router::get('/order/', [new \Controller\public\OrderController(), 'orderPage']);
 \Core\Routing\Router::post('/order/', [new \Controller\public\OrderController(), 'checkout']);
-\Core\Routing\Router::get('/product/order/:id/', [new \Controller\public\OrderController(), 'addToCart']);
+\Core\Routing\Router::post('/order/modify/', [new \Controller\public\OrderController(), 'modifyCart']);
+\Core\Routing\Router::post('/order/delete/', [new \Controller\public\OrderController(), 'deleteFromCart']);
 
 \Core\Routing\Router::get('/auth/', [new \Controller\private\AuthController(), 'authPage']);
 \Core\Routing\Router::post('/auth/',[new \Controller\private\AuthController(), 'authUser']);
