@@ -158,8 +158,5 @@ class OrderController extends BaseController
         echo $this->render('layoutView.php', [
             'content' => "<p>ну всё жди. скоро будем</p>",
         ]);
-
-
-       // header('Location: /catalog/all/1/');
     }
 }

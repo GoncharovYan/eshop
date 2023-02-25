@@ -52,24 +52,37 @@ class AuthController extends BaseController
         if(!$val->isSuccess())
         {
             $messages = $val->getErrors();
-            echo $this->render('layoutView.php', [
-                'messages'=> $messages,
-                'content' => $this->render('private/authView.php', [
-                ]),
-            ]);
-            exit;
         }
-
-        if(UserServices::checkPass($data['login'],$data['pass']))
+        else
         {
-           $_SESSION['login'] = $data['login'];
-           $_SESSION['pass'] = $data['pass'];
-           $user = User::find([
-               'conditions'=> "LOGIN = '{$_SESSION['login']}'"
-           ]);
-           $_SESSION['email'] = $user[0]->email;
+            if(!UserServices::checkLogin($data['login']))
+            {
+                $messages []= "Логин не найден!";
+            }
+            else
+            {
+                if(UserServices::checkPass($data['login'],$data['pass']))
+                {
+                    $_SESSION['login'] = $data['login'];
+                    $_SESSION['pass'] = $data['pass'];
+                    $user = User::find([
+                        'conditions'=> "LOGIN = '{$_SESSION['login']}'"
+                    ]);
+                    $_SESSION['email'] = $user[0]->email;
+                    header("Location: /catalog/all/1/");
+                    exit;
+                }
+                else
+                {
+                    $messages []= "Неверный пароль!";
+                }
+            }
         }
-        header("Location: /catalog/all/1/");
+        echo $this->render('layoutView.php', [
+            'messages'=> $messages,
+            'content' => $this->render('private/authView.php', [
+            ]),
+        ]);
     }
 
     public function registerUser($data)
@@ -92,8 +105,7 @@ class AuthController extends BaseController
             exit;
         }
 
-
-        if(UserServices::checkLogin($data['login']))
+        if(!UserServices::checkLogin($data['login']))
         {
             $pass = password_hash($data['pass'], PASSWORD_DEFAULT);
             $newUser = new User();

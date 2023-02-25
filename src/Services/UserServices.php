@@ -15,9 +15,9 @@ class UserServices
         ]);
         if(isset($user[0]))
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static function checkPass(string $login, string $pass): bool

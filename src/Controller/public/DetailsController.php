@@ -22,27 +22,13 @@ class DetailsController extends BaseController
 		{
 			$tag = new Tag();
 			$tags = $tag->items()->find([
-											'conditions' => "ITEM_ID = $id"
-										]);
+			    'conditions' => "ITEM_ID = $id"
+            ]);
 
-			$imagePath = Image::executeQuery(
-			    "SELECT PATH, ITEM_ID
-			            FROM image
-			            WHERE ITEM_ID = $id
-			            ORDER BY ID
-			            limit 5"
-			);
-
-
-			// if(!$imagePath)
-			// {
-			//     $imagePath = Image::executeQuery(
-			//         "SELECT PATH, item.ID FROM image
-			//
-			//     WHERE ITEM_ID = '$id' AND image.IS_MAIN = 1
-			//     "
-			//     );
-			// }
+            $imagePath = Image::find([
+                'conditions' => "ITEM_ID = $id",
+                'limit' => 5,
+            ]);
 
 			echo $this->render('layoutView.php', [
 				'content' => $this->render('public/detailsPageView.php', [
