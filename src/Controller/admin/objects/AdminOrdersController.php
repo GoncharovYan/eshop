@@ -19,11 +19,20 @@ class AdminOrdersController extends BaseController
 			exit;
 		}
 
-		if ($id === 'new') {
-			$order = new Orders();
-			$items = [];
+		if (!is_numeric($id)){
+			if($id === 'new'){
+				$order = new Orders();
+				$items = [];
+			} else {
+				echo 'order not found';
+				exit;
+			}
 		} else {
 			$order = Orders::findById($id);
+			if(is_null($order)){
+				echo 'order not found';
+				exit;
+			}
 			$item = new Item();
 			$items = $item->orders()->find([
 				'conditions' => "ORDERS_ID = $id"
@@ -52,6 +61,8 @@ class AdminOrdersController extends BaseController
 		switch ($data['action']) {
 			case "edit":
 				AdminValidateServices::adminOrderEditValidate($data);
+				break;
+			case "delete":
 				break;
 			case "deleteRelations":
 				AdminValidateServices::adminRelationsValidate($data);

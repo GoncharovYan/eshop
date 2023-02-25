@@ -18,10 +18,19 @@ class AdminUserController extends BaseController
 			exit;
 		}
 
-		if ($id === 'new') {
-			$user = new User();
+		if (!is_numeric($id)){
+			if($id === 'new'){
+				$user = new User();
+			} else {
+				echo 'User not found';
+				exit;
+			}
 		} else {
 			$user = User::findById($id);
+			if(is_null($user)){
+				echo 'User not found';
+				exit;
+			}
 		}
 
 		echo $this->render('admin/layoutView.php', [
@@ -42,11 +51,17 @@ class AdminUserController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		if ($data['action'] !== 'edit') {
-			echo 'Wrong action';
-			exit();
+		switch ($data['action']) {
+			case "edit":
+				AdminValidateServices::adminUserEditValidate($data);
+				break;
+			case "delete":
+				break;
+			default:
+				echo 'Wrong action';
+				exit();
 		}
-		AdminValidateServices::adminUserEditValidate($data);
+
 		AdminServices::adminEditAction('user', $id, $data);
 	}
 }
