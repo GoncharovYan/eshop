@@ -6,9 +6,11 @@ class m2023_25_02_20_30_createTestData
 {
 	public static function up($connection): void
 	{
+		$pass = password_hash('admin', PASSWORD_DEFAULT);
+
 		mysqli_query($connection,
 		"INSERT INTO user (LOGIN, PASSWORD, ROLE)
-				VALUE ('admin', 'admin', 0)");
+				VALUE ('admin', '$pass', 0)");
 
 		mysqli_query($connection,
 		"INSERT INTO image (ID, PATH, HEIGHT, WIDTH, ITEM_ID)
