@@ -18,10 +18,19 @@ class AdminTagController extends BaseController
 			exit;
 		}
 
-		if ($id === 'new') {
-			$tag = new Tag();
+		if (!is_numeric($id)){
+			if($id === 'new'){
+				$tag = new Tag();
+			} else {
+				echo 'tag not found';
+				exit;
+			}
 		} else {
 			$tag = Tag::findById($id);
+			if(is_null($tag)){
+				echo 'tag not found';
+				exit;
+			}
 		}
 
 		echo $this->render('admin/layoutView.php', [
@@ -42,11 +51,17 @@ class AdminTagController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		if ($data['action'] !== 'edit') {
-			echo 'Wrong action';
-			exit();
+		switch ($data['action']) {
+			case "edit":
+				AdminValidateServices::adminTagEditValidate($data);
+				break;
+			case "delete":
+				break;
+			default:
+				echo 'Wrong action';
+				exit();
 		}
-		AdminValidateServices::adminTagEditValidate($data);
+
 		AdminServices::adminEditAction('tag', $id, $data);
 	}
 }

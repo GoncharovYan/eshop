@@ -5,6 +5,7 @@ namespace App;
 use Core\Database\Migration\Migrator;
 use Controller\CatalogController;
 use Core\Routing\Router;
+use Services\ConfigurationServices;
 
 class Kernel
 {
@@ -12,8 +13,7 @@ class Kernel
     {
         $route = Router::find($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
-		$environment = 'nodev';
-		if($environment === 'dev')
+		if(ConfigurationServices::option('ENVIRONMENT') === 'dev')
 		{
 			Migrator::migrate();
 		}
