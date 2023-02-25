@@ -1,7 +1,7 @@
 <div class="auth-form">
     <div class="auth-form-content">
         <p class="title-form">Регистрация</p>
-        <form class="login-form" action="/registr/" method="post" onsubmit="return validateRegistrForm()">
+        <form class="login-form" action="/registration/" method="post" onsubmit="return validateRegistrForm()">
             <label>E-mail</label>
             <input required class="auth-input" name="email" type="email" id="reg-email">
             <label>Логин</label>

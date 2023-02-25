@@ -8,6 +8,6 @@
             <input required class="auth-input" name="pass" type="password" id="auth-pass" minlength="5" maxlength="62">
             <button type="submit"  class="auth-form-btn" >Войти</button>
         </form>
-        <a id="auth-page-btn" href="/registr/">Зарегистрироваться</a>
+        <a id="auth-page-btn" href="/registration/">Зарегистрироваться</a>
     </div>
 </div>

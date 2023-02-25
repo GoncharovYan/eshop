@@ -16,8 +16,8 @@
 \Core\Routing\Router::get('/auth/', [new \Controller\private\AuthController(), 'authPage']);
 \Core\Routing\Router::post('/auth/',[new \Controller\private\AuthController(), 'authUser']);
 
-\Core\Routing\Router::get('/registr/', [new \Controller\private\AuthController(), 'registerPage']);
-\Core\Routing\Router::post('/registr/',[new \Controller\private\AuthController(), 'registerUser']);
+\Core\Routing\Router::get('/registration/', [new \Controller\private\AuthController(), 'registerPage']);
+\Core\Routing\Router::post('/registration/',[new \Controller\private\AuthController(), 'registerUser']);
 
 \Core\Routing\Router::get('/logout/',[new \Controller\private\AuthController(), 'logOutUser']);
 
