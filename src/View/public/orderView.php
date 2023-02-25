@@ -16,12 +16,12 @@
         <div class="order-details" id="order-div">
             <p class="order-details__title" id="first-p-child">куда звонить</p>
 
-            <form method="post" action="/checkout/" onsubmit="return checkInputForm()">
-                <input class="form-field" type="text" name="name" placeholder="*Name">
-                <input class="form-field" type="text" name="phone" placeholder="*Phone">
-                <input class="form-field" type="email" name="email" placeholder="*E-mail" value="<?= $email ?>">
-                <input class="form-field" type="text" name="address" placeholder="*Address">
-                <input class="form-field" type="text" name="comment" placeholder="Comment">
+            <form method="post" action="/order/">
+                <input required lass="form-field" type="text"  name="name" placeholder="*Name" maxlength="254">
+                <input required class="form-field" type="tel" name="phone"  placeholder="*Phone" pattern="[+][7][0-9]{10}">
+                <input required class="form-field" type="email" name="email" placeholder="*E-mail" maxlength="126" value="<?= $email ?>">
+                <input required class="form-field" type="text" name="address" placeholder="*Address" maxlength="254">
+                <input class="form-field" type="text" name="comment" placeholder="Comment" maxlength="1022">
 
                 <p class="order-details__total-price">
                     Всего денег: <span style="font-weight: bold">

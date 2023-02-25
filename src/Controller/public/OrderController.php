@@ -11,7 +11,7 @@ use Validation\Validator;
 
 class OrderController extends BaseController
 {
-    public function orderPage()
+    public function orderPage($messages = null)
     {
         //$product = Item::findById($id);
         session_start();
@@ -48,6 +48,7 @@ class OrderController extends BaseController
 
 
             echo $this->render('layoutView.php', [
+                'messages'=> $messages,
                 'content' => $this->render('public/orderView.php', [
                     'items' => $items,
                     'counts' => $cart,
@@ -86,47 +87,15 @@ class OrderController extends BaseController
 		$val->checkPhone($data['phone']);
 		$val->checkText($data['name'], 'Name', 30);
 		$val->checkText($data['address'], 'Address', 120);
-
+        if (empty($data['comment'])) {
+            $data['comment'] = '-';
+        } else {
+            $val->checkText($data['comment'], 'comment', 1022);
+        }
 
 		if(!$val->isSuccess())
 		{
-			$cart = $_SESSION['cart'];
-			$productsIdArray = array_keys($cart);
-			$cost = 0;
-
-			$productsIdString = implode(",", $productsIdArray);
-
-			$items = Item::find([
-									'conditions' => "ID IN ($productsIdString)",
-								]);
-
-			foreach ($items as $item)
-			{
-				$cost += $item->price * $cart[(int)$item->id];
-			}
-
-			$_SESSION['total_cost'] = $cost;
-
-			if (isset($_SESSION['login']))
-			{
-				$email = $_SESSION['email'];
-			}
-			else
-			{
-				$email = null;
-			}
-			$messages = $val->getErrors();
-			echo $this->render('layoutView.php', [
-				'messages'=> $messages,
-				'content' => $this->render('public/orderView.php', [
-					'items' => $items,
-					'counts' => $cart,
-					'email' => $email,
-					'cost' => $cost,
-					'token' => $_SESSION['token']
-				]),
-			]);
-			header('Location:/order/');
+            $this->orderPage($val->getErrors());
 			exit;
 		}
 

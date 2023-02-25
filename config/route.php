@@ -9,7 +9,7 @@
 \Core\Routing\Router::get('/product/:id/', [new \Controller\public\DetailsController(), 'detailsPage']);
 
 \Core\Routing\Router::get('/order/', [new \Controller\public\OrderController(), 'orderPage']);
-\Core\Routing\Router::post('/checkout/', [new \Controller\public\OrderController(), 'checkout']);
+\Core\Routing\Router::post('/order/', [new \Controller\public\OrderController(), 'checkout']);
 \Core\Routing\Router::get('/product/order/:id/', [new \Controller\public\OrderController(), 'addToCart']);
 
 \Core\Routing\Router::get('/auth/', [new \Controller\private\AuthController(), 'authPage']);
