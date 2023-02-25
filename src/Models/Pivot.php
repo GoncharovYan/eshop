@@ -40,16 +40,18 @@ class Pivot {
 		$groupByClause = "";
 		$limit         = "";
 
+		self::setConnect();
+
 		if(is_array($options)) {
 			foreach($options as $key => $value) {
 				if($key === 'conditions') {
-					$whereClause = " WHERE " . $value;
+					$whereClause = " WHERE " . trim(self::$db->quote($value), '\'"');
 				}
 				if($key === 'order') {
-					$orderClause = " ORDER BY " . $value;
+					$orderClause = " ORDER BY " . trim(self::$db->quote($value), '\'"');
 				}
 				if($key === 'limit') {
-					$limit = " LIMIT " . $value;
+					$limit = " LIMIT " . trim(self::$db->quote($value), '\'"');
 				}
 			}
 			$optionsSql = $whereClause . $orderClause . $limit;
