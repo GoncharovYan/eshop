@@ -9,11 +9,15 @@ class AdminServices
 	public static function adminEditAction($className, $id, $data)
 	{
 		$class = "\Models\\" . ucfirst($className);
-		if ($id === 'new') {
+		if ($id === 'new')
+		{
 			$obj = new $class;
-		} else {
+		}
+		else
+		{
 			$obj = $class::findById($id);
-			if (!isset($obj)) {
+			if (!isset($obj))
+			{
 				echo 'Неверный id';
 				exit();
 			}
@@ -25,10 +29,14 @@ class AdminServices
 
 	public static function adminEdit($className, $obj, $id, $data)
 	{
-		foreach ($data as $key => $value) {
-			if ($key === 'password') {
+		foreach ($data as $key => $value)
+		{
+			if ($key === 'password')
+			{
 				$obj->$key = password_hash($value, PASSWORD_DEFAULT);
-			} else {
+			}
+			else
+			{
 				$obj->$key = $value;
 			}
 		}
@@ -68,7 +76,7 @@ class AdminServices
 
 	public static function adminAddRelations($className, $obj, $id, $data)
 	{
-		if($obj->id === null)
+		if ($obj->id === null)
 		{
 			echo 'object not found or was not saved';
 			exit();
@@ -94,7 +102,7 @@ class AdminServices
 
 	public static function adminAddImage($className, $obj, $id, $data)
 	{
-		if($obj->id === null)
+		if ($obj->id === null)
 		{
 			echo 'object not found or was not saved';
 			exit();
@@ -111,7 +119,8 @@ class AdminServices
 		$newImage->width = $imageInfo[0];
 		$newImage->height = $imageInfo[1];
 
-		if (isset($_FILES) && $_FILES['image']['error'] === 0) {
+		if (isset($_FILES) && $_FILES['image']['error'] === 0)
+		{
 			$destiation_dir = ROOT . '/public' . $path;
 			move_uploaded_file($_FILES['image']['tmp_name'], $destiation_dir);
 			$newImage->save();

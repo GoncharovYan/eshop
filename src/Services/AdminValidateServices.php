@@ -18,8 +18,10 @@ class AdminValidateServices
 		$val->checkInt($data['sort_order'], 'sort_order');
 		$val->checkInt($data['price'], 'price', 0);
 
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -30,8 +32,10 @@ class AdminValidateServices
 	{
 		$val = new Validator();
 		$val->checkInt($data['main_image_id'], 'main_image_id', 1);
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -42,12 +46,15 @@ class AdminValidateServices
 	{
 		$val = new Validator();
 
-		foreach ($data['id'] as $id) {
+		foreach ($data['id'] as $id)
+		{
 			$val->checkInt($id, 'id', 1);
 		}
 
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -58,8 +65,10 @@ class AdminValidateServices
 	{
 		$val = new Validator();
 		$val->checkInt($data['id'], 'id', 1);
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -68,11 +77,13 @@ class AdminValidateServices
 
 	public static function adminItemAddImageValidate($data)
 	{
-		if (isset($_FILES['image']['tmp_name'])) {
+		if (isset($_FILES['image']['tmp_name']))
+		{
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
 			$mime = finfo_file($finfo, $_FILES['image']['tmp_name']);
-			$allowed = array('image/png', 'image/jpg', 'image/jpeg', 'image/webp');
-			if (!in_array($mime, $allowed)) {
+			$allowed = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'];
+			if (!in_array($mime, $allowed))
+			{
 				echo 'Wrong file type';
 				exit();
 			}
@@ -87,8 +98,10 @@ class AdminValidateServices
 		$val->checkInt($data['height'], 'height', 1);
 		$val->checkInt($data['item_id'], 'item_id', 1);
 		$val->checkPath($data['path']);
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -98,13 +111,16 @@ class AdminValidateServices
 	public static function adminUserEditValidate($data)
 	{
 		$val = new Validator();
-		if(!empty($data['email'])) {
+		if (!empty($data['email']))
+		{
 			$val->checkEmail($data['email']);
 		}
 		$val->checkLogin($data['login']);
 		$val->checkBool($data['role'], 'role');
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -116,8 +132,10 @@ class AdminValidateServices
 		$val = new Validator();
 		$val->checkText($data['tag_name'], 'name', 255);
 		$val->checkEngText($data['alias'], 'alias', 255);
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -130,26 +148,37 @@ class AdminValidateServices
 		$val->checkText($data['customer_name'], 'customer_name', 255, 1);
 		$val->checkPhone($data['c_phone']);
 		$val->checkEmail($data['c_email']);
-		if (empty($data['comment'])) {
+		if (empty($data['comment']))
+		{
 			$data['comment'] = '-';
-		} else {
+		}
+		else
+		{
 			$val->checkText($data['comment'], 'comment', 1023);
 		}
 
 		$val->checkText($data['address'], 'address', 511);
-		if (empty($data['price'])) {
+		if (empty($data['price']))
+		{
 			$data['price'] = 0;
-		} else {
+		}
+		else
+		{
 			$val->checkInt($data['price'], 'price', 0);
 		}
-		if (empty($data['status'])) {
+		if (empty($data['status']))
+		{
 			$data['status'] = 0;
-		} else {
+		}
+		else
+		{
 			$val->checkBool($data['status'], 'status');
 		}
 
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;
@@ -159,13 +188,16 @@ class AdminValidateServices
 	public static function adminUpdateRelationsValidate($data)
 	{
 		$val = new Validator();
-		foreach ($data['relationData'] as $key => $value) {
+		foreach ($data['relationData'] as $key => $value)
+		{
 			$val->checkInt($key, 'key', 1);
 			$val->checkInt($value, 'value', 1);
 		}
 
-		if (!$val->isSuccess()) {
-			foreach ($val->getErrors() as $error) {
+		if (!$val->isSuccess())
+		{
+			foreach ($val->getErrors() as $error)
+			{
 				echo $error . "</br>";
 			}
 			exit;

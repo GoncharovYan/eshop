@@ -11,111 +11,111 @@ use Validation\Validator;
 
 class OrderController extends BaseController
 {
-    public function orderPage($messages = null)
-    {
-        session_start();
+	public function orderPage($messages = null)
+	{
+		session_start();
 
-        if (!empty($_SESSION['cart']))
-        {
-            $cart = $_SESSION['cart'];
+		if (!empty($_SESSION['cart']))
+		{
+			$cart = $_SESSION['cart'];
 
-            $productsIdArray = array_keys($cart);
-            $cost = 0;
+			$productsIdArray = array_keys($cart);
+			$cost = 0;
 
-            $productsIdString = implode(",", $productsIdArray);
+			$productsIdString = implode(",", $productsIdArray);
 
-            $items = Item::find([
-                'conditions' => "ID IN ($productsIdString)",
-            ]);
+			$items = Item::find([
+				'conditions' => "ID IN ($productsIdString)",
+			]);
 
-            foreach ($items as $item)
-            {
-                $cost += $item->price * $cart[(int)$item->id];
-            }
+			foreach ($items as $item)
+			{
+				$cost += $item->price * $cart[(int)$item->id];
+			}
 
-            $_SESSION['total_cost'] = $cost;
+			$_SESSION['total_cost'] = $cost;
 
-            if (isset($_SESSION['login']))
-            {
-                $email = $_SESSION['email'];
-            }
-            else
-            {
-                $email = null;
-            }
+			if (isset($_SESSION['login']))
+			{
+				$email = $_SESSION['email'];
+			}
+			else
+			{
+				$email = null;
+			}
 
 			$token = TokenServices::createToken();
 
-            echo $this->render('layoutView.php', [
-                'messages'=> $messages,
-                'content' => $this->render('public/orderView.php', [
-                    'items' => $items,
-                    'counts' => $cart,
-                    'email' => $email,
-                    'cost' => $cost,
+			echo $this->render('layoutView.php', [
+				'messages' => $messages,
+				'content' => $this->render('public/orderView.php', [
+					'items' => $items,
+					'counts' => $cart,
+					'email' => $email,
+					'cost' => $cost,
 					'token' => $token,
-                ]),
-            ]);
-        }
-        else
-        {
-            echo $this->render('layoutView.php', [
-                'content' => "<p>Корзина пустая :(</p>",
-            ]);
-        }
-    }
+				]),
+			]);
+		}
+		else
+		{
+			echo $this->render('layoutView.php', [
+				'content' => "<p>Корзина пустая :(</p>",
+			]);
+		}
+	}
 
-    public function modifyCart()
-    {
-        session_start();
+	public function modifyCart()
+	{
+		session_start();
 
-        $data = Json::decode(file_get_contents('php://input'));
+		$data = Json::decode(file_get_contents('php://input'));
 
-        $id = $data['id'];
-        $change = $data['change'];
+		$id = $data['id'];
+		$change = $data['change'];
 
-        if (!isset($_SESSION['cart'][$id]))
-        {
-            $_SESSION['cart'][$id] = max(0, $change);
-        }
-        else
-        {
-            $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + $change;
-        }
+		if (!isset($_SESSION['cart'][$id]))
+		{
+			$_SESSION['cart'][$id] = max(0, $change);
+		}
+		else
+		{
+			$_SESSION['cart'][$id] = $_SESSION['cart'][$id] + $change;
+		}
 
-        $count = $_SESSION['cart'][$id];
+		$count = $_SESSION['cart'][$id];
 
-        if ($_SESSION['cart'][$id] < 1)
-        {
-            unset($_SESSION['cart'][$id]);
-        }
+		if ($_SESSION['cart'][$id] < 1)
+		{
+			unset($_SESSION['cart'][$id]);
+		}
 
-        echo Json::encode([
-            'id' => $id,
-            'change' => $change,
-            'count' =>  $count,
-            'price' => $data['price'],
-        ]);
-    }
+		echo Json::encode([
+			'id' => $id,
+			'change' => $change,
+			'count' => $count,
+			'price' => $data['price'],
+		]);
+	}
 
-    public function deleteFromCart()
-    {
-        session_start();
+	public function deleteFromCart()
+	{
+		session_start();
 
-        $data = Json::decode(file_get_contents('php://input'));
+		$data = Json::decode(file_get_contents('php://input'));
 
-        $id = $data['id'];
+		$id = $data['id'];
 
-        unset($_SESSION['cart'][$id]);
+		unset($_SESSION['cart'][$id]);
 
-        echo Json::encode([
-            'id' => $id,
-        ]);
-    }
+		echo Json::encode([
+			'id' => $id,
+		]);
+	}
 
-    public function checkout($data)
-    {
-        session_start();
+	public function checkout($data)
+	{
+		session_start();
 
 		$token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
 		TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
@@ -125,49 +125,52 @@ class OrderController extends BaseController
 		$val->checkPhone($data['phone']);
 		$val->checkText($data['name'], 'Name', 30);
 		$val->checkText($data['address'], 'Address', 120);
-        if (empty($data['comment'])) {
-            $data['comment'] = '-';
-        } else {
-            $val->checkText($data['comment'], 'comment', 1022);
-        }
-
-		if(!$val->isSuccess())
+		if (empty($data['comment']))
 		{
-            $this->orderPage($val->getErrors());
+			$data['comment'] = '-';
+		}
+		else
+		{
+			$val->checkText($data['comment'], 'comment', 1022);
+		}
+
+		if (!$val->isSuccess())
+		{
+			$this->orderPage($val->getErrors());
 			exit;
 		}
 
-        $newOrder = new Orders();
+		$newOrder = new Orders();
 
-        $newOrder->customer_name = $data['name'];
-        $newOrder->c_phone = $data['phone'];
-        $newOrder->c_email = $data['email'];
-        $newOrder->address = $data['address'];
-        $newOrder->comment = $data['comment'];
-        $newOrder->status = 0;
-        $newOrder->price = $_SESSION['total_cost'];
+		$newOrder->customer_name = $data['name'];
+		$newOrder->c_phone = $data['phone'];
+		$newOrder->c_email = $data['email'];
+		$newOrder->address = $data['address'];
+		$newOrder->comment = $data['comment'];
+		$newOrder->status = 0;
+		$newOrder->price = $_SESSION['total_cost'];
 
-        $order = $newOrder->save();
+		$order = $newOrder->save();
 
-        $cart = $_SESSION['cart'];
-        if (!$cart)
-        {
-            echo $this->render('layoutView.php', [
-                'content' => "<p>Корзина пустая :(</p>",
-            ]);
+		$cart = $_SESSION['cart'];
+		if (!$cart)
+		{
+			echo $this->render('layoutView.php', [
+				'content' => "<p>Корзина пустая :(</p>",
+			]);
 
-            return;
-        }
-        unset($_SESSION['cart']);
+			return;
+		}
+		unset($_SESSION['cart']);
 
-        $productIdArr = array_keys($cart);
+		$productIdArr = array_keys($cart);
 
-        $products = Item::findByIdArr($productIdArr);
+		$products = Item::findByIdArr($productIdArr);
 
-        $order->addRelationArr($products, "ITEM_COUNT", $cart);
+		$order->addRelationArr($products, "ITEM_COUNT", $cart);
 
-        echo $this->render('layoutView.php', [
-            'content' => "<p>ну всё жди. скоро будем</p>",
-        ]);
-    }
+		echo $this->render('layoutView.php', [
+			'content' => "<p>ну всё жди. скоро будем</p>",
+		]);
+	}
 }

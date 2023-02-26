@@ -13,21 +13,29 @@ class AdminTagController extends BaseController
 {
 	public function adminTagPage(int|string $id)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
 
-		if (!is_numeric($id)){
-			if($id === 'new'){
+		if (!is_numeric($id))
+		{
+			if ($id === 'new')
+			{
 				$tag = new Tag();
-			} else {
+			}
+			else
+			{
 				echo 'tag not found';
 				exit;
 			}
-		} else {
+		}
+		else
+		{
 			$tag = Tag::findById($id);
-			if(is_null($tag)){
+			if (is_null($tag))
+			{
 				echo 'tag not found';
 				exit;
 			}
@@ -43,7 +51,8 @@ class AdminTagController extends BaseController
 
 	public function adminTagEdit($id, $data)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
@@ -51,7 +60,8 @@ class AdminTagController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		switch ($data['action']) {
+		switch ($data['action'])
+		{
 			case "edit":
 				AdminValidateServices::adminTagEditValidate($data);
 				break;

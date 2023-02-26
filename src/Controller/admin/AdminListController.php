@@ -15,11 +15,11 @@ class AdminListController extends BaseController
 {
 	public function adminListPage(string $className)
 	{
-        if(!UserServices::isAdmin())
-        {
-            header("Location: /catalog/all/1/");
-            exit;
-        }
+		if (!UserServices::isAdmin())
+		{
+			header("Location: /catalog/all/1/");
+			exit;
+		}
 
 		$class = "\Models\\" . ucfirst($className);
 		if (!class_exists($class))

@@ -15,25 +15,33 @@ class AdminItemController extends BaseController
 {
 	public function adminItemPage(int|string $id)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
 
 		$allTags = Tag::findAll();
-		if (!is_numeric($id)) {
-			if ($id === 'new') {
+		if (!is_numeric($id))
+		{
+			if ($id === 'new')
+			{
 				$item = new Item();
 				$mainImage = Image::findById(1);
 				$images = [];
 				$tags = [];
-			} else {
+			}
+			else
+			{
 				echo 'Item not found';
 				exit;
 			}
-		} else {
+		}
+		else
+		{
 			$item = Item::findById($id);
-			if (is_null($item)) {
+			if (is_null($item))
+			{
 				echo 'Item not found';
 				exit;
 			}
@@ -42,21 +50,24 @@ class AdminItemController extends BaseController
 
 			$image = new Image();
 			$images = $image::find([
-				'conditions' => "ITEM_ID = $id"
+				'conditions' => "ITEM_ID = $id",
 			]);
 
 			$tag = new Tag();
 			$tags = $tag->items()->find([
-				'conditions' => "ITEM_ID = $id"
+				'conditions' => "ITEM_ID = $id",
 			]);
 
 			// Удаление текущих тегов товара из массива всех тегов
 			$tagsID = [];
-			foreach ($tags as $itemTag) {
+			foreach ($tags as $itemTag)
+			{
 				$tagsID[] = $itemTag['id'];
 			}
-			foreach ($allTags as $key => $otherTag) {
-				if (in_array($otherTag->id, $tagsID, true)) {
+			foreach ($allTags as $key => $otherTag)
+			{
+				if (in_array($otherTag->id, $tagsID, true))
+				{
 					unset($allTags[$key]);
 				}
 			}
@@ -77,7 +88,8 @@ class AdminItemController extends BaseController
 	public
 	function adminItemEdit($id, $data)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
@@ -85,7 +97,8 @@ class AdminItemController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		switch ($data['action']) {
+		switch ($data['action'])
+		{
 			case "edit":
 				AdminValidateServices::adminItemEditValidate($data);
 				break;

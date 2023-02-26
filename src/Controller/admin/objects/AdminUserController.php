@@ -13,21 +13,29 @@ class AdminUserController extends BaseController
 {
 	public function adminUserPage(int|string $id)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
 
-		if (!is_numeric($id)){
-			if($id === 'new'){
+		if (!is_numeric($id))
+		{
+			if ($id === 'new')
+			{
 				$user = new User();
-			} else {
+			}
+			else
+			{
 				echo 'User not found';
 				exit;
 			}
-		} else {
+		}
+		else
+		{
 			$user = User::findById($id);
-			if(is_null($user)){
+			if (is_null($user))
+			{
 				echo 'User not found';
 				exit;
 			}
@@ -43,7 +51,8 @@ class AdminUserController extends BaseController
 
 	public function adminUserEdit($id, $data)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
@@ -51,7 +60,8 @@ class AdminUserController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		switch ($data['action']) {
+		switch ($data['action'])
+		{
 			case "edit":
 				AdminValidateServices::adminUserEditValidate($data);
 				break;

@@ -14,28 +14,36 @@ class AdminOrdersController extends BaseController
 {
 	public function adminOrdersPage(int|string $id)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
 
-		if (!is_numeric($id)){
-			if($id === 'new'){
+		if (!is_numeric($id))
+		{
+			if ($id === 'new')
+			{
 				$order = new Orders();
 				$items = [];
-			} else {
+			}
+			else
+			{
 				echo 'order not found';
 				exit;
 			}
-		} else {
+		}
+		else
+		{
 			$order = Orders::findById($id);
-			if(is_null($order)){
+			if (is_null($order))
+			{
 				echo 'order not found';
 				exit;
 			}
 			$item = new Item();
 			$items = $item->orders()->find([
-				'conditions' => "ORDERS_ID = $id"
+				'conditions' => "ORDERS_ID = $id",
 			]);
 		}
 
@@ -50,7 +58,8 @@ class AdminOrdersController extends BaseController
 
 	public function adminOrdersEdit($id, $data)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
@@ -58,7 +67,8 @@ class AdminOrdersController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		switch ($data['action']) {
+		switch ($data['action'])
+		{
 			case "edit":
 				AdminValidateServices::adminOrderEditValidate($data);
 				break;

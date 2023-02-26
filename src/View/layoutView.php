@@ -20,7 +20,7 @@
                 <img src="/resources/public/images/logo.png" class="logo" alt="logo">
             </a>
 			<form action="/catalog/all/1/" class="search" method="GET" >
-                <input required type="search" placeholder="Поиск по сайту (только русские и латинские буквы)" name="search" id="search-text" pattern="^[A-Za-zА-Яа-яЁё\s]+$">
+                <input required type="search" placeholder="Поиск по сайту (допустимы только буквы и цифры)" name="search" id="search-text" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]+$">
 				<button type="submit">
                     <img src="/resources/public/images/icon-search.png" class="search__icon" alt="search">
                 </button>

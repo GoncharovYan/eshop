@@ -13,21 +13,29 @@ class AdminImageController extends BaseController
 {
 	public function adminImagePage(int|string $id)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
 
-		if (!is_numeric($id)){
-			if($id === 'new'){
+		if (!is_numeric($id))
+		{
+			if ($id === 'new')
+			{
 				$image = new Image();
-			} else {
+			}
+			else
+			{
 				echo 'image not found';
 				exit;
 			}
-		} else {
+		}
+		else
+		{
 			$image = Image::findById($id);
-			if(is_null($image)){
+			if (is_null($image))
+			{
 				echo 'image not found';
 				exit;
 			}
@@ -43,7 +51,8 @@ class AdminImageController extends BaseController
 
 	public function adminImageEdit($id, $data)
 	{
-		if (!UserServices::isAdmin()) {
+		if (!UserServices::isAdmin())
+		{
 			header("Location: /catalog/all/1/");
 			exit;
 		}
@@ -51,7 +60,8 @@ class AdminImageController extends BaseController
 		session_start();
 		TokenServices::checkToken($data['token'], $_SESSION['token'], "Bad token");
 
-		switch ($data['action']) {
+		switch ($data['action'])
+		{
 			case "edit":
 				AdminValidateServices::adminImageEditValidate($data);
 				break;
