@@ -26,7 +26,11 @@ class AdminServices
 	public static function adminEdit($className, $obj, $id, $data)
 	{
 		foreach ($data as $key => $value) {
-			$obj->$key = $value;
+			if ($key === 'password') {
+				$obj->$key = password_hash($value, PASSWORD_DEFAULT);
+			} else {
+				$obj->$key = $value;
+			}
 		}
 		$obj = $obj->save();
 		header("Location: /admin/$className/$obj->id/");
@@ -64,6 +68,11 @@ class AdminServices
 
 	public static function adminAddRelations($className, $obj, $id, $data)
 	{
+		if($obj->id === null)
+		{
+			echo 'object not found or was not saved';
+			exit();
+		}
 		$relatedClass = "\Models\\" . ucfirst($data['relation']);
 		$relatedClassArr = $relatedClass::findByIdArr($data['id']);
 		$obj->addRelationArr($relatedClassArr);
@@ -85,6 +94,12 @@ class AdminServices
 
 	public static function adminAddImage($className, $obj, $id, $data)
 	{
+		if($obj->id === null)
+		{
+			echo 'object not found or was not saved';
+			exit();
+		}
+
 		$imageInfo = getimagesize($_FILES["image"]["tmp_name"]);
 		$fileName = md5(uniqid('', true)) . '.jpg';
 		$uploadDir = '/resources/public/itemImages/';

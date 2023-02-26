@@ -119,7 +119,9 @@ class AdminValidateServices
 	public static function adminUserEditValidate($data)
 	{
 		$val = new Validator();
-		$val->checkEmail($data['email']);
+		if(!empty($data['email'])) {
+			$val->checkEmail($data['email']);
+		}
 		$val->checkLogin($data['login']);
 		$val->checkBool($data['role'], 'role');
 		if (!$val->isSuccess()) {
