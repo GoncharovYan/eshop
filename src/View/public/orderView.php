@@ -51,9 +51,6 @@
 				endforeach; ?>
             </div>
         </div>
-
     </div>
-
     <script src="/resources/public/js/cart.js"></script>
-    <script src="/resources/public/js/formInputCheck.js"></script>
 </div>

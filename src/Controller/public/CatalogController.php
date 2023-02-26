@@ -4,13 +4,8 @@ namespace Controller\public;
 
 use Controller\BaseController;
 use Core\Web\Json;
-use JetBrains\PhpStorm\NoReturn;
-use Models\Image;
-use Models\Item;
 use Models\Tag;
 use Services\CatalogServices;
-use Services\ConfigurationServices;
-use Services\PageServices;
 use Validation\Validator;
 
 class CatalogController extends BaseController

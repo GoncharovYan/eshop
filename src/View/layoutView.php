@@ -57,7 +57,6 @@
         <? endif; ?>
         <?= $content ?>
 	</main>
-    <script src="/resources/public/js/catalog-search.js"></script>
 	<footer>
 	</footer>
 </body>
