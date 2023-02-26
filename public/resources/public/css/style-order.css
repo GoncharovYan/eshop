@@ -1,0 +1,146 @@
+.order {
+  display: flex;
+  flex-direction: column;
+}
+
+.order__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.order-info {
+  display: flex;
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  margin-right: 40px;
+  width: 400px;
+}
+
+.order-details__title {
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.order-details form {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-details form input {
+  padding: 10px;
+  font-size: 16px;
+  margin: 5px 0;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.order-details__confirm {
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 20px;
+  background-color: rgba(243, 190, 0, 0.8);
+  border: none;
+}
+
+.order-details__confirm:hover {
+  background-color: #e7a600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.order-details__total-price {
+  margin-top: 50px;
+}
+
+.order-cart {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  border-left: 2px solid rgba(243, 190, 0, 0.8);
+}
+
+.order-cart__title {
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.order-cart .items {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-cart .item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-grow: 1;
+  padding-bottom: 15px;
+  border-bottom: 1px solid black;
+}
+
+.order-cart .item__name {
+  width: 300px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.order-cart .item__count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+}
+
+.order-cart .item__price {
+  width: 100px;
+  text-align: center;
+}
+
+.order-cart .item__del {
+  margin-left: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: start;
+  width: 15px;
+  height: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.order-cart .item__del span {
+  position: absolute;
+  left: 0;
+  top: -2px;
+}
+
+.order-cart .item__del:hover {
+  color: red;
+  transition: 200ms;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  background-color: rgba(243, 190, 0, 0.8);
+  border-radius: 100%;
+  margin: 0 5px;
+  user-select: none;
+}
+
+.counter:hover {
+  background-color: #e7a600;
+  cursor: pointer;
+  transition: 0.2s;
+}

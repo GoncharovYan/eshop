@@ -1,0 +1,111 @@
+.details {
+	display: grid;
+	grid-template-columns: 690px 550px;
+	grid-column-gap: 100px;
+	font-family: Roboto, sans-serif;
+	position: relative;
+	margin-left: 7%;
+}
+
+.details .images {
+	display: grid;
+	grid-template:
+		"main-img main-img main-img main-img main-img"
+		"mini-img1 mini-img2 mini-img3 mini-img4 mini-img5";
+	gap: 40px 5px;
+	grid-template-columns: 130px 130px 130px 130px 130px;
+	height: 730px;
+	margin-bottom: 100px;
+}
+
+.previous, .next{
+	position: absolute;
+	width: auto;
+	top:280px;
+	padding: 0 15px;
+	cursor: pointer;
+}
+
+.details .images .main-image {
+	grid-area: main-img;
+	grid-column: span 5;
+	object-fit: cover;
+	transition: 1s;
+}
+
+.details .images .main-image:hover{
+	transform: scale(1.1);
+}
+.details .images .mini-image1 {
+	grid-area: mini-img1;
+}
+
+.details .profile {
+	margin-right: 100px;
+}
+
+.details .profile h2 {
+	font-size: 36px;
+	color: rgba(0, 0, 0, 0.9);
+}
+
+.details div .long-description {
+	font-size: 20px;
+	margin: 30px 0 30px 0;
+	color:rgba(0, 0, 0, 0.8);
+}
+.details .wrapper{
+	display: flex;
+	margin-top: 50px;
+	align-items: center;
+}
+.details .wrapper p{
+	font-size: 22px;
+	font-weight: 600;
+	margin-right: 15%;
+	color:rgba(0, 0, 0, 0.9);
+}
+.details .wrapper .button{
+	padding: 10px 15px;
+	font-size: 20px;
+	background-color: rgba(243, 190, 0, 0.8);
+	border:none;
+}
+.details .wrapper .button:hover{
+	background-color: rgb(231, 166, 0);
+	cursor: pointer;
+	transition: 0.2s;
+}
+.details .wrapper .button_active{
+	padding: 10px 15px;
+	font-size: 20px;
+	background-color: white;
+	border:2px solid rgba(243, 190, 0, 0.8);
+
+	margin-right: 20px;
+}
+.details .wrapper .button_active:hover{
+	background-color: white;
+	border:2px solid rgba(243, 190, 0, 0.8);
+}
+.details .tags{
+	margin: 30px 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+.details .tags a{
+	margin: 0 10px 20px 0;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.1);
+	padding: 5px 10px;
+	border-radius: 15px;
+}
+.details .tags a:hover{
+	background-color: #cbcbcb;
+	cursor: pointer;
+	transition: 0.2s;
+}
+.hidden {
+	display: none;
+}

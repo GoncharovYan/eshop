@@ -1,0 +1,120 @@
+
+
+.catalog .tags ul {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tags a:hover{
+  background-color: rgba(243, 190, 0, 0.8);
+}
+
+.catalog .tags ul a {
+  display: block;
+  list-style-type: none;
+  text-decoration: none;
+  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 0.8);
+  padding: 10px 10px 10px 10px;
+  border-bottom: 1px solid;
+}
+
+.catalog-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.catalog .item {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: grid;
+  width: 230px;
+  height: 450px;
+  justify-content: center;
+}
+.catalog .item .name{
+	width: 195px;
+	margin: 10px 0 0 10px;
+	height: 40px;
+}
+
+.catalog .item .name a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 20px;
+
+}
+
+.catalog .item .name a:hover {
+  color: rgba(243, 190, 0, 0.8);
+  transition: 100ms;
+}
+
+.catalog .item span {
+  margin: 15px 0 0 10px;
+  color: rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  height: 90px;
+  width: 195px;
+}
+
+.catalog .item .price {
+  margin: 35px 0 20px 0px;
+  font-size: 22px;
+  font-weight: 600;
+  background-color: rgba(243, 190, 0, 0.8);
+  padding: 10px 15px;
+  text-align: center;
+  width: 144px;
+  justify-self: center;
+}
+
+.catalog .item img {
+  height: 165px;
+  width: 195px;
+  object-fit: contain;
+  margin-top: 25px;
+  justify-self: center;
+}
+
+.emptyProducts{
+  font-size: 25px;
+  margin-top: 15px;
+}
+
+.paginator {
+  margin-top: 20px;
+  grid-area: paginator;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page{
+  margin:0px 10px 0px 10px;
+  font-size: 24px;
+  font-weight: 600;
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+.page:hover{
+  background-color: rgba(243, 190, 0, 0.8);
+  cursor: pointer;
+}
+
+.no-page{
+  margin:55px 10px 10px 10px;
+  background-color: rgba(243, 190, 0, 0.8);
+  font-size: 22px;
+  font-weight: 600;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+}

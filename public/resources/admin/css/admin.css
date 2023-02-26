@@ -1,0 +1,41 @@
+.elastic li.hide{
+	display: none;
+}
+
+.elastic-tag li{
+	display: flex;
+}
+
+.elastic-tag li.hide{
+	display: none;
+}
+
+.elastic tr.hide{
+	display: none;
+}
+
+.item .main-image{
+	height: 400px;
+	width: 400px;
+	object-fit: contain;
+}
+
+.admin-image .main-image{
+	height: 400px;
+	width: 400px;
+	object-fit: contain;
+}
+
+.item .additional-image{
+	height: 200px;
+	width: 200px;
+	object-fit: contain;
+}
+
+.item textarea{
+	height: 200px;
+}
+
+.item .tag{
+	height: 400px;
+}
