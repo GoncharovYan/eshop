@@ -9,35 +9,14 @@ class AdminValidateServices
 	public static function adminItemEditValidate($data)
 	{
 		$val = new Validator();
-		if (empty($data['main_image_id'])) {
-			$data['main_image_id'] = 1;
-		} else {
-			$val->checkInt($data['main_image_id'], 'main_image_id', 1);
-		}
+		$val->checkInt($data['main_image_id'], 'main_image_id', 1);
 
 		$val->checkText($data['item_name'], 'item_name', 511);
 		$val->checkText($data['short_desc'], 'short_desc', 1023);
 		$val->checkText($data['full_desc'], 'full_desc', 8191);
 
-		if (empty($data['count'])) {
-			$data['count'] = 0;
-		} else {
-			$val->checkInt($data['count'], 'count', 0);
-		}
-
-		if (empty($data['sort_order'])) {
-			$data['sort_order'] = 0;
-		} else {
-			$val->checkInt($data['sort_order'], 'sort_order');
-		}
-
-		if (empty($data['price'])) {
-			$data['price'] = 0;
-		} else {
-			$val->checkInt($data['price'], 'price', 0);
-		}
-
-		$val->checkBool($data['is_active'], 'is_active');
+		$val->checkInt($data['sort_order'], 'sort_order');
+		$val->checkInt($data['price'], 'price', 0);
 
 		if (!$val->isSuccess()) {
 			foreach ($val->getErrors() as $error) {

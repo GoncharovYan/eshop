@@ -29,33 +29,12 @@ use Models\Item;
 
 				<div class="d-flex">
 					<div class="p-3">
-						<label class="form-label">Количество</label>
-						<input type="number" name="count" class="form-control" value="<?= $item->count ?>">
-					</div>
-					<div class="p-3">
 						<label class="form-label">Цена</label>
 						<input type="number" name="price" class="form-control" value="<?= $item->price ?>">
 					</div>
 					<div class="p-3">
 						<label class="form-label">Порядок сортировки</label>
 						<input type="number" name="sort_order" class="form-control" value="<?= $item->sort_order ?>">
-					</div>
-				</div>
-
-				<div class="d-flex p-3">
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="is_active"
-							   value="1" <?= $item->is_active ? 'checked' : '' ?>>
-						<label class="form-check-label">
-							Активен
-						</label>
-					</div>
-					<div class="form-check ms-3">
-						<input class="form-check-input" type="radio" name="is_active"
-							   value="0" <?= $item->is_active ? '' : 'checked' ?>>
-						<label class="form-check-label">
-							Неактивен
-						</label>
 					</div>
 				</div>
 

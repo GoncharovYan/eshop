@@ -12,13 +12,9 @@ class Item extends Relation {
 
 	public $full_desc;
 
-	public $count;
-
 	public $price;
 
 	public $sort_order;
-
-	public $is_active;
 
 	public $date_created;
 
