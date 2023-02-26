@@ -25,8 +25,8 @@ use Models\User;
 			</div>
 
 			<div class="form-group mb-2">
-				<label class="form-label">Пароль</label>
-				<input class="form-control" type="password" name="password" value="<?= $user->password ?>">
+				<label class="form-label">Новый пароль</label>
+				<input class="form-control" type="password" name="password" value="">
 			</div>
 
 			<label class="d-flex p-3"">

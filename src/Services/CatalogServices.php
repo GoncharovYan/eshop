@@ -22,6 +22,7 @@ class CatalogServices
 
             $productList = $item->tags()->find([
                 'conditions' =>  $condition,
+				'order' => "SORT_ORDER",
                 'limit' => "$id, $itemsPerPage",
             ]);
         }
@@ -31,13 +32,16 @@ class CatalogServices
             {
                 $productList = $item->find([
                     'conditions' =>  "ITEM_NAME like '%$search%'",
+					'order' => "SORT_ORDER",
                     'limit' => "$id, $itemsPerPage",
                 ]);
             }
             else
             {
                 $productList = $item->find([
-                    'limit' => "$id, $itemsPerPage"]);
+                    'limit' => "$id, $itemsPerPage",
+					'order' => "SORT_ORDER",
+					]);
             }
             foreach ($productList as &$product)
             {
