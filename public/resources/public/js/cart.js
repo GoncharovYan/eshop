@@ -1,8 +1,9 @@
-function modifyCart(id, count = 1)
+function modifyCart(id, price, change = 1)
 {
     const addParams = {
         id: id,
-        count: count,
+        change: change,
+        price: price,
     };
 
     fetch(`/order/modify/`,
@@ -20,8 +21,10 @@ function modifyCart(id, count = 1)
         .then((data) =>
         {
             const itemCount = document.getElementById(`item-id-${data['id']}-count`);
+            const itemPrice = document.getElementById(`item-id-${data['id']}-price`);
+            const total = document.getElementById('total');
 
-            if (parseInt(itemCount.innerHTML) + data['count'] < 1)
+            if (parseInt(itemCount.innerHTML) + data['change'] < 1)
             {
                 const item = document.getElementById(`item-id-${data['id']}`);
 
@@ -29,7 +32,9 @@ function modifyCart(id, count = 1)
                 parent.removeChild(item);
                 return;
             }
-            itemCount.innerHTML = parseInt(itemCount.innerHTML) + data['count'];
+            itemCount.innerHTML = parseInt(itemCount.innerHTML) + parseInt(data['change']);
+            itemPrice.innerHTML = parseInt(itemPrice.innerHTML) + parseInt(data['change']) * parseInt(data['price']);
+            total.innerHTML = parseInt(total.innerHTML) + parseInt(data['change']) * parseInt(data['price']);
         })
 }
 

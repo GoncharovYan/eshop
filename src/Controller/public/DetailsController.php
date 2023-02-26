@@ -11,6 +11,8 @@ class DetailsController extends BaseController
 {
     public function detailsPage(int $id)
     {
+        session_start();
+
 		$product = Item::findById($id);
 
 		if(!$product){
@@ -30,11 +32,21 @@ class DetailsController extends BaseController
                 'limit' => 5,
             ]);
 
+            if (!empty($_SESSION['cart'][$id]))
+            {
+                $count = $_SESSION['cart'][$id];
+            }
+            else
+            {
+                $count = 0;
+            }
+
 			echo $this->render('layoutView.php', [
 				'content' => $this->render('public/detailsPageView.php', [
 					'imagePath' => $imagePath,
 					'product' => $product,
 					'tags' => $tags,
+                    'count' => $count,
 				])
 			]);
 		}

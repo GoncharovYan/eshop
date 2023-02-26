@@ -3,6 +3,7 @@
  * @var array $product
  * @var array $tags
  * @var array $imagePath
+ * @var int $count
  */
 ?>
 
@@ -34,13 +35,18 @@
 				endforeach; ?>
 			</div>
 			<div class="wrapper">
-			<p><?= $product->price . " ₽"?></p>
-			<p class="button" onclick='modifyCart(<?= $product->id ?>)'>В корзину</p>
-			</div>
+                <div
+                     class="hidden"
+                     id="data"
+                     data-count="<?= $count ?>"
+                     data-id="<?= $product->id ?>">
+                </div>
+                <p><?= $product->price . " ₽"?></p>
+            </div>
 		</div>
 	<a class="previous" onclick="previousSlide()" style="margin-left: -50px">&#10094;</a>
 	<a class="next" onclick="nextSlide()" style="margin-left: 700px">&#10095;</a>
 
 	<script src="/resources/public/js/slider.js"></script>
-    <script src="/resources/public/js/cart.js"></script>
+    <script src="/resources/public/js/details-cart.js"></script>
 	</div>
