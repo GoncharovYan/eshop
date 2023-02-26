@@ -72,17 +72,18 @@ class OrderController extends BaseController
         $data = Json::decode(file_get_contents('php://input'));
 
         $id = $data['id'];
-        $count = $data['count'];
+        $change = $data['change'];
 
         if (!isset($_SESSION['cart'][$id]))
         {
-            if ($count < 1) return;
-
-            $_SESSION['cart'][$id] = $count;
-            return;
+            $_SESSION['cart'][$id] = max(0, $change);
+        }
+        else
+        {
+            $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + $change;
         }
 
-        $_SESSION['cart'][$id] = $_SESSION['cart'][$id] + $count;
+        $count = $_SESSION['cart'][$id];
 
         if ($_SESSION['cart'][$id] < 1)
         {
@@ -91,7 +92,9 @@ class OrderController extends BaseController
 
         echo Json::encode([
             'id' => $id,
-            'count' => $count,
+            'change' => $change,
+            'count' =>  $count,
+            'price' => $data['price'],
         ]);
     }
 
@@ -147,6 +150,15 @@ class OrderController extends BaseController
         $order = $newOrder->save();
 
         $cart = $_SESSION['cart'];
+        if (!$cart)
+        {
+            echo $this->render('layoutView.php', [
+                'content' => "<p>Корзина пустая :(</p>",
+            ]);
+
+            return;
+        }
+        unset($_SESSION['cart']);
 
         $productIdArr = array_keys($cart);
 

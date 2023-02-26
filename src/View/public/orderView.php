@@ -24,7 +24,7 @@
                 <input class="form-field" type="text" name="comment" placeholder="Comment" maxlength="1022">
 
                 <p class="order-details__total-price">
-                    Всего денег: <span style="font-weight: bold">
+                    Всего денег: <span id="total" style="font-weight: bold">
                         <?= $cost ?></span>
                 </p>
                 <input class="order-details__confirm" type="submit" value="Да я покупаю всё">
@@ -40,11 +40,11 @@
                     <div class="item" id="item-id-<?= $item->id ?>">
                         <p class="item__name"> <?= $item->item_name?><p>
                         <div class="item__count">
-                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, -1)">-</div>
+                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, <?= $item->price ?>, -1)">-</div>
                             <p  id="item-id-<?= $item->id ?>-count"><?=$counts[$item->id]?></p>
-                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, 1)">+</div>
+                            <div class="counter" onclick="modifyCart(<?= $item->id ?>, <?= $item->price ?>, 1)">+</div>
                         </div>
-                        <p class="item__price"> <?= $item->price * $counts[$item->id]?><p>
+                        <p class="item__price" id="item-id-<?= $item->id ?>-price"> <?= $item->price * $counts[$item->id]?><p>
                         <p class="item__del" onclick="deleteFromCart(<?= $item->id ?>)"><span>×</span></p>
                     </div>
 				<?php
