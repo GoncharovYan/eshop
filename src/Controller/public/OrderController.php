@@ -59,9 +59,11 @@ class OrderController extends BaseController
 		}
 		else
 		{
-			echo $this->render('layoutView.php', [
-				'content' => "<p>Корзина пустая :(</p>",
-			]);
+            echo $this->render('layoutView.php', [
+                'content' => $this->render('public/pageNotFoundView.php', [
+                    'error' => "Корзина пустая :(",
+                ]),
+            ]);
 		}
 	}
 
@@ -155,11 +157,11 @@ class OrderController extends BaseController
 		$cart = $_SESSION['cart'];
 		if (!$cart)
 		{
-			echo $this->render('layoutView.php', [
-				'content' => "<p>Корзина пустая :(</p>",
-			]);
-
-			return;
+            echo $this->render('layoutView.php', [
+                'content' => $this->render('public/pageNotFoundView.php', [
+                    'error' => "Корзина пустая :(",
+                ]),
+            ]);
 		}
 		unset($_SESSION['cart']);
 

@@ -29,7 +29,7 @@
 .details .images .main-image {
 	grid-area: main-img;
 	grid-column: span 5;
-	object-fit: cover;
+	object-fit: contain;
 	transition: 1s;
 }
 

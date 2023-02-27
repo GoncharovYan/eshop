@@ -14,12 +14,11 @@ class CatalogServices
 		$item = new Item();
 		if ($tag !== 'all')
 		{
-			$condition = "ALIAS = '$tag'";
+			$condition = "ALIAS = '$tag' AND IS_ACTIVE = 1";
 			if ($search !== '')
 			{
-				$condition .= " AND ITEM_NAME like '%$search%'";
+				$condition .= " AND ITEM_NAME like '%$search%' ";
 			}
-
 			$productList = $item->tags()->find([
 				'conditions' => $condition,
 				'order' => "SORT_ORDER",
@@ -28,21 +27,12 @@ class CatalogServices
 		}
 		else
 		{
-			if ($search !== '')
-			{
-				$productList = $item->find([
-					'conditions' => "ITEM_NAME like '%$search%'",
-					'order' => "SORT_ORDER",
-					'limit' => "$id, $itemsPerPage",
-				]);
-			}
-			else
-			{
-				$productList = $item->find([
-					'limit' => "$id, $itemsPerPage",
-					'order' => "SORT_ORDER",
-				]);
-			}
+            $condition = "IS_ACTIVE = 1";
+            $productList = $item->find([
+                'conditions' => $condition,
+                'order' => "SORT_ORDER",
+                'limit' => "$id, $itemsPerPage",
+            ]);
 			foreach ($productList as &$product)
 			{
 				$product = (array)$product;
@@ -84,7 +74,7 @@ class CatalogServices
 			$condition = "ALIAS = '$tag'";
 			if ($search !== '')
 			{
-				$condition .= " AND ITEM_NAME like '%$search%'";
+				$condition .= " AND ITEM_NAME like '%$search%' AND IS_ACTIVE = 1";
 			}
 
 			$fullProductList = $item->tags()->find([
@@ -96,12 +86,14 @@ class CatalogServices
 			if ($search !== '')
 			{
 				$fullProductList = $item->find([
-					'conditions' => "ITEM_NAME like '%$search%'",
+					'conditions' => "ITEM_NAME like '%$search%' AND IS_ACTIVE = 1",
 				]);
 			}
 			else
 			{
-				$fullProductList = $item->findAll();
+                $fullProductList = $item->find([
+                    'conditions' => "IS_ACTIVE = 1",
+                ]);
 			}
 		}
 		return ceil(count($fullProductList) / $itemsPerPage);
