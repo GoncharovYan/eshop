@@ -51,12 +51,14 @@ class AuthController extends BaseController
 
 	public function authUser($data)
 	{
+        $minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
+
+        session_start();
+
         $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-        TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+        TokenServices::checkToken($token, $_SESSION['token'], "Bad token");
 
-		$minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
 
-		session_start();
 		$val = new Validator();
 		$val->checkLogin($data['login']);
 		$val->checkText($data['pass'], 'password', 62, $minPassLength);
@@ -101,10 +103,12 @@ class AuthController extends BaseController
 
 	public function registerUser($data)
 	{
-        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
-        TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+        $minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
 
-	    $minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
+	    session_start();
+
+        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+        TokenServices::checkToken($token, $_SESSION['token'], "Bad token");
 
 		$val = new Validator();
 		$val->checkEmail($data['email']);
