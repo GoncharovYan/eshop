@@ -5,6 +5,7 @@ namespace Controller\private;
 use Controller\BaseController;
 use Models\User;
 use Services\ConfigurationServices;
+use Services\TokenServices;
 use Services\UserServices;
 use Validation\Validator;
 
@@ -19,8 +20,11 @@ class AuthController extends BaseController
 		}
 		else
 		{
+            $token = TokenServices::createToken();
+
 			echo $this->render('layoutView.php', [
 				'content' => $this->render('private/authView.php', [
+                    'token' => $token,
 				]),
 			]);
 		}
@@ -35,8 +39,11 @@ class AuthController extends BaseController
 		}
 		else
 		{
+		    $token = TokenServices::createToken();
+
 			echo $this->render('layoutView.php', [
 				'content' => $this->render('private/registerView.php', [
+                    'token' => $token,
 				]),
 			]);
 		}
@@ -44,6 +51,9 @@ class AuthController extends BaseController
 
 	public function authUser($data)
 	{
+        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+        TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+
 		$minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
 
 		session_start();
@@ -80,16 +90,21 @@ class AuthController extends BaseController
 				}
 			}
 		}
+
 		echo $this->render('layoutView.php', [
 			'messages' => $messages,
 			'content' => $this->render('private/authView.php', [
+                'token' => $token,
 			]),
 		]);
 	}
 
 	public function registerUser($data)
 	{
-		$minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
+        $token = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
+        TokenServices::checkToken($token, $_SESSION['token'], "Извините, мы не можем принять ваш заказ");
+
+	    $minPassLength = ConfigurationServices::option('PASSWORD_MIN_LENGTH');
 
 		$val = new Validator();
 		$val->checkEmail($data['email']);
@@ -102,6 +117,7 @@ class AuthController extends BaseController
 			echo $this->render('layoutView.php', [
 				'messages' => $messages,
 				'content' => $this->render('private/registerView.php', [
+                    'token' => $token,
 				]),
 			]);
 			exit;
@@ -121,6 +137,7 @@ class AuthController extends BaseController
 			echo $this->render('layoutView.php', [
 				'messages' => $messages,
 				'content' => $this->render('private/authView.php', [
+                    'token' => $token,
 				]),
 			]);
 		}
@@ -130,6 +147,7 @@ class AuthController extends BaseController
 			echo $this->render('layoutView.php', [
 				'messages' => $messages,
 				'content' => $this->render('private/registerView.php', [
+                    'token' => $token,
 				]),
 			]);
 		}

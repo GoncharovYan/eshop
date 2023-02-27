@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var string $token
+ */
+?>
+
+
 <div class="auth-form">
     <div class="auth-form-content">
         <p class="title-form">Регистрация</p>
@@ -9,6 +16,7 @@
             <label>Пароль</label>
             <input required class="auth-input" name="pass" type="password" id="reg-pass" minlength="5" maxlength="62"/>
             <button type="submit" class="auth-form-btn" >Зарегистрироваться</button>
+            <input type="hidden" name="token" value="<?= $token?>">
         </form>
         <a id="auth-page-btn" href="/auth/">Форма авторизации</a>
     </div>
