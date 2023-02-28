@@ -28,6 +28,10 @@ class CatalogServices
 		else
 		{
             $condition = "IS_ACTIVE = 1";
+            if ($search !== '')
+            {
+                $condition .= " AND ITEM_NAME like '%$search%' ";
+            }
             $productList = $item->find([
                 'conditions' => $condition,
                 'order' => "SORT_ORDER",

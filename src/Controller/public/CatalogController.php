@@ -48,6 +48,7 @@ class CatalogController extends BaseController
 			];
 
 			echo $this->render('layoutView.php', [
+			    'tag' => $tag,
 				'messages' => $messages,
 				'content' => $this->render('public/catalogView.php', [
 					'productList' => $productList,

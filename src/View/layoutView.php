@@ -3,6 +3,7 @@
  * @var string $style
  * @var string $content
  * @var array $messages
+ * @var string $tag
  */
 ?>
 
@@ -19,7 +20,7 @@
 			<a href="/catalog/all/1/">
                 <img src="/resources/public/images/logo.png" class="logo" alt="logo">
             </a>
-			<form action="/catalog/all/1/" class="search" method="GET" >
+			<form action="/catalog/<?= (isset($tag))?$tag:'all';?>/1/" class="search" method="GET" >
                 <input required type="search" placeholder="Поиск по сайту" name="search" id="search-text" pattern="^[A-Za-zА-Яа-я0-9Ёё\s]+$">
 				<button type="submit">
                     <img src="/resources/public/images/icon-search.png" class="search__icon" alt="search">
