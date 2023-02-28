@@ -38,6 +38,23 @@ use Models\Item;
 					</div>
 				</div>
 
+				<div class="d-flex p-3">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="is_active"
+							   value="1" <?= $item->is_active ? 'checked' : '' ?>>
+						<label class="form-check-label">
+							Активен
+						</label>
+					</div>
+					<div class="form-check ms-3">
+						<input class="form-check-input" type="radio" name="is_active"
+							   value="0" <?= $item->is_active ? '' : 'checked' ?>>
+						<label class="form-check-label">
+							Неактивен
+						</label>
+					</div>
+				</div>
+
 				<div class="p-3">
 					<label class="form-label">Краткое описание</label>
 					<input type="text" name="short_desc" class="form-control" value="<?= $item->short_desc ?>">
