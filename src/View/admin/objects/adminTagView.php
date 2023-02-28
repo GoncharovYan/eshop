@@ -34,6 +34,7 @@ use Models\Tag;
 		<div>
 			<form method="post">
 				<input type="hidden" name="action" value="delete">
+				<input type="hidden" name="token" value="<?= $token?>">
 				<button type="submit" class="btn btn-danger">Удалить тег</button>
 			</form>
 		</div>
