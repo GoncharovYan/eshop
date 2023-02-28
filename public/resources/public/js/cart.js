@@ -16,9 +16,6 @@ function modifyCart(id, price, change = 1)
         })
         .then((response) =>
         {
-        	if((location.href+`/product/${id}`) === location.host)
-        		{}
-			location.reload()
             return response.json();
         })
         .then((data) =>
@@ -39,9 +36,6 @@ function modifyCart(id, price, change = 1)
             itemPrice.innerHTML = parseInt(itemPrice.innerHTML) + parseInt(data['change']) * parseInt(data['price']);
             total.innerHTML = parseInt(total.innerHTML) + parseInt(data['change']) * parseInt(data['price']);
         })
-		.then(()=>{
-			location.reload()
-		})
 }
 
 function deleteFromCart(id)
@@ -60,7 +54,6 @@ function deleteFromCart(id)
         })
         .then((response) =>
         {
-
             return response.json();
         })
         .then((data) =>
