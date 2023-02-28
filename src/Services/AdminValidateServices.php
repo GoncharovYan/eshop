@@ -15,6 +15,7 @@ class AdminValidateServices
 		$val->checkText($data['short_desc'], 'short_desc', 1023);
 		$val->checkText($data['full_desc'], 'full_desc', 8191);
 
+		$val->checkBool($data['is_active'], 'is_active');
 		$val->checkInt($data['sort_order'], 'sort_order');
 		$val->checkInt($data['price'], 'price', 0);
 

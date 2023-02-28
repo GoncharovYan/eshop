@@ -14,6 +14,8 @@ class Item extends Relation {
 
 	public $price;
 
+	public $is_active;
+
 	public $sort_order;
 
 	public $date_created;
