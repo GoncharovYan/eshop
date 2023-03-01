@@ -38,10 +38,11 @@ function modifyCart(id, price, change = 1)
         })
 }
 
-function deleteFromCart(id)
+function deleteFromCart(id, price)
 {
     const addParams = {
         id: id,
+        price: price,
     };
 
     fetch(`/order/delete/`,
@@ -58,8 +59,13 @@ function deleteFromCart(id)
         })
         .then((data) =>
         {
+            const total = document.getElementById('total');
             const item = document.getElementById(`item-id-${data['id']}`);
+            const itemPrice = document.getElementById(`item-id-${data['id']}-price`);
+
             const parent = item.parentNode;
+
+            total.innerHTML = parseInt(total.innerHTML) - parseInt(itemPrice.innerHTML);
 
             parent.removeChild(item);
         })

@@ -142,6 +142,18 @@ class OrderController extends BaseController
 			exit;
 		}
 
+        $cart = $_SESSION['cart'];
+        if (!$cart)
+        {
+            echo $this->render('layoutView.php', [
+                'content' => $this->render('public/pageNotFoundView.php', [
+                    'error' => "Корзина пустая :(",
+                ]),
+            ]);
+            return;
+        }
+        unset($_SESSION['cart']);
+
 		$newOrder = new Orders();
 
 		$newOrder->customer_name = $data['name'];
@@ -154,17 +166,6 @@ class OrderController extends BaseController
 
 		$order = $newOrder->save();
 
-		$cart = $_SESSION['cart'];
-		if (!$cart)
-		{
-            echo $this->render('layoutView.php', [
-                'content' => $this->render('public/pageNotFoundView.php', [
-                    'error' => "Корзина пустая :(",
-                ]),
-            ]);
-		}
-		unset($_SESSION['cart']);
-
 		$productIdArr = array_keys($cart);
 
 		$products = Item::findByIdArr($productIdArr);
@@ -172,7 +173,7 @@ class OrderController extends BaseController
 		$order->addRelationArr($products, "ITEM_COUNT", $cart);
 
 		echo $this->render('layoutView.php', [
-			'content' => "<p>ну всё жди. скоро будем</p>",
+			'content' => "ну всё жди. скоро будем"
 		]);
 	}
 }

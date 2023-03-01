@@ -34,7 +34,7 @@ function modifyCart(id, change)
                 wrapper.removeChild(plus);
             }
             //if we add first item to cart
-            else if (count === 1 && change === 1)
+            else if (count - change === 0)
             {
                 button.innerHTML = 'В корзине';
                 button.classList.add("button_active");
