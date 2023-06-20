@@ -28,6 +28,7 @@ function modifyCart(id, change)
             {
                 button.innerHTML = 'В корзину';
                 button.classList.remove("button_active");
+                button.addEventListener('click', countIncrease);
 
                 wrapper.removeChild(minus);
                 wrapper.removeChild(counter);

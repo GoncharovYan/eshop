@@ -8,7 +8,6 @@ export class PageList
     maxPage
     search = ''
 
-
     constructor(attachToNodeId = '', curPage, maxPage, search ='',catalogList)
     {
         if(attachToNodeId === '')
